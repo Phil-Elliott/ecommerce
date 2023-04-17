@@ -1,4 +1,6 @@
 import Head from "next/head";
+import Image from "next/image";
+import Hero from "/assets/hero.jpg";
 
 export default function Home() {
   return (
@@ -9,9 +11,21 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        {/* <h1 className="text-4xl bg-red bg-Secondary">Hello</h1>
-        <h2>fuck</h2> */}
+      <div className="relative container mx-auto h-screen flex justify-center">
+        <Image
+          src={Hero}
+          alt="Hero"
+          className="object-cover w-full h-full brightness-75"
+        />
+        <div className="absolute top-52 flex flex-col justify-center items-center pt-10">
+          <h1 className="text-white font-bold text-8xl">Great Products</h1>
+          <p className="text-white font-semibold text-xl my-10">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+          </p>
+          <button className="bg-white text-black font-bold py-2 px-12 text-xl rounded hover:bg-gray-200 transition duration-200 ease-in-out">
+            Shop
+          </button>
+        </div>
       </div>
     </>
   );
@@ -19,9 +33,16 @@ export default function Home() {
 
 /*
 
-  Setup tailwind
+  Home Page
+   - Have hero image
+   - show all categories going down
+   - Have Footer
 
-  1) Make header
+
+
+
+
+  
   2) Make footer
   3) Make main page
   4) Make other pages for the categories

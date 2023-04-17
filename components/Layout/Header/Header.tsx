@@ -5,13 +5,15 @@ import { FiShoppingCart } from "react-icons/fi";
 
 const Header = () => {
   return (
-    <div className="shadow">
+    <div className="fixed w-full bg-white shadow z-10">
       <div className="container mx-auto py-4 flex justify-between items-center text-md font-medium select-none">
         <div className="cursor-pointer flex space-x-6">
           <AiFillShop className="text-2xl" />
-          <p className="cursor-pointer sm:hidden block">Shop</p>
+          <p className="cursor-pointer sm:hidden block">Categories</p>
+          <p className="cursor-pointer sm:hidden block">Deals</p>
         </div>
-        <p className="cursor-pointer sm:block hidden">Shop</p>
+        <p className="cursor-pointer sm:block hidden">Categories</p>
+        <p className="cursor-pointer sm:block hidden">Deals</p>
         <div className="relative justify-center items-center lg:w-2/5 w-3/5 sm:flex hidden">
           <AiOutlineSearch className="absolute left-0 ml-3 text-gray-400 text-xl cursor-pointer" />
           <input
@@ -48,17 +50,3 @@ const Header = () => {
 };
 
 export default Header;
-
-/*
-
-top bar
-- logo
-- right icons
-bottom
-- search bar
-
-have hamburger menu on show below lg screen size
-
-- make responsive and move on to home page
-
-*/
