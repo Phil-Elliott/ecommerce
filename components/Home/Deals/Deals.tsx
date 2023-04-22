@@ -23,7 +23,7 @@ const dealsInfo = [
 
 const Deals = () => {
   return (
-    <div className="container mx-auto py-10 grid grid-cols-3 gap-5">
+    <div className="container mx-auto pt-10 grid grid-cols-3 gap-5">
       {dealsInfo.map((deal) => (
         <div
           key={deal.id}

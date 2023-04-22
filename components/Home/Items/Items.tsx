@@ -79,7 +79,11 @@ const products = [
   ],
 ];
 
-const Items = () => {
+type ItemProps = {
+  name: string;
+};
+
+const Items = ({ name }: ItemProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -95,9 +99,9 @@ const Items = () => {
   };
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto pt-10">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-semibold">Featured Items</h1>
+        <h1 className="text-3xl font-semibold">{name}</h1>
         <div className="text-base flex items-center space-x-4">
           <button className="text-base">Show All</button>
           <div
@@ -115,13 +119,13 @@ const Items = () => {
         </div>
       </div>
 
-      <div className="overflow-hidden py-10">
+      <div className="overflow-hidden pt-10">
         <div
           ref={scrollRef}
           className="flex gap-4 whitespace-nowrap overflow-x-scroll scrollbar px-1"
         >
           {products[0].map((product) => (
-            <div className="bg-white rounded-lg shadow w-64 inline-block mb-10">
+            <div className="bg-white rounded-lg shadow w-64 inline-block mb-10 cursor-pointer select-none">
               <Image
                 src={HeroImg}
                 alt={product.name}
@@ -143,20 +147,11 @@ const Items = () => {
 
 export default Items;
 
-// {
-/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10">
-        {products[0].map((product) => (
-          <div className="bg-white rounded-lg shadow-lg">
-            <Image
-              src={HeroImg}
-              alt={product.name}
-              className="w-full h-64 object-cover rounded-t-lg"
-            />
-            <div className="p-4">
-              <h1 className="text-lg font-semibold pb-4">{product.name}</h1>
-              <p className="text-gray-500">${product.price}</p>
-            </div>
-          </div>
-        ))}
-      </div> */
-// }
+/*
+
+passing in 
+1) Name (do this now)
+2) Data
+
+
+*/

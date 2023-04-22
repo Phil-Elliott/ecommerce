@@ -5,7 +5,7 @@ import Head from "next/head";
 
 export default function Home() {
   return (
-    <>
+    <div className="mb-10">
       <Head>
         <title>Home</title>
         <meta name="description" content="Take a look at what we sell" />
@@ -14,8 +14,10 @@ export default function Home() {
       </Head>
       <Hero />
       <Deals />
-      <Items />
-    </>
+      <Items name="Featured Items" />
+      <Items name="Best Sellers" />
+      <Items name="New Arrivals" />
+    </div>
   );
 }
 
