@@ -33,7 +33,7 @@ const Header = () => {
           </div>
           <div className="flex items-center space-x-3 cursor-pointer">
             <FiShoppingCart className="text-xl" />
-            <p className="lg:block hidden">$0.00</p>
+            {/* <p className="lg:block hidden">$0.00</p> */}
           </div>
         </div>
       </div>

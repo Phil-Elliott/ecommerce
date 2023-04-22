@@ -1,6 +1,7 @@
+import Deals from "components/Home/Deals/Deals";
+import Hero from "components/Home/Hero/Hero";
+import Items from "components/Home/Items/Items";
 import Head from "next/head";
-import Image from "next/image";
-import Hero from "/assets/hero.jpg";
 
 export default function Home() {
   return (
@@ -11,27 +12,30 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="relative container mx-auto h-screen flex justify-center">
-        <Image
-          src={Hero}
-          alt="Hero"
-          className="object-cover w-full h-full brightness-75"
-        />
-        <div className="absolute top-52 flex flex-col justify-center items-center pt-10">
-          <h1 className="text-white font-bold text-8xl">Great Products</h1>
-          <p className="text-white font-semibold text-xl my-10">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-          </p>
-          <button className="bg-white text-black font-bold py-2 px-12 text-xl rounded hover:bg-gray-200 transition duration-200 ease-in-out">
-            Shop
-          </button>
-        </div>
-      </div>
+      <Hero />
+      <Deals />
+      <Items />
     </>
   );
 }
 
 /*
+
+  Electronics store
+
+
+
+  Get a primary color
+  Try fluid font sizes 
+  Add to header
+       - reminders
+       - dark mode (need to also set up)
+  Get links to work
+  Start making some shared components
+      - button
+      - image with text over it
+
+
 
   Home Page
    - Have hero image
