@@ -1,9 +1,22 @@
+import { useState } from "react";
 import Deals from "components/Home/Deals/Deals";
 import Hero from "components/Home/Hero/Hero";
 import Items from "components/Home/Items/Items";
 import Head from "next/head";
 
-export default function Home() {
+type ProductsProps = {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  category: string;
+};
+
+type HomeProps = {
+  products: ProductsProps[];
+};
+
+export default function Home({ products }: HomeProps) {
   return (
     <div className="mb-10">
       <Head>
@@ -14,43 +27,32 @@ export default function Home() {
       </Head>
       <Hero />
       <Deals />
-      <Items name="Featured Items" />
-      <Items name="Best Sellers" />
-      <Items name="New Arrivals" />
+      <Items name="Featured Items" products={products} />
+      <Items name="Best Sellers" products={products} />
+      <Items name="New Arrivals" products={products} />
     </div>
   );
 }
 
 /*
 
+  1) Make all of the links work
+      - Shop Page
+      - Checkout Page
+      - Product Page
+      
+      
+      - Sign in Page or maybe just a modal
+      - Wishlist Page or also maybe a modal
+      - Cart Page or also maybe a modal
+
+      - Categories Page (Save this for later - might change)
+      - Search Page (could be the same as shop page) 
+        - same as all of the links on the home page. Can just use the filtered data from the shop page and still have all of the options on the left
+
+
   Electronics store
-
-
-
-  Get a primary color
-  Try fluid font sizes 
-  Add to header
-       - reminders
-       - dark mode (need to also set up)
-  Get links to work
-  Start making some shared components
-      - button
-      - image with text over it
-
-
-
-  Home Page
-   - Have hero image
-   - show all categories going down
-   - Have Footer
-
-
-
-
-
   
-  2) Make footer
-  3) Make main page
   4) Make other pages for the categories
   5) Make a product page
   6) Make a cart page or side thing
