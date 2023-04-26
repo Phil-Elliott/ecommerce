@@ -32,6 +32,10 @@ module.exports = {
     },
 
     extend: {
+      maxHeight: {
+        "filter-height": "calc(100vh - 12rem)",
+      },
+
       fontSize: {
         "fluid-xs": "clamp(0.75rem, 1.5vw, 0.875rem)", // 12px to 14px
         "fluid-sm": "clamp(0.875rem, 2vw, 1rem)", // 14px to 16px

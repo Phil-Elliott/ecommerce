@@ -11,7 +11,7 @@ type ShopProps = {
 
 const shop = ({ tours }: ShopProps) => {
   return (
-    <div className="container mx-auto py-28">
+    <div className=" ">
       <Layout tours={tours}>
         <Items tours={tours} />
       </Layout>

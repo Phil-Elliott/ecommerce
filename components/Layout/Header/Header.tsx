@@ -7,7 +7,7 @@ import { FiShoppingCart } from "react-icons/fi";
 
 const Header = () => {
   return (
-    <div className="fixed w-full bg-white shadow z-10">
+    <div className="fixed w-full bg-white shadow z-50">
       <div className="container mx-auto py-4 flex justify-between items-center text-md font-medium select-none">
         <div className="cursor-pointer flex space-x-6">
           <Link href="/">

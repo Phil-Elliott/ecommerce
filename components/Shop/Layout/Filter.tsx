@@ -23,8 +23,8 @@ const Filter = ({ tours }: FilterProps) => {
     .filter((activity, index, self) => self.indexOf(activity) === index);
 
   return (
-    <div className="flex flex-col space-y-2 overflow-y-scroll">
-      <div className="border-gray border-b-2 pb-2">
+    <div className="flex flex-col space-y-2 overflow-y-scroll max-h-filter-height w-full sticky top-40 scrollbar">
+      <div className="border-gray border-b-2 pb-2 mr-4">
         <h1 className="text-xl font-semibold pb-4">Categories</h1>
         {categories.map((category) => (
           <div key={category} className="flex items-center space-x-2 pb-2">
@@ -38,7 +38,7 @@ const Filter = ({ tours }: FilterProps) => {
           </div>
         ))}
       </div>
-      <div className="border-gray border-b-2 pb-2">
+      <div className="border-gray border-b-2 pb-2 mr-4">
         <h1 className="text-xl font-semibold pb-4">Locations</h1>
         {locations.map((location) => (
           <div key={location} className="flex items-center space-x-2 pb-2">
@@ -52,7 +52,7 @@ const Filter = ({ tours }: FilterProps) => {
           </div>
         ))}
       </div>
-      <div className="border-gray border-b-2 pb-2">
+      <div className="border-gray border-b-2 pb-2 mr-4">
         <h1 className="text-xl font-semibold pb-4">Activities</h1>
         {locations.map((location) => (
           <div key={location} className="flex items-center space-x-2 pb-2">
@@ -63,6 +63,20 @@ const Filter = ({ tours }: FilterProps) => {
               value={location}
             />
             <label htmlFor={location}>{location}</label>
+          </div>
+        ))}
+      </div>
+      <div className="border-gray border-b-2 pb-2 mr-4">
+        <h1 className="text-xl font-semibold pb-4">Categories</h1>
+        {categories.map((category) => (
+          <div key={category} className="flex items-center space-x-2 pb-2">
+            <input
+              type="checkbox"
+              name="category"
+              id={category}
+              value={category}
+            />
+            <label htmlFor={category}>{category}</label>
           </div>
         ))}
       </div>

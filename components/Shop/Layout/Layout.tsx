@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Filter from "./Filter";
 import { TourProps } from "components/shared/Types/Types";
@@ -9,13 +9,21 @@ type LayoutProps = {
 };
 
 const Layout = ({ children, tours }: LayoutProps) => {
+  const [showFilter, setShowFilter] = useState(true);
+
+  const handleShowFilter = () => {
+    setShowFilter(!showFilter);
+  };
+
   return (
     <>
-      <Header />
-      <div className="flex gap-12">
-        <div className="w-1/4">
-          <Filter tours={tours} />
-        </div>
+      <Header handleShowFilter={handleShowFilter} showFilter={showFilter} />
+      <div className="container mx-auto flex gap-12 pt-48 pb-32">
+        {showFilter ? (
+          <div className="w-1/4">
+            <Filter tours={tours} />
+          </div>
+        ) : null}
         {children}
       </div>
     </>
