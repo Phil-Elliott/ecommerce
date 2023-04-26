@@ -3,19 +3,14 @@ import React, { useRef } from "react";
 import HeroImg from "/assets/hero.jpg";
 
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { TourProps } from "components/shared/Types/Types";
 
 type ItemProps = {
   name: string;
-  products: {
-    id: number;
-    name: string;
-    image: string;
-    price: number;
-    category: string;
-  }[];
+  tours: TourProps[];
 };
 
-const Items = ({ name, products }: ItemProps) => {
+const Items = ({ name, tours }: ItemProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -56,18 +51,18 @@ const Items = ({ name, products }: ItemProps) => {
           ref={scrollRef}
           className="flex gap-4 whitespace-nowrap overflow-x-scroll scrollbar px-1"
         >
-          {products.map((product) => (
+          {tours.map((tour) => (
             <div className="bg-white rounded-lg shadow w-64 inline-block mb-10 cursor-pointer select-none">
               <Image
                 src={HeroImg}
-                alt={product.name}
+                alt={tour.name}
                 className="w-full h-64 object-cover rounded-t-lg"
               />
               <div className="p-4 w-64">
                 <h1 className="text-lg font-semibold pb-4 whitespace-normal">
-                  {product.name}
+                  {tour.name}
                 </h1>
-                <p className="text-gray-500">${product.price}</p>
+                <p className="text-gray-500">${tour.price}</p>
               </div>
             </div>
           ))}

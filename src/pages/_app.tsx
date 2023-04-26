@@ -2,112 +2,174 @@ import { useState } from "react";
 import Layout from "components/Layout/Layout";
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
-
-type ProductsProps = {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  category: string;
-};
+import { TourProps } from "components/shared/Types/Types";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [products, setProducts] = useState<ProductsProps[]>([
+  const [tours, setTours] = useState<TourProps[]>([
     {
-      id: 1001,
-      name: "TechWave SuperCharger 9000",
-      image: "techwave_supercharger_9000.jpg",
-      price: 49.99,
-      category: "Chargers",
+      id: 1,
+      name: "Tropical Paradise",
+      image: "tropical-paradise.jpg",
+      price: 1200,
+      description: "Explore the beautiful tropical islands and sandy beaches.",
+      category: "Beach",
+      location: "Maldives",
+      duration: "7 days",
+      date: "2023-05-15",
+      rating: 4.5,
+      availability: 15,
+      groupSize: 20,
+      difficulty: "Easy",
+      activities: ["Snorkeling", "Swimming", "Sunbathing"],
     },
     {
-      id: 1002,
-      name: "BlueMax Noise-Canceling Headphones",
-      image: "bluemax_headphones.jpg",
-      price: 129.99,
-      category: "Audio",
+      id: 2,
+      name: "European Capitals Tour",
+      image: "european-capitals.jpg",
+      price: 2500,
+      description:
+        "Discover the charm and history of Europe's most iconic cities.",
+      category: "Cultural",
+      // category: "Beach",
+      location: "Europe",
+      duration: "14 days",
+      date: "2023-06-01",
+      rating: 4.7,
+      availability: 20,
+      groupSize: 25,
+      difficulty: "Moderate",
+      activities: ["Sightseeing", "Museum visits", "Food tasting"],
     },
     {
-      id: 1003,
-      name: 'UltraSharp 27" 4K Monitor',
-      image: "ultrasharp_27_4k_monitor.jpg",
-      price: 449.99,
-      category: "Monitors",
+      id: 3,
+      name: "Amazon Rainforest Adventure",
+      image: "amazon-rainforest.jpg",
+      price: 1800,
+      description:
+        "Immerse yourself in the biodiversity of the Amazon Rainforest.",
+      category: "Nature",
+      location: "Brazil",
+      duration: "10 days",
+      date: "2023-07-20",
+      rating: 4.8,
+      availability: 10,
+      groupSize: 15,
+      difficulty: "Moderate",
+      activities: ["Hiking", "Wildlife watching", "Boat rides"],
     },
     {
-      id: 1004,
-      name: "PowerGrip 10,000mAh Power Bank",
-      image: "powergrip_powerbank.jpg",
-      price: 34.99,
-      category: "Power Banks",
+      id: 4,
+      name: "Himalayan Trek",
+      image: "himalayan-trek.jpg",
+      price: 2000,
+      description:
+        "Embark on an exhilarating journey through the majestic Himalayas.",
+      category: "Adventure",
+      location: "Nepal",
+      duration: "14 days",
+      date: "2023-08-01",
+      rating: 5,
+      availability: 8,
+      groupSize: 12,
+      difficulty: "Hard",
+      activities: ["Trekking", "Camping", "Photography"],
     },
     {
-      id: 1005,
-      name: "SwiftConnect Bluetooth Speaker",
-      image: "swiftconnect_speaker.jpg",
-      price: 59.99,
-      category: "Speakers",
+      id: 5,
+      name: "Tropical Paradise",
+      image: "tropical-paradise.jpg",
+      price: 1200,
+      description: "Explore the beautiful tropical islands and sandy beaches.",
+      category: "Beach",
+      location: "Maldives",
+      duration: "7 days",
+      date: "2023-05-15",
+      rating: 4.5,
+      availability: 15,
+      groupSize: 20,
+      difficulty: "Easy",
+      activities: ["Snorkeling", "Swimming", "Sunbathing"],
     },
     {
-      id: 1006,
-      name: "SmartShade RGB LED Light Bulb",
-      image: "smartshade_rgb_bulb.jpg",
-      price: 19.99,
-      category: "Smart Home",
+      id: 6,
+      name: "European Capitals Tour",
+      image: "european-capitals.jpg",
+      price: 2500,
+      description:
+        "Discover the charm and history of Europe's most iconic cities.",
+      category: "Cultural",
+      // category: "Beach",
+      location: "Europe",
+      duration: "14 days",
+      date: "2023-06-01",
+      rating: 4.7,
+      availability: 20,
+      groupSize: 25,
+      difficulty: "Moderate",
+      activities: ["Sightseeing", "Museum visits", "Food tasting"],
     },
     {
-      id: 1007,
-      name: "PixaClear 4K Action Camera",
-      image: "pixaclear_action_camera.jpg",
-      price: 199.99,
-      category: "Cameras",
+      id: 7,
+      name: "Amazon Rainforest Adventure",
+      image: "amazon-rainforest.jpg",
+      price: 1800,
+      description:
+        "Immerse yourself in the biodiversity of the Amazon Rainforest.",
+      category: "Nature",
+      location: "Brazil",
+      duration: "10 days",
+      date: "2023-07-20",
+      rating: 4.8,
+      availability: 10,
+      groupSize: 15,
+      difficulty: "Moderate",
+      activities: ["Hiking", "Wildlife watching", "Boat rides"],
     },
     {
-      id: 1008,
-      name: "TechWave Wireless Mouse & Keyboard Combo",
-      image: "techwave_mouse_keyboard.jpg",
-      price: 69.99,
-      category: "Keyboards & Mice",
-    },
-    {
-      id: 1009,
-      name: "StreamPro 1080p Webcam",
-      image: "streampro_webcam.jpg",
-      price: 79.99,
-      category: "Webcams",
-    },
-    {
-      id: 1010,
-      name: "TriFiber Ultra-Thin HDMI Cable 6ft",
-      image: "trifiber_hdmi_cable.jpg",
-      price: 14.99,
-      category: "Cables & Adapters",
+      id: 8,
+      name: "Himalayan Trek",
+      image: "himalayan-trek.jpg",
+      price: 2000,
+      description:
+        "Embark on an exhilarating journey through the majestic Himalayas.",
+      category: "Adventure",
+      location: "Nepal",
+      duration: "14 days",
+      date: "2023-08-01",
+      rating: 5,
+      availability: 8,
+      groupSize: 12,
+      difficulty: "Hard",
+      activities: ["Trekking", "Camping", "Photography"],
     },
   ]);
 
   return (
     <Layout>
-      <Component {...pageProps} products={products} />
+      <Component {...pageProps} tours={tours} />
     </Layout>
   );
 }
 
 /*
 
-add testing
-start making home page (use figma and mrbeast for design)
-learn node
-go to gym lazy ass
-call the immigration office
+Maybe make a travel package site - vary easy to get images and data and also could add some other cool stuff later
+
+2) Add testing to the project and practice it a little
+3) Fix up the shop page
+    - break it up into components
+    - add options and functionality to the left part
+    - have only 10 options showing at a time
+    - get top buttons to work
+4) Create a search page and add functionality
+5) In shared - make modal, button, and popup components
+6) Make everything responsive
+7) Add stuff to data to allow you to filter on home page
 
 
-stack
-- next
-- redux
-- jest
-- tailwind
-- graphql
-- postgres or mongo
-- node & express
+
+
+
+
 
 */

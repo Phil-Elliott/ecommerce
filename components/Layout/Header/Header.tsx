@@ -16,12 +16,12 @@ const Header = () => {
           <p className="cursor-pointer sm:hidden block">
             <Link href="/shop">Shop</Link>
           </p>
-          <p className="cursor-pointer sm:hidden block">Categories</p>
+          {/* <p className="cursor-pointer sm:hidden block">Categories</p> */}
         </div>
         <p className="cursor-pointer sm:block hidden">
           <Link href="/shop">Shop</Link>
         </p>
-        <p className="cursor-pointer sm:block hidden">Categories</p>
+        {/* <p className="cursor-pointer sm:block hidden">Categories</p> */}
         <div className="relative justify-center items-center lg:w-2/5 w-3/5 sm:flex hidden">
           <AiOutlineSearch className="absolute left-0 ml-3 text-gray-400 text-xl cursor-pointer" />
           <input

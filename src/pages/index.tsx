@@ -3,20 +3,13 @@ import Deals from "components/Home/Deals/Deals";
 import Hero from "components/Home/Hero/Hero";
 import Items from "components/Home/Items/Items";
 import Head from "next/head";
-
-type ProductsProps = {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  category: string;
-};
+import { TourProps } from "components/shared/Types/Types";
 
 type HomeProps = {
-  products: ProductsProps[];
+  tours: TourProps[];
 };
 
-export default function Home({ products }: HomeProps) {
+export default function Home({ tours }: HomeProps) {
   return (
     <div className="mb-10">
       <Head>
@@ -27,9 +20,9 @@ export default function Home({ products }: HomeProps) {
       </Head>
       <Hero />
       <Deals />
-      <Items name="Featured Items" products={products} />
-      <Items name="Best Sellers" products={products} />
-      <Items name="New Arrivals" products={products} />
+      {/* <Items name="Featured Tours" products={products} /> */}
+      <Items name="Best Sellers" tours={tours} />
+      <Items name="New Tours" tours={tours} />
     </div>
   );
 }

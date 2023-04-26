@@ -23,7 +23,7 @@ const dealsInfo = [
 
 const Deals = () => {
   return (
-    <div className="container mx-auto pt-10 grid grid-cols-3 gap-5">
+    <div className="container mx-auto pt-10 grid grid-cols-3 gap-8">
       {dealsInfo.map((deal) => (
         <div
           key={deal.id}
@@ -32,7 +32,7 @@ const Deals = () => {
           }}
           className="relative bg-cover bg-center rounded-sm cursor-pointer flex flex-col justify-center items-center px-10 py-20"
         >
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-25 rounded-sm"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-100 rounded-sm"></div>
           <p className="z-10 text-white font-semibold text-xl my-5 text-center">
             {deal.description}
           </p>

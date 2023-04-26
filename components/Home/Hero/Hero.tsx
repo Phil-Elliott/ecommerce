@@ -8,11 +8,11 @@ const Hero = () => {
       <Image
         src={HeroImg}
         alt="Hero"
-        className="object-cover w-full h-full brightness-75 rounded-sm"
+        className="object-cover w-full h-full brightness-0 rounded-sm"
       />
-      <div className="absolute flex flex-col justify-center items-center">
+      <div className="absolute flex flex-col justify-center items-center gap-8">
         <h1 className="text-white font-bold text-8xl">Great Products</h1>
-        <p className="text-white font-semibold text-xl my-10">
+        <p className="text-white font-semibold text-xl ">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
         </p>
         <button className="bg-white text-black font-semibold py-2 px-12 text-xl rounded hover:bg-gray-200 transition duration-200 ease-in-out">
