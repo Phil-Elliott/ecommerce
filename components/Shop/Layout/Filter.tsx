@@ -1,11 +1,57 @@
+import React, { useEffect, useState } from "react";
 import { TourProps } from "components/shared/Types/Types";
-import React from "react";
+
+import { BsChevronDown } from "react-icons/bs";
 
 type FilterProps = {
   tours: TourProps[];
 };
 
+type FilterOption = {
+  name: string;
+  options: string[];
+  show: boolean;
+};
+
 const Filter = ({ tours }: FilterProps) => {
+  const [filterOptions, setFilterOptions] = useState<FilterOption[]>([
+    {
+      name: "Category",
+      options: [],
+      show: true,
+    },
+    {
+      name: "Location",
+      options: [],
+      show: true,
+    },
+    {
+      name: "Activities",
+      options: [],
+      show: true,
+    },
+    {
+      name: "Difficulty",
+      options: [],
+      show: true,
+    },
+    {
+      name: "Prices",
+      options: [],
+      show: true,
+    },
+  ]);
+
+  const handleFilterClick = (name: string) => {
+    setFilterOptions((prev) =>
+      prev.map((filterOption) =>
+        filterOption.name === name
+          ? { ...filterOption, show: !filterOption.show }
+          : filterOption
+      )
+    );
+  };
+
   // Finds all of the categories in the tours array and removes duplicates
   const categories = tours
     .map((tour) => tour.category)
@@ -35,105 +81,73 @@ const Filter = ({ tours }: FilterProps) => {
     "Over $2,000",
   ];
 
+  useEffect(() => {
+    setFilterOptions((prev) => [
+      {
+        name: "Category",
+        options: categories,
+        show: true,
+      },
+      {
+        name: "Location",
+        options: locations,
+        show: true,
+      },
+      {
+        name: "Activities",
+        options: activities,
+        show: true,
+      },
+      {
+        name: "Difficulty",
+        options: difficulties,
+        show: true,
+      },
+      {
+        name: "Prices",
+        options: prices,
+        show: true,
+      },
+    ]);
+  }, []);
+
   return (
     <div className="flex flex-col space-y-2 overflow-y-scroll max-h-filter-height w-full sticky top-40 scrollbar">
-      <div className="border-gray border-b-2 pb-2 mr-6">
-        <h1 className="text-xl font-semibold pb-4">Categories</h1>
-        {categories.map((category) => (
+      {filterOptions.map((filterOption) => (
+        <div
+          key={filterOption.name}
+          className="border-gray border-b-2 pb-2 mr-6"
+        >
           <div
-            key={category}
-            className="flex items-center space-x-2 pb-2 relative"
+            className="flex justify-between items-center pb-4 cursor-pointer"
+            onClick={() => handleFilterClick(filterOption.name)}
           >
-            <div className="relative flex">
-              <input
-                type="checkbox"
-                name="category"
-                id={category}
-                value={category}
-                className="custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
-              />
-            </div>
-            <label htmlFor={category}>{category}</label>
+            <h1 className="text-xl font-semibold ">{filterOption.name}s</h1>
+            <BsChevronDown className="text-xl" />
           </div>
-        ))}
-      </div>
-      <div className="border-gray border-b-2 pb-2 mr-6">
-        <h1 className="text-xl font-semibold pb-4">Locations</h1>
-        {locations.map((location) => (
-          <div
-            key={location}
-            className="flex items-center space-x-2 pb-2 relative"
-          >
-            <div className="relative flex">
-              <input
-                type="checkbox"
-                name="location"
-                id={location}
-                value={location}
-                className="custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
-              />
-            </div>
-            <label htmlFor={location}>{location}</label>
-          </div>
-        ))}
-      </div>
-      <div className="border-gray border-b-2 pb-2 mr-6">
-        <h1 className="text-xl font-semibold pb-4">Activities</h1>
-        {activities.map((activity) => (
-          <div
-            key={activity}
-            className="flex items-center space-x-2 pb-2 relative"
-          >
-            <div className="relative flex">
-              <input
-                type="checkbox"
-                name="activity"
-                id={activity}
-                value={activity}
-                className="custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
-              />
-            </div>
-            <label htmlFor={activity}>{activity}</label>
-          </div>
-        ))}
-      </div>
-      <div className="border-gray border-b-2 pb-2 mr-6">
-        <h1 className="text-xl font-semibold pb-4">Difficulty</h1>
-        {difficulties.map((difficulty) => (
-          <div
-            key={difficulty}
-            className="flex items-center space-x-2 pb-2 relative"
-          >
-            <div className="relative flex">
-              <input
-                type="checkbox"
-                name="difficulty"
-                id={difficulty}
-                value={difficulty}
-                className="custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
-              />
-            </div>
-            <label htmlFor={difficulty}>{difficulty}</label>
-          </div>
-        ))}
-      </div>
-      <div className="border-gray border-b-2 pb-2 mr-6">
-        <h1 className="text-xl font-semibold pb-4">Price</h1>
-        {prices.map((price) => (
-          <div key={price} className="flex items-center space-x-2 pb-2">
-            <div className="relative flex">
-              <input
-                type="checkbox"
-                name="price"
-                id={price}
-                value={price}
-                className="custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
-              />
-            </div>
-            <label htmlFor={price}>{price}</label>
-          </div>
-        ))}
-      </div>
+          {filterOption.show
+            ? filterOption.options.map((option) => (
+                <div
+                  key={option}
+                  className="flex items-center space-x-2 pb-2 relative"
+                >
+                  <div className="relative flex ">
+                    <input
+                      type="checkbox"
+                      name={filterOption.name}
+                      id={option}
+                      value={option}
+                      className="cursor-pointer custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
+                    />
+                  </div>
+                  <label className="cursor-pointer" htmlFor={option}>
+                    {option}
+                  </label>
+                </div>
+              ))
+            : null}
+        </div>
+      ))}
     </div>
   );
 };

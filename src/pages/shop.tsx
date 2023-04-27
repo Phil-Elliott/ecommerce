@@ -23,10 +23,7 @@ export default shop;
 
 /*
 
-Make a layout for header and filter of shop page
-Make the content the Children and wrap the layout around it
 
-Make interfaces shared and import the tours interface to each one that needs it
 
 Also fix the header on scroll down disappears and appears on scroll up
 
