@@ -17,7 +17,9 @@ const Layout = ({ children, tours }: LayoutProps) => {
 
   return (
     <>
-      <Header handleShowFilter={handleShowFilter} showFilter={showFilter} />
+      <div className="fixed w-full">
+        <Header handleShowFilter={handleShowFilter} showFilter={showFilter} />
+      </div>
       <div className="container mx-auto flex gap-12 pt-48 pb-32">
         {showFilter ? (
           <div className="w-1/4">

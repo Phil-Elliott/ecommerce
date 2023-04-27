@@ -8,7 +8,7 @@ type HeaderProps = {
 
 const Header = ({ handleShowFilter, showFilter }: HeaderProps) => {
   return (
-    <div className="flex justify-between items-center font-medium fixed bg-white container mx-auto pt-28 pb-2 z-30">
+    <div className="container mx-auto flex justify-between items-center font-medium bg-white pt-28 pb-2 z-30">
       <h1 className="text-3xl">Products</h1>
       <div className="flex space-x-6">
         <div
