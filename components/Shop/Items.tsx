@@ -14,14 +14,14 @@ const Items = ({ tours }: ItemsProps) => {
       {tours.map((tour) => (
         <div
           key={tour.id}
-          className="bg-white rounded-lg shadow hover:shadow-lg w-full inline-block cursor-pointer select-none"
+          className="bg-white rounded-lg shadow hover:shadow-lg w-full inline-block cursor-pointer select-none h-96"
         >
           <Image
             src={HeroImg}
             alt={tour.name}
-            className="w-full h-64 object-cover rounded-t-lg"
+            className="w-full h-2/3 object-cover rounded-t-lg"
           />
-          <div className="p-4 w-64 flex flex-col justify-between h-32">
+          <div className="p-4 w-64 flex flex-col justify-between h-1/3">
             <h1 className="text-lg font-semibold whitespace-normal">
               {tour.name}
             </h1>

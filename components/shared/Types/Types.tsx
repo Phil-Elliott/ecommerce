@@ -14,3 +14,11 @@ export type TourProps = {
   difficulty: string;
   activities: string[];
 };
+
+export type FilteredOptionsProps = {
+  category: string[];
+  location: string[];
+  activities: string[];
+  difficulty: string[];
+  prices: string[];
+};
