@@ -11,6 +11,7 @@ type LayoutProps = {
     name: keyof FilteredOptionsProps,
     option: string
   ) => void;
+  changeSortBy: (value: string) => void;
 };
 
 const Layout = ({
@@ -18,6 +19,7 @@ const Layout = ({
   tours,
   addFilterOption,
   removeFilterOption,
+  changeSortBy,
 }: LayoutProps) => {
   const [showFilter, setShowFilter] = useState(true);
 
@@ -28,7 +30,11 @@ const Layout = ({
   return (
     <>
       <div className="fixed w-full z-40">
-        <Header handleShowFilter={handleShowFilter} showFilter={showFilter} />
+        <Header
+          handleShowFilter={handleShowFilter}
+          showFilter={showFilter}
+          changeSortBy={changeSortBy}
+        />
       </div>
       <div className="container mx-auto flex gap-12 pt-48 pb-32">
         {showFilter ? (

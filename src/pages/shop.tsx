@@ -18,6 +18,25 @@ const shop = ({ tours }: ShopProps) => {
     difficulty: [],
     prices: [],
   });
+  const [sortBy, setSortBy] = useState<string>("date");
+
+  // sorts the tours based on the sortBy state
+  useEffect(() => {
+    const sortedTours = [...filteredItems].sort((a, b) => {
+      if (sortBy === "date") {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      } else if (sortBy === "priceAsc") {
+        return a.price - b.price;
+      } else if (sortBy === "priceDesc") {
+        return b.price - a.price;
+      } else if (sortBy === "rating") {
+        return b.rating - a.rating;
+      } else {
+        return 0;
+      }
+    });
+    setFilteredItems(sortedTours);
+  }, [sortBy]);
 
   // adds an option to the filterOptions object
   const addFilterOption = (
@@ -146,6 +165,7 @@ const shop = ({ tours }: ShopProps) => {
         tours={tours}
         addFilterOption={addFilterOption}
         removeFilterOption={removeFilterOption}
+        changeSortBy={(value: string) => setSortBy(value)}
       >
         <Items tours={filteredItems} />
       </Layout>

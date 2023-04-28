@@ -10,15 +10,16 @@ import {
 type HeaderProps = {
   handleShowFilter: () => void;
   showFilter: boolean;
+  changeSortBy: (value: string) => void;
 };
 
-const Header = ({ handleShowFilter, showFilter }: HeaderProps) => {
+const Header = ({
+  handleShowFilter,
+  showFilter,
+  changeSortBy,
+}: HeaderProps) => {
   const [display, setDisplay] = useState<boolean>(false);
   const sortByRef = useRef(null);
-
-  useEffect(() => {
-    console.log("sortByRef", sortByRef.current);
-  }, [sortByRef]);
 
   return (
     <div className="container mx-auto flex justify-between items-center font-medium bg-white pt-28 pb-2 z-30">
@@ -42,9 +43,42 @@ const Header = ({ handleShowFilter, showFilter }: HeaderProps) => {
         {display && (
           <Popup close={() => setDisplay(false)} ignoreRef={sortByRef}>
             <div className="flex flex-col space-y-2 p-4 items-end font-normal">
-              <p>Start date</p>
-              <p>Price: High-Low</p>
-              <p>Price: Low-High</p>
+              <p
+                className="cursor-pointer"
+                onClick={() => {
+                  changeSortBy("date");
+                  setDisplay(false);
+                }}
+              >
+                Start date
+              </p>
+              <p
+                className="cursor-pointer"
+                onClick={() => {
+                  changeSortBy("rating");
+                  setDisplay(false);
+                }}
+              >
+                Rating
+              </p>
+              <p
+                className="cursor-pointer"
+                onClick={() => {
+                  changeSortBy("priceAsc");
+                  setDisplay(false);
+                }}
+              >
+                Price: Low-High
+              </p>
+              <p
+                className="cursor-pointer"
+                onClick={() => {
+                  changeSortBy("priceDesc");
+                  setDisplay(false);
+                }}
+              >
+                Price: High-Low
+              </p>
             </div>
           </Popup>
         )}
