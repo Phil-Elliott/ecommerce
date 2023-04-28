@@ -25,6 +25,7 @@ const Header = ({
 
   return (
     <>
+      {/* <div className="fixed w-full z-40"> */}
       <div className="container mx-auto hidden lg:flex justify-between items-center font-medium bg-white pt-28 pb-2 z-30">
         <h1 className="text-2xl">Products ({count})</h1>
         <div className="flex space-x-6 relative">
@@ -87,10 +88,11 @@ const Header = ({
           )}
         </div>
       </div>
+      {/* </div> */}
       <div className="flex lg:hidden flex-col font-medium bg-white pt-24 z-30">
-        <h1 className="container mx-auto text-xl border-gray border-b-2 pb-4">
-          Products
-        </h1>
+        <div className="border-gray border-b-2">
+          <h1 className="container mx-auto text-xl pb-4">Products</h1>
+        </div>
         <div className="container mx-auto flex justify-between items-center py-4 relative">
           <p className="text-gray-500">{count} Results</p>
           <div

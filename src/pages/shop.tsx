@@ -4,6 +4,7 @@ import Items from "components/Shop/Items";
 import Layout from "components/Shop/Layout/Layout";
 
 import { FilteredOptionsProps, TourProps } from "components/shared/Types/Types";
+import Hero from "components/Home/Hero/Hero";
 
 type ShopProps = {
   tours: TourProps[];
@@ -156,7 +157,7 @@ const shop = ({ tours }: ShopProps) => {
   }, [filterOptions]);
 
   return (
-    <div className=" ">
+    <div className="">
       <Layout
         tours={tours}
         addFilterOption={addFilterOption}

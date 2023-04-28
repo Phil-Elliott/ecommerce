@@ -153,9 +153,9 @@ const Filter = ({
       {filterOptions.map((filterOption, i) => (
         <div
           key={filterOption.name}
-          className={`border-gray py-4 mr-6 ${
+          className={`border-gray pb-4 mr-6 ${
             i !== filterOptions.length - 1 ? "border-b-2" : "border-b-0"
-          }`}
+          } ${i === 0 ? "pt-0" : "pt-4"}`}
         >
           <div
             className="flex justify-between items-center cursor-pointer"

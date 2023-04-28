@@ -52,7 +52,10 @@ const Items = ({ name, tours }: ItemProps) => {
           className="flex gap-4 whitespace-nowrap overflow-x-scroll scrollbar px-1"
         >
           {tours.map((tour) => (
-            <div className="bg-white rounded-lg shadow w-64 inline-block mb-10 cursor-pointer select-none">
+            <div
+              key={tour.id}
+              className="bg-white rounded-lg shadow w-64 inline-block mb-10 cursor-pointer select-none"
+            >
               <Image
                 src={HeroImg}
                 alt={tour.name}
