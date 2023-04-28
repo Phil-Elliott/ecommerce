@@ -157,10 +157,9 @@ Maybe make a travel package site - vary easy to get images and data and also cou
 
 2) Add testing to the project and practice it a little
 3) Fix up the shop page
-    - break it up into components
-    - add options and functionality to the left part
-    - have only 10 options showing at a time
-    - get top buttons to work
+    - Make responsive
+    - Get sort by button to work
+    - Fix item cards
 4) Create a search page and add functionality
 5) In shared - make modal, button, and popup components
 6) Make everything responsive

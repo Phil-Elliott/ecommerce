@@ -149,26 +149,29 @@ const Filter = ({
   };
 
   return (
-    <div className="flex flex-col space-y-2 overflow-y-scroll max-h-filter-height w-full sticky top-40 scrollbar">
+    <div className="flex flex-col overflow-y-scroll max-h-filter-height w-full sticky top-40 scrollbar">
       {filterOptions.map((filterOption, i) => (
         <div
           key={filterOption.name}
-          className={`border-gray  pb-2 mr-6 ${
+          className={`border-gray py-4 mr-6 ${
             i !== filterOptions.length - 1 ? "border-b-2" : "border-b-0"
           }`}
         >
           <div
-            className="flex justify-between items-center pb-4 cursor-pointer"
+            className="flex justify-between items-center cursor-pointer"
             onClick={() => toggleFilterOption(filterOption.name)}
           >
-            <h1 className="text-xl font-semibold ">{filterOption.name}s</h1>
-            <BsChevronDown className="text-xl" />
+            <h1 className="text-xl text-base font-medium">
+              {filterOption.name}s
+            </h1>
+            <BsChevronDown className="text-lg" />
           </div>
-          {filterOption.show
-            ? filterOption.options.map((option) => (
+          {filterOption.show ? (
+            <div className="pt-4">
+              {filterOption.options.map((option) => (
                 <div
                   key={option}
-                  className="flex items-center space-x-2 pb-2 relative"
+                  className="flex items-center space-x-2 pb-2 relative text-base"
                 >
                   <div className="relative flex ">
                     <input
@@ -189,8 +192,9 @@ const Filter = ({
                     {option}
                   </label>
                 </div>
-              ))
-            : null}
+              ))}
+            </div>
+          ) : null}
         </div>
       ))}
     </div>
