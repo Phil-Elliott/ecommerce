@@ -155,10 +155,6 @@ const shop = ({ tours }: ShopProps) => {
     setFilteredItems(filteredTours);
   }, [filterOptions]);
 
-  // useEffect(() => {
-  //   console.log(filterOptions);
-  // }, [filteredItems]);
-
   return (
     <div className=" ">
       <Layout

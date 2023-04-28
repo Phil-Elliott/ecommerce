@@ -34,11 +34,12 @@ const Layout = ({
           handleShowFilter={handleShowFilter}
           showFilter={showFilter}
           changeSortBy={changeSortBy}
+          count={tours.length}
         />
       </div>
       <div className="container mx-auto flex gap-12 pt-48 pb-32">
         {showFilter ? (
-          <div className="w-1/4">
+          <div className="w-1/4 lg:block hidden">
             <Filter
               tours={tours}
               addFilterOption={addFilterOption}
@@ -53,3 +54,15 @@ const Layout = ({
 };
 
 export default Layout;
+
+/*
+
+- Have sortby disapear on smaller screen 
+- Create a responsive filter that takes up full screen on mobile (will include sortby)
+
+
+Header 
+justify-between result num and filter button
+
+
+*/

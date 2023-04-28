@@ -19,7 +19,7 @@ module.exports = {
         sm: "2rem",
         lg: "2rem",
         xl: "5rem",
-        "2xl": "12rem",
+        "2xl": "9rem",
       },
     },
     screens: {

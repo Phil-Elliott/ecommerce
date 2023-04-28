@@ -10,7 +10,7 @@ type ItemsProps = {
 
 const Items = ({ tours }: ItemsProps) => {
   return (
-    <div className="grid grid-cols-3 gap-10 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3   ">
+    <div className="grid grid-cols-3 gap-10 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3   ">
       {tours.map((tour) => (
         <div
           key={tour.id}
