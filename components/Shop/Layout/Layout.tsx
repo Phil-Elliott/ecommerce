@@ -12,6 +12,8 @@ type LayoutProps = {
     option: string
   ) => void;
   changeSortBy: (value: string) => void;
+  count: number;
+  sortBy: string;
 };
 
 const Layout = ({
@@ -20,8 +22,11 @@ const Layout = ({
   addFilterOption,
   removeFilterOption,
   changeSortBy,
+  count,
+  sortBy,
 }: LayoutProps) => {
   const [showFilter, setShowFilter] = useState(true);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const handleShowFilter = () => {
     setShowFilter(!showFilter);
@@ -29,23 +34,24 @@ const Layout = ({
 
   return (
     <>
-      <div className="fixed w-full z-40">
-        <Header
-          handleShowFilter={handleShowFilter}
-          showFilter={showFilter}
-          changeSortBy={changeSortBy}
-          count={tours.length}
-        />
-      </div>
-      <div className="container mx-auto flex gap-12 pt-48 pb-32">
+      <Header
+        handleShowFilter={handleShowFilter}
+        showFilter={showFilter}
+        changeSortBy={changeSortBy}
+        count={count}
+        openMobileFilter={() => setIsMobileFilterOpen(true)}
+      />
+      <div className="container mx-auto flex gap-12 pt-4 lg:pt-48 pb-32">
         {showFilter ? (
-          <div className="w-1/4 lg:block hidden">
-            <Filter
-              tours={tours}
-              addFilterOption={addFilterOption}
-              removeFilterOption={removeFilterOption}
-            />
-          </div>
+          <Filter
+            tours={tours}
+            addFilterOption={addFilterOption}
+            removeFilterOption={removeFilterOption}
+            isMobileFilterOpen={isMobileFilterOpen}
+            closeMobileFilter={() => setIsMobileFilterOpen(false)}
+            changeSortBy={changeSortBy}
+            sortBy={sortBy}
+          />
         ) : null}
         {children}
       </div>

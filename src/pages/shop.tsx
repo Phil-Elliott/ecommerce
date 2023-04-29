@@ -163,6 +163,8 @@ const shop = ({ tours }: ShopProps) => {
         addFilterOption={addFilterOption}
         removeFilterOption={removeFilterOption}
         changeSortBy={(value: string) => setSortBy(value)}
+        count={filteredItems.length}
+        sortBy={sortBy}
       >
         <Items tours={filteredItems} />
       </Layout>
@@ -173,7 +175,9 @@ const shop = ({ tours }: ShopProps) => {
 export default shop;
 
 /*
-
+1) Finish responsive filter
+2) Make search work and connect to shop page
+3) Maybe work on home page
 
 
 */
