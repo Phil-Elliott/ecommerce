@@ -4,7 +4,7 @@ import Items from "components/Shop/Items";
 import Layout from "components/Shop/Layout/Layout";
 
 import { FilteredOptionsProps, TourProps } from "components/shared/Types/Types";
-import Hero from "components/Home/Hero/Hero";
+import { useRouter } from "next/router";
 
 type ShopProps = {
   tours: TourProps[];
@@ -20,6 +20,24 @@ const shop = ({ tours }: ShopProps) => {
     prices: [],
   });
   const [sortBy, setSortBy] = useState<string>("date");
+
+  const router = useRouter();
+  const searchQuery = router.query.search as string;
+
+  useEffect(() => {
+    if (
+      searchQuery !== "" &&
+      searchQuery !== undefined &&
+      searchQuery !== null
+    ) {
+      const searchedTours = tours.filter((tour) => {
+        return tour.name.toLowerCase().includes(searchQuery.toString());
+      });
+      setFilteredItems(searchedTours);
+    } else {
+      setFilteredItems(tours);
+    }
+  }, [searchQuery]);
 
   // sorts the tours based on the sortBy state
   useEffect(() => {
@@ -157,7 +175,7 @@ const shop = ({ tours }: ShopProps) => {
   }, [filterOptions]);
 
   return (
-    <div className="">
+    <>
       <Layout
         tours={tours}
         addFilterOption={addFilterOption}
@@ -165,10 +183,11 @@ const shop = ({ tours }: ShopProps) => {
         changeSortBy={(value: string) => setSortBy(value)}
         count={filteredItems.length}
         sortBy={sortBy}
+        searchQuery={searchQuery}
       >
         <Items tours={filteredItems} />
       </Layout>
-    </div>
+    </>
   );
 };
 

@@ -13,6 +13,7 @@ type HeaderProps = {
   changeSortBy: (value: string) => void;
   count: number;
   openMobileFilter: () => void;
+  searchQuery: string;
 };
 
 const Header = ({
@@ -21,6 +22,7 @@ const Header = ({
   changeSortBy,
   count,
   openMobileFilter,
+  searchQuery,
 }: HeaderProps) => {
   const [display, setDisplay] = useState<boolean>(false);
   const sortByRef = useRef(null);
@@ -29,7 +31,9 @@ const Header = ({
     <>
       <div className="fixed w-full z-40">
         <div className="container mx-auto hidden lg:flex justify-between items-center font-medium bg-white pt-28 pb-2 z-30">
-          <h1 className="text-2xl">Products ({count})</h1>
+          <h1 className="text-2xl">
+            {searchQuery ? searchQuery : "Tour Packages"} ({count})
+          </h1>
           <div className="flex space-x-6 relative">
             <div
               className="flex items-center space-x-1 cursor-pointer relative"

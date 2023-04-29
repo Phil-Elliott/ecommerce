@@ -14,6 +14,7 @@ type LayoutProps = {
   changeSortBy: (value: string) => void;
   count: number;
   sortBy: string;
+  searchQuery: string;
 };
 
 const Layout = ({
@@ -24,6 +25,7 @@ const Layout = ({
   changeSortBy,
   count,
   sortBy,
+  searchQuery,
 }: LayoutProps) => {
   const [showFilter, setShowFilter] = useState(true);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
@@ -40,6 +42,7 @@ const Layout = ({
         changeSortBy={changeSortBy}
         count={count}
         openMobileFilter={() => setIsMobileFilterOpen(true)}
+        searchQuery={searchQuery}
       />
       <div className="container mx-auto flex gap-12 pt-4 lg:pt-48 pb-32">
         {showFilter ? (
