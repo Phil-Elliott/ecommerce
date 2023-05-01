@@ -46,7 +46,7 @@ const Header = ({
       <div className="fixed w-full z-40">
         <div
           className={`container mx-auto hidden lg:flex justify-between items-center font-medium bg-white pb-4 z-30
-          transition-all duration-300 ease-in-out
+          transition-all duration-500 ease-in-out
         ${hiddenHeader ? "pt-4" : "pt-28"}
         `}
         >

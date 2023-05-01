@@ -11,7 +11,8 @@ export default function App({ Component, pageProps }: AppProps) {
       name: "Tropical Paradise",
       image: "tropical-paradise.jpg",
       price: 1200,
-      description: "Explore the beautiful tropical islands and sandy beaches.",
+      description:
+        "Explore the beautiful tropical islands and sandy beaches. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
       category: "Beach",
       location: "Maldives",
       duration: "7 days",
