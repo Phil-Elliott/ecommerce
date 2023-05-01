@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { AiOutlineSearch, AiOutlineHeart, AiFillShop } from "react-icons/ai";
@@ -7,10 +7,28 @@ import { FiShoppingCart } from "react-icons/fi";
 import router from "next/router";
 
 const Header = () => {
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = useState("");
+  const [hiddenHeader, setHiddenHeader] = useState(false);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    window.addEventListener("scroll", () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY) {
+        setHiddenHeader(true);
+      } else {
+        setHiddenHeader(false);
+      }
+      lastScrollY = currentScrollY;
+    });
+  });
 
   return (
-    <div className="fixed w-full bg-white shadow z-50">
+    <div
+      className={`fixed w-full bg-white shadow z-50 transition duration-500 ease-in-out ${
+        hiddenHeader ? "-translate-y-20 " : " translate-y-0"
+      }`}
+    >
       <div className="container mx-auto py-4 flex justify-between items-center text-md font-medium select-none">
         <div className="cursor-pointer flex space-x-6">
           <Link href="/">

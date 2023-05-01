@@ -34,10 +34,16 @@ const shop = ({ tours }: ShopProps) => {
         return tour.name.toLowerCase().includes(searchQuery.toString());
       });
       setFilteredItems(searchedTours);
+      console.log("worked", searchQuery);
     } else {
       setFilteredItems(tours);
+      console.log("didnt work", searchQuery);
     }
   }, [searchQuery]);
+
+  useEffect(() => {
+    console.log("filteredItems", filteredItems);
+  }, [filteredItems]);
 
   // sorts the tours based on the sortBy state
   useEffect(() => {
@@ -194,9 +200,8 @@ const shop = ({ tours }: ShopProps) => {
 export default shop;
 
 /*
-1) Finish responsive filter
-2) Make search work and connect to shop page
-3) Maybe work on home page
+- Fix the search functionality
+
 
 
 */

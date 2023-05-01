@@ -182,7 +182,7 @@ const Filter = ({
   return (
     <>
       <div className="w-1/4 lg:block hidden">
-        <div className="flex flex-col overflow-y-scroll max-h-filter-height w-full sticky top-40 scrollbar">
+        <div className="flex flex-col overflow-y-scroll max-h-filter-height w-full sticky top-16 scrollbar">
           {filterOptions.map((filterOption, i) => (
             <div
               key={filterOption.name}

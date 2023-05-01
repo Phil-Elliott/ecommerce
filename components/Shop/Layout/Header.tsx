@@ -26,11 +26,30 @@ const Header = ({
 }: HeaderProps) => {
   const [display, setDisplay] = useState<boolean>(false);
   const sortByRef = useRef(null);
+  const [hiddenHeader, setHiddenHeader] = useState(false);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    window.addEventListener("scroll", () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY) {
+        setHiddenHeader(true);
+      } else {
+        setHiddenHeader(false);
+      }
+      lastScrollY = currentScrollY;
+    });
+  });
 
   return (
     <>
       <div className="fixed w-full z-40">
-        <div className="container mx-auto hidden lg:flex justify-between items-center font-medium bg-white pt-28 pb-2 z-30">
+        <div
+          className={`container mx-auto hidden lg:flex justify-between items-center font-medium bg-white pb-4 z-30
+          transition-all duration-300 ease-in-out
+        ${hiddenHeader ? "pt-4" : "pt-28"}
+        `}
+        >
           <h1 className="text-2xl">
             {searchQuery ? searchQuery : "Tour Packages"} ({count})
           </h1>
@@ -54,7 +73,7 @@ const Header = ({
               <Popup close={() => setDisplay(false)} ignoreRef={sortByRef}>
                 <div className="flex flex-col space-y-2 p-4 items-end font-normal">
                   <p
-                    className="cursor-pointer"
+                    className="cursor-pointer hover:text-gray-500"
                     onClick={() => {
                       changeSortBy("date");
                       setDisplay(false);
@@ -63,7 +82,7 @@ const Header = ({
                     Start date
                   </p>
                   <p
-                    className="cursor-pointer"
+                    className="cursor-pointer hover:text-gray-500"
                     onClick={() => {
                       changeSortBy("rating");
                       setDisplay(false);
@@ -72,7 +91,7 @@ const Header = ({
                     Rating
                   </p>
                   <p
-                    className="cursor-pointer"
+                    className="cursor-pointer hover:text-gray-500"
                     onClick={() => {
                       changeSortBy("priceAsc");
                       setDisplay(false);
@@ -81,7 +100,7 @@ const Header = ({
                     Price: Low-High
                   </p>
                   <p
-                    className="cursor-pointer"
+                    className="cursor-pointer hover:text-gray-500"
                     onClick={() => {
                       changeSortBy("priceDesc");
                       setDisplay(false);
