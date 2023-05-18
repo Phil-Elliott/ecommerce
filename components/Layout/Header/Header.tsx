@@ -52,7 +52,7 @@ const Header = () => {
             onChange={(e) => setQuery(e.target.value)}
             onKeyPress={(e) =>
               e.key === "Enter" &&
-              router.push(`/shop?search=${encodeURIComponent(query)}`)
+              router.push(`/shop?search=${encodeURIComponent(query.trim())}`)
             }
           />
         </div>

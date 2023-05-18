@@ -24,26 +24,28 @@ const shop = ({ tours }: ShopProps) => {
   const router = useRouter();
   const searchQuery = router.query.search as string;
 
-  useEffect(() => {
-    if (
-      searchQuery !== "" &&
-      searchQuery !== undefined &&
-      searchQuery !== null
-    ) {
-      const searchedTours = tours.filter((tour) => {
-        return tour.name.toLowerCase().includes(searchQuery.toString());
-      });
-      setFilteredItems(searchedTours);
-      console.log("worked", searchQuery);
-    } else {
-      setFilteredItems(tours);
-      console.log("didnt work", searchQuery);
-    }
-  }, [searchQuery]);
+  const [initialSearchQuery, setInitialSearchQuery] = useState("");
 
   useEffect(() => {
-    console.log("filteredItems", filteredItems);
-  }, [filteredItems]);
+    if (router.isReady) {
+      setInitialSearchQuery(searchQuery);
+    }
+  }, [router.isReady, searchQuery]);
+
+  useEffect(() => {
+    if (initialSearchQuery && initialSearchQuery.trim() !== "") {
+      const searchedTours = tours.filter((tour) => {
+        return tour.name
+          .toLowerCase()
+          .includes(initialSearchQuery.toLowerCase().trim());
+      });
+      setFilteredItems(searchedTours);
+      console.log("worked", initialSearchQuery);
+    } else {
+      setFilteredItems(tours);
+      console.log("didn't work", initialSearchQuery);
+    }
+  }, [initialSearchQuery]);
 
   // sorts the tours based on the sortBy state
   useEffect(() => {
@@ -198,10 +200,3 @@ const shop = ({ tours }: ShopProps) => {
 };
 
 export default shop;
-
-/*
-- Fix the search functionality
-
-
-
-*/
