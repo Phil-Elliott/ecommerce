@@ -1,4 +1,5 @@
 import Popup from "components/shared/Popup/Popup";
+import * as Popover from "@radix-ui/react-popover";
 import React, { useEffect, useState, useRef } from "react";
 import {
   FiChevronUp,
@@ -24,8 +25,6 @@ const Header = ({
   openMobileFilter,
   searchQuery,
 }: HeaderProps) => {
-  const [display, setDisplay] = useState<boolean>(false);
-  const sortByRef = useRef(null);
   const [hiddenHeader, setHiddenHeader] = useState(false);
 
   useEffect(() => {
@@ -61,22 +60,19 @@ const Header = ({
               {showFilter ? <p>Hide Filter</p> : <p>Show Filter</p>}
               {showFilter ? <FiChevronLeft /> : <FiChevronRight />}
             </div>
-            <div
-              ref={sortByRef}
-              className="flex items-center space-x-1 cursor-pointer relative"
-              onClick={() => setDisplay(!display)}
-            >
-              <p>Sort By</p>
-              {display ? <FiChevronUp /> : <FiChevronDown />}
-            </div>
-            {display && (
-              <Popup close={() => setDisplay(false)} ignoreRef={sortByRef}>
-                <div className="flex flex-col space-y-2 p-4 items-end font-normal">
+            <Popover.Root>
+              <Popover.Trigger className="flex items-center space-x-1 cursor-pointer relative">
+                <p>Sort By</p> <FiChevronDown />
+              </Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content
+                  align="end"
+                  className="flex flex-col space-y-2 p-4 items-end font-normal bg-white shadow-sm rounded-md z-10 bg-white cursor-default"
+                >
                   <p
                     className="cursor-pointer hover:text-gray-500"
                     onClick={() => {
                       changeSortBy("date");
-                      setDisplay(false);
                     }}
                   >
                     Start date
@@ -85,7 +81,6 @@ const Header = ({
                     className="cursor-pointer hover:text-gray-500"
                     onClick={() => {
                       changeSortBy("rating");
-                      setDisplay(false);
                     }}
                   >
                     Rating
@@ -94,7 +89,6 @@ const Header = ({
                     className="cursor-pointer hover:text-gray-500"
                     onClick={() => {
                       changeSortBy("priceAsc");
-                      setDisplay(false);
                     }}
                   >
                     Price: Low-High
@@ -103,14 +97,14 @@ const Header = ({
                     className="cursor-pointer hover:text-gray-500"
                     onClick={() => {
                       changeSortBy("priceDesc");
-                      setDisplay(false);
                     }}
                   >
                     Price: High-Low
                   </p>
-                </div>
-              </Popup>
-            )}
+                  <Popover.Arrow />
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
           </div>
         </div>
       </div>
