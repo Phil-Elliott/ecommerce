@@ -154,13 +154,16 @@ export default function App({ Component, pageProps }: AppProps) {
 
 /*
 
+1) add testing
+2) Get signin models working
+3) Connect signin to backend
+4) add search page or alter shop page for it
+5) Fix up product page and make responsive
+
+
 Maybe make a travel package site - vary easy to get images and data and also could add some other cool stuff later
 
 2) Add testing to the project and practice it a little
-3) Fix up the shop page
-    - Make responsive
-    - Get sort by button to work
-    - Fix item cards
 4) Create a search page and add functionality
 5) In shared - make modal, button, and popup components
 6) Make everything responsive

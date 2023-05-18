@@ -4,6 +4,7 @@ import Hero from "components/Home/Hero/Hero";
 import Items from "components/Home/Items/Items";
 import Head from "next/head";
 import { TourProps } from "components/shared/Types/Types";
+import * as Popover from "@radix-ui/react-popover";
 
 type HomeProps = {
   tours: TourProps[];

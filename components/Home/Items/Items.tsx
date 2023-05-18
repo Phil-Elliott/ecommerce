@@ -4,24 +4,30 @@ import HeroImg from "/assets/hero.jpg";
 
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { TourProps } from "components/shared/Types/Types";
+import Button from "components/shared/Button/Button";
 
 type ItemProps = {
   name: string;
   tours: TourProps[];
 };
+// Scroll distance constant
+const SCROLL_DISTANCE = 270;
 
 const Items = ({ name, tours }: ItemProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -270, behavior: "smooth" });
+      scrollRef.current.scrollBy({
+        left: -SCROLL_DISTANCE,
+        behavior: "smooth",
+      });
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 270, behavior: "smooth" });
+      scrollRef.current.scrollBy({ left: SCROLL_DISTANCE, behavior: "smooth" });
     }
   };
 
@@ -30,19 +36,29 @@ const Items = ({ name, tours }: ItemProps) => {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-semibold">{name}</h1>
         <div className="text-base flex items-center space-x-4">
-          <button className="text-base">Show All</button>
-          <div
+          <Button
+            ariaLabel="Show All"
+            className="text-base"
+            onClick={() => {
+              /* Add your onClick functionality here */
+            }}
+          >
+            Show All
+          </Button>
+          <Button
+            ariaLabel="Scroll Left"
             className="bg-gray-500 text-white p-1 rounded-full cursor-pointer"
             onClick={scrollLeft}
           >
             <BsChevronLeft />
-          </div>
-          <div
+          </Button>
+          <Button
+            ariaLabel="Scroll Right"
             className="bg-gray-500 text-white p-1 rounded-full cursor-pointer"
             onClick={scrollRight}
           >
             <BsChevronRight />
-          </div>
+          </Button>
         </div>
       </div>
 
@@ -60,6 +76,9 @@ const Items = ({ name, tours }: ItemProps) => {
                 src={HeroImg}
                 alt={tour.name}
                 className="w-full h-64 object-cover rounded-t-lg"
+                onError={(e) => {
+                  e.currentTarget.src = "/path/to/default/image.jpg";
+                }}
               />
               <div className="p-4 w-64">
                 <h1 className="text-lg font-semibold pb-4 whitespace-normal">

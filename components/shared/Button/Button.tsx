@@ -1,36 +1,28 @@
-import React from "react";
-import styles from "./Button.module.scss";
+import React, { ReactNode } from "react";
 
 type ButtonProps = {
-  children: React.ReactNode;
-  variant: "primary" | "secondary" | "danger";
-  handleClick: () => void;
-  space?: boolean;
-  disabled?: boolean;
-  widthFull?: boolean;
+  onClick?: () => void;
+  children: ReactNode;
+  className?: string;
+  type?: "button" | "submit" | "reset";
+  ariaLabel?: string;
 };
 
-const Button = ({
+const Button: React.FC<ButtonProps> = ({
+  onClick,
   children,
-  variant,
-  handleClick,
-  space,
-  disabled,
-  widthFull,
-}: ButtonProps) => {
-  return (
-    <button
-      //   className={`${styles[variant]}`}
-      onClick={() => handleClick()}
-      style={{
-        marginRight: space ? "1rem" : "0",
-        width: widthFull ? "100%" : "auto",
-      }}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  );
-};
+  className = "",
+  type = "button",
+  ariaLabel,
+}) => (
+  <button
+    onClick={onClick}
+    className={`${className}`}
+    type={type}
+    aria-label={ariaLabel}
+  >
+    {children}
+  </button>
+);
 
 export default Button;
