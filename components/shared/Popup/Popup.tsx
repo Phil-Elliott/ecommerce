@@ -1,30 +1,24 @@
-import React, { useRef } from "react";
-import { useOnClickOutside } from "usehooks-ts";
+import React from "react";
+import * as Popover from "@radix-ui/react-popover";
 
 type PopupProps = {
+  header: React.ReactNode;
   children: React.ReactNode;
-  close: (value: boolean) => void | (() => void);
-  ignoreRef?: React.RefObject<HTMLElement>;
 };
 
-const Popup = ({ children, close, ignoreRef }: PopupProps) => {
-  const ref = useRef(null);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (ignoreRef?.current?.contains(event.target as Node)) {
-      return;
-    }
-    close(false);
-  };
-  useOnClickOutside(ref, handleClickOutside);
-
+const Popup = ({ header, children }: PopupProps) => {
   return (
-    <div
-      ref={ref}
-      className="absolute shadow-sm rounded-md z-10 bg-white cursor-default right-0 top-10"
-    >
-      {children}
-    </div>
+    <Popover.Root>
+      <Popover.Trigger className="">{header}</Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          align="end"
+          className="flex flex-col space-y-2 p-4 items-end font-normal bg-white shadow-sm rounded-md z-10 bg-white cursor-default"
+        >
+          {children}
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 };
 

@@ -1,6 +1,6 @@
-import Popup from "components/shared/Popup/Popup";
+import React, { useEffect, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
-import React, { useEffect, useState, useRef } from "react";
+import Popup from "components/shared/Popup/Popup";
 import {
   FiChevronUp,
   FiChevronDown,
@@ -60,51 +60,46 @@ const Header = ({
               {showFilter ? <p>Hide Filter</p> : <p>Show Filter</p>}
               {showFilter ? <FiChevronLeft /> : <FiChevronRight />}
             </div>
-            <Popover.Root>
-              <Popover.Trigger className="flex items-center space-x-1 cursor-pointer relative">
-                <p>Sort By</p> <FiChevronDown />
-              </Popover.Trigger>
-              <Popover.Portal>
-                <Popover.Content
-                  align="end"
-                  className="flex flex-col space-y-2 p-4 items-end font-normal bg-white shadow-sm rounded-md z-10 bg-white cursor-default"
-                >
-                  <p
-                    className="cursor-pointer hover:text-gray-500"
-                    onClick={() => {
-                      changeSortBy("date");
-                    }}
-                  >
-                    Start date
-                  </p>
-                  <p
-                    className="cursor-pointer hover:text-gray-500"
-                    onClick={() => {
-                      changeSortBy("rating");
-                    }}
-                  >
-                    Rating
-                  </p>
-                  <p
-                    className="cursor-pointer hover:text-gray-500"
-                    onClick={() => {
-                      changeSortBy("priceAsc");
-                    }}
-                  >
-                    Price: Low-High
-                  </p>
-                  <p
-                    className="cursor-pointer hover:text-gray-500"
-                    onClick={() => {
-                      changeSortBy("priceDesc");
-                    }}
-                  >
-                    Price: High-Low
-                  </p>
-                  <Popover.Arrow />
-                </Popover.Content>
-              </Popover.Portal>
-            </Popover.Root>
+            <Popup
+              header={
+                <div className="flex items-center space-x-1 cursor-pointer">
+                  <p>Sort By</p> <FiChevronDown />
+                </div>
+              }
+            >
+              <p
+                className="cursor-pointer hover:text-gray-500"
+                onClick={() => {
+                  changeSortBy("date");
+                }}
+              >
+                Start date
+              </p>
+              <p
+                className="cursor-pointer hover:text-gray-500"
+                onClick={() => {
+                  changeSortBy("rating");
+                }}
+              >
+                Rating
+              </p>
+              <p
+                className="cursor-pointer hover:text-gray-500"
+                onClick={() => {
+                  changeSortBy("priceAsc");
+                }}
+              >
+                Price: Low-High
+              </p>
+              <p
+                className="cursor-pointer hover:text-gray-500"
+                onClick={() => {
+                  changeSortBy("priceDesc");
+                }}
+              >
+                Price: High-Low
+              </p>
+            </Popup>
           </div>
         </div>
       </div>

@@ -3,6 +3,10 @@ import Layout from "components/Layout/Layout";
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
 import { TourProps } from "components/shared/Types/Types";
+import Modal from "components/shared/Modal/Modal";
+import Signin from "components/Signin/Signin";
+import * as Dialog from "@radix-ui/react-dialog";
+import { Cross1Icon } from "@radix-ui/react-icons";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [tours, setTours] = useState<TourProps[]>([
@@ -144,15 +148,38 @@ export default function App({ Component, pageProps }: AppProps) {
       activities: ["Trekking", "Camping", "Photography"],
     },
   ]);
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <Layout>
-      <Component {...pageProps} tours={tours} />
-    </Layout>
+    <>
+      <Dialog.Root open={open} onOpenChange={setOpen}>
+        <Layout signInButton={() => setOpen(true)}>
+          <Dialog.Portal>
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 z-50" />
+            <Dialog.Content className="fixed left-0 right-0 top-1/2 transform -translate-y-1/2 mx-auto w-96 bg-white rounded-md p-4 z-50">
+              <Signin closeModal={() => setOpen(false)} />
+              <Dialog.Close asChild>
+                <button
+                  className="absolute top-0 right-0 p-3"
+                  aria-label="Close"
+                >
+                  <Cross1Icon />
+                </button>
+              </Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Portal>
+          <Component {...pageProps} tours={tours} />
+        </Layout>
+      </Dialog.Root>
+    </>
   );
 }
 
 /*
+
+<Modal trigger={signInButton}>
+        <Signin closeModal={() => document.body.click()} />
+      </Modal>
 
 1) add testing
 2) Get signin models working

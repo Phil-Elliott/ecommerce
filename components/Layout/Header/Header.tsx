@@ -6,7 +6,11 @@ import { BsPersonCircle } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import router from "next/router";
 
-const Header = () => {
+type HeaderProps = {
+  signInButton: VoidFunction;
+};
+
+const Header = ({ signInButton }: HeaderProps) => {
   const [query, setQuery] = useState("");
   const [hiddenHeader, setHiddenHeader] = useState(false);
 
@@ -57,7 +61,7 @@ const Header = () => {
           />
         </div>
         <div className="flex items-center lg:space-x-12 space-x-6 cursor-pointer">
-          <div className="flex items-center space-x-3">
+          <div onClick={signInButton} className="flex items-center space-x-3">
             <BsPersonCircle className="text-xl" />
             <p className="lg:block hidden">Sign in</p>
           </div>
