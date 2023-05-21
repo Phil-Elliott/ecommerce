@@ -156,7 +156,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Layout signInButton={() => setOpen(true)}>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 z-50" />
-            <Dialog.Content className="fixed left-0 right-0 top-1/2 transform -translate-y-1/2 mx-auto w-96 bg-white rounded-md p-4 z-50">
+            <Dialog.Content className="fixed left-0 right-0 top-1/4  mx-auto w-96 bg-white rounded-md p-4 z-50 transition-transform duration-300 ease-out dialog-content">
               <Signin closeModal={() => setOpen(false)} />
               <Dialog.Close asChild>
                 <button
@@ -176,6 +176,14 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 /*
+
+1) Add animimation to modal
+2) Add forget password and anything else that is relevent 
+3) Start connecting to backend and see if you can get it working
+4) Add testing to the project and practice it a little with the signin component
+5) Try or see if you can move the modal to the layout comp
+
+
 
 <Modal trigger={signInButton}>
         <Signin closeModal={() => document.body.click()} />
