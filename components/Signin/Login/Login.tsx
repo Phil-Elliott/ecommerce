@@ -28,25 +28,26 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:1337/api/auth/local",
+        "http://localhost:3000/api/v1/auth/login",
         {
-          identifier: email,
+          email: email,
           password: password,
         }
       );
-      let jwt = response.data.jwt;
-      localStorage.setItem("jwt", jwt);
+      console.log(response);
+      // let jwt = response.data.jwt;
+      // localStorage.setItem("jwt", jwt);
 
       // Redirect to the dashboard
-      if (jwt) {
-        console.log(response.data.user);
-        closeModal();
-        localStorage.setItem("email", response.data.user.email);
-        localStorage.setItem("username", response.data.user.username);
-        // dispatch(setJwt(jwt));
-        // dispatch(setUser(response.data.user));
-        // navigate("/dashboard/");
-      }
+      // if (jwt) {
+      //   console.log(response.data.user);
+      //   closeModal();
+      //   localStorage.setItem("email", response.data.user.email);
+      //   localStorage.setItem("username", response.data.user.username);
+      //   // dispatch(setJwt(jwt));
+      //   // dispatch(setUser(response.data.user));
+      //   // navigate("/dashboard/");
+      // }
     } catch (error: any) {
       console.log(error);
       setError("error");
@@ -88,7 +89,9 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
             👋 Invalid email or password
           </p>
         )}
-        {/* <p className={styles.forgot}>Forgot Password</p> */}
+        <p className="text-sm text-gray-700 cursor-pointer hover:underline mb-2">
+          Forgot Password
+        </p>
         <div className="">
           <button
             className="bg-black hover:opacity-90 text-white font-semibold mt-2 py-1 px-2 w-full rounded-md focus:outline-none focus:ring-offset-2"

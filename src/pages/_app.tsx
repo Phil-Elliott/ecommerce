@@ -155,8 +155,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Layout signInButton={() => setOpen(true)}>
           <Dialog.Portal>
-            <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 z-50" />
-            <Dialog.Content className="fixed left-0 right-0 top-1/4  mx-auto w-96 bg-white rounded-md p-4 z-50 transition-transform duration-300 ease-out dialog-content">
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 z-50 flex items-center justify-center" />
+            <Dialog.Content className="fixed left-0 right-0 top-32  mx-auto w-96 bg-white rounded-md p-4 z-50 transition-transform duration-300 ease-out dialog-content">
               <Signin closeModal={() => setOpen(false)} />
               <Dialog.Close asChild>
                 <button
@@ -177,37 +177,23 @@ export default function App({ Component, pageProps }: AppProps) {
 
 /*
 
-1) Add animimation to modal
-2) Add forget password and anything else that is relevent 
-3) Start connecting to backend and see if you can get it working
-4) Add testing to the project and practice it a little with the signin component
-5) Try or see if you can move the modal to the layout comp
+Work on functionality and architecture now
 
-
-
-<Modal trigger={signInButton}>
-        <Signin closeModal={() => document.body.click()} />
-      </Modal>
-
-1) add testing
-2) Get signin models working
-3) Connect signin to backend
-4) add search page or alter shop page for it
-5) Fix up product page and make responsive
-
-
-Maybe make a travel package site - vary easy to get images and data and also could add some other cool stuff later
-
-2) Add testing to the project and practice it a little
-4) Create a search page and add functionality
-5) In shared - make modal, button, and popup components
-6) Make everything responsive
-7) Add stuff to data to allow you to filter on home page
-
-
-
-
-
+1) add and get products to display in shop ( alot to do here )
+2) Finish configuring signup and signin
+3) Create cart page
+    - Add to cart functionality
+    - Remove from cart functionality
+    - Update cart functionality
+    - Checkout functionality
+4) Create wishlist page
+    - Add to wishlist functionality
+    - Remove from wishlist functionality
+    - Update wishlist functionality
+5) Create checkout page
+    - Add payment functionality
+    - Add shipping functionality
+    - Add order functionality
 
 
 */

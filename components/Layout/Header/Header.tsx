@@ -65,14 +65,21 @@ const Header = ({ signInButton }: HeaderProps) => {
             <BsPersonCircle className="text-xl" />
             <p className="lg:block hidden">Sign in</p>
           </div>
-          <div className="flex items-center space-x-3 cursor-pointer">
+
+          <Link
+            href="/watchList"
+            className="flex items-center space-x-3 cursor-pointer"
+          >
             <AiOutlineHeart className="text-xl" />
             <p className="lg:block hidden">Wishlist</p>
-          </div>
-          <div className="flex items-center space-x-3 cursor-pointer">
+          </Link>
+          <Link
+            href="/cart"
+            className="flex items-center space-x-3 cursor-pointer"
+          >
             <FiShoppingCart className="text-xl" />
             {/* <p className="lg:block hidden">$0.00</p> */}
-          </div>
+          </Link>
         </div>
       </div>
       <div className="relative justify-center items-center w-full px-4 pb-4 sm:hidden flex">

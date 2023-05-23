@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
 
 type SignupProps = {
   handleFormChange: () => void;
@@ -50,25 +50,26 @@ const Signup = ({ handleFormChange, closeModal }: SignupProps) => {
     }
 
     axios
-      .post("http://localhost:1337/api/auth/local/register", {
-        username: username,
+      .post("http://localhost:3000/api/v1/auth/register", {
+        name: username,
         email: email,
         password: password,
+        passwordConfirm: confirmPassword,
       })
       .then((response) => {
-        console.log("User profile", response.data.user);
-        console.log("User token", response.data.jwt);
-        let jwt = response.data.jwt;
-        localStorage.setItem("jwt", jwt);
+        console.log("User profile", response);
+        // console.log("User token", response.data.jwt);
+        // let jwt = response.data.jwt;
+        // localStorage.setItem("jwt", jwt);
 
         // Redirect to the dashboard
-        if (jwt) {
-          closeModal();
-          localStorage.setItem("email", response.data.user.email);
-          localStorage.setItem("username", response.data.user.username);
-          // dispatch(setJwt(jwt));   Might be able to survive on localstate
-          // dispatch(setUser(response.data.user)); could also put this in local state or just make context state or normal state
-        }
+        // if (jwt) {
+        //   closeModal();
+        //   localStorage.setItem("email", response.data.user.email);
+        //   localStorage.setItem("username", response.data.user.username);
+        //   // dispatch(setJwt(jwt));   Might be able to survive on localstate
+        //   // dispatch(setUser(response.data.user)); could also put this in local state or just make context state or normal state
+        // }
       })
       .catch((error) => {
         console.log("An error occurred:", error.response);
