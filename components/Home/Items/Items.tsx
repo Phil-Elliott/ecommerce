@@ -1,5 +1,6 @@
-import Image from "next/image";
 import React, { useRef } from "react";
+import Image from "next/image";
+import router from "next/router";
 import HeroImg from "/assets/hero.jpg";
 
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -39,9 +40,9 @@ const Items = ({ name, tours }: ItemProps) => {
           <Button
             ariaLabel="Show All"
             className="text-base"
-            onClick={() => {
-              /* Add your onClick functionality here */
-            }}
+            // onClick={() => {
+            //   /* Add your onClick functionality here */
+            // }}
           >
             Show All
           </Button>
@@ -70,6 +71,9 @@ const Items = ({ name, tours }: ItemProps) => {
           {tours.map((tour) => (
             <div
               key={tour.id}
+              onClick={() =>
+                router.push(`/product?id=${encodeURIComponent(tour.id)}`)
+              }
               className="bg-white rounded-lg shadow w-64 inline-block mb-10 cursor-pointer select-none"
             >
               <Image
