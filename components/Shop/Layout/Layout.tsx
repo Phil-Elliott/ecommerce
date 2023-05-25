@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Filter from "./Filter";
-import { FilteredOptionsProps, TourProps } from "components/shared/Types/Types";
+import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 
 type LayoutProps = {
   children: React.ReactNode;
-  tours: TourProps[];
+  games: GameProps[];
   addFilterOption: (name: keyof FilteredOptionsProps, option: string) => void;
   removeFilterOption: (
     name: keyof FilteredOptionsProps,
@@ -19,7 +19,7 @@ type LayoutProps = {
 
 const Layout = ({
   children,
-  tours,
+  games,
   addFilterOption,
   removeFilterOption,
   changeSortBy,
@@ -47,7 +47,7 @@ const Layout = ({
       <div className="container mx-auto flex gap-12 pt-4 lg:pt-48 pb-32">
         {showFilter ? (
           <Filter
-            tours={tours}
+            games={games}
             addFilterOption={addFilterOption}
             removeFilterOption={removeFilterOption}
             isMobileFilterOpen={isMobileFilterOpen}
@@ -63,15 +63,3 @@ const Layout = ({
 };
 
 export default Layout;
-
-/*
-
-- Have sortby disapear on smaller screen 
-- Create a responsive filter that takes up full screen on mobile (will include sortby)
-
-
-Header 
-justify-between result num and filter button
-
-
-*/

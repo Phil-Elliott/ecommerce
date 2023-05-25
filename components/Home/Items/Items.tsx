@@ -4,17 +4,17 @@ import router from "next/router";
 import HeroImg from "/assets/hero.jpg";
 
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { TourProps } from "components/shared/Types/Types";
+import { GameProps } from "components/shared/Types/Types";
 import Button from "components/shared/Button/Button";
 
 type ItemProps = {
   name: string;
-  tours: TourProps[];
+  games: GameProps[];
 };
 // Scroll distance constant
 const SCROLL_DISTANCE = 270;
 
-const Items = ({ name, tours }: ItemProps) => {
+const Items = ({ name, games }: ItemProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -68,17 +68,17 @@ const Items = ({ name, tours }: ItemProps) => {
           ref={scrollRef}
           className="flex gap-4 whitespace-nowrap overflow-x-scroll scrollbar px-1"
         >
-          {tours.map((tour) => (
+          {games.map((game) => (
             <div
-              key={tour.id}
+              key={game.id}
               onClick={() =>
-                router.push(`/product?id=${encodeURIComponent(tour.id)}`)
+                router.push(`/product?id=${encodeURIComponent(game.id)}`)
               }
               className="bg-white rounded-lg shadow w-64 inline-block mb-10 cursor-pointer select-none"
             >
               <Image
                 src={HeroImg}
-                alt={tour.name}
+                alt={game.name}
                 className="w-full h-64 object-cover rounded-t-lg"
                 onError={(e) => {
                   e.currentTarget.src = "/path/to/default/image.jpg";
@@ -86,9 +86,9 @@ const Items = ({ name, tours }: ItemProps) => {
               />
               <div className="p-4 w-64">
                 <h1 className="text-lg font-semibold pb-4 whitespace-normal">
-                  {tour.name}
+                  {game.name}
                 </h1>
-                <p className="text-gray-500">${tour.price}</p>
+                <p className="text-gray-500">${game.price}</p>
               </div>
             </div>
           ))}

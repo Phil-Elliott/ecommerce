@@ -3,23 +3,23 @@ import React, { useEffect, useState } from "react";
 import Items from "components/Shop/Items";
 import Layout from "components/Shop/Layout/Layout";
 
-import { FilteredOptionsProps, TourProps } from "components/shared/Types/Types";
+import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 import { useRouter } from "next/router";
 
 type ShopProps = {
-  tours: TourProps[];
+  games: GameProps[];
 };
 
-const shop = ({ tours }: ShopProps) => {
-  const [filteredItems, setFilteredItems] = useState<TourProps[]>(tours);
+const shop = ({ games }: ShopProps) => {
+  const [filteredGames, setFilteredGames] = useState<GameProps[]>(games);
   const [filterOptions, setFilterOptions] = useState<FilteredOptionsProps>({
     category: [],
-    location: [],
-    activities: [],
-    difficulty: [],
+    publisher: [],
+    gameModes: [],
+    platform: [],
     prices: [],
   });
-  const [sortBy, setSortBy] = useState<string>("date");
+  const [sortBy, setSortBy] = useState<string>("releaseDate");
 
   const router = useRouter();
   const searchQuery = router.query.search as string;
@@ -34,24 +34,23 @@ const shop = ({ tours }: ShopProps) => {
 
   useEffect(() => {
     if (initialSearchQuery && initialSearchQuery.trim() !== "") {
-      const searchedTours = tours.filter((tour) => {
-        return tour.name
+      const searchedGames = games.filter((game) =>
+        game.name
           .toLowerCase()
-          .includes(initialSearchQuery.toLowerCase().trim());
-      });
-      setFilteredItems(searchedTours);
-      console.log("worked", initialSearchQuery);
+          .includes(initialSearchQuery.toLowerCase().trim())
+      );
+      setFilteredGames(searchedGames);
     } else {
-      setFilteredItems(tours);
-      console.log("didn't work", initialSearchQuery);
+      setFilteredGames(games);
     }
   }, [initialSearchQuery]);
 
-  // sorts the tours based on the sortBy state
   useEffect(() => {
-    const sortedTours = [...filteredItems].sort((a, b) => {
-      if (sortBy === "date") {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
+    const sortedGames = [...filteredGames].sort((a, b) => {
+      if (sortBy === "releaseDate") {
+        return (
+          new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime()
+        );
       } else if (sortBy === "priceAsc") {
         return a.price - b.price;
       } else if (sortBy === "priceDesc") {
@@ -62,10 +61,9 @@ const shop = ({ tours }: ShopProps) => {
         return 0;
       }
     });
-    setFilteredItems(sortedTours);
+    setFilteredGames(sortedGames);
   }, [sortBy]);
 
-  // adds an option to the filterOptions object
   const addFilterOption = (
     name: keyof FilteredOptionsProps,
     option: string
@@ -76,7 +74,6 @@ const shop = ({ tours }: ShopProps) => {
     }));
   };
 
-  // removes an option from the filterOptions object
   const removeFilterOption = (
     name: keyof FilteredOptionsProps,
     option: string
@@ -87,54 +84,59 @@ const shop = ({ tours }: ShopProps) => {
     }));
   };
 
-  // filters the tours based on the filterOptions
   useEffect(() => {
-    const filteredTours = tours.filter((tour) => {
+    const filteredGames = games.filter((game) => {
       let isCategory = false;
-      let isLocation = false;
-      let isActivities = false;
-      let isDifficulty = false;
+      let isPublisher = false;
+      let isGameModes = false;
+      let isPlatform = false;
       let isPrices = false;
 
-      if (filterOptions.category.length === 0) {
+      if (
+        filterOptions.category.length === 0 ||
+        filterOptions.category.includes(game.category)
+      ) {
         isCategory = true;
+      }
+
+      if (
+        filterOptions.publisher.length === 0 ||
+        filterOptions.publisher.includes(game.publisher)
+      ) {
+        isPublisher = true;
+      }
+
+      if (filterOptions.gameModes.length === 0) {
+        isGameModes = true;
       } else {
-        filterOptions.category.forEach((category) => {
-          if (tour.category === category) {
-            isCategory = true;
+        game.gameModes.forEach((gameMode) => {
+          if (filterOptions.gameModes.includes(gameMode)) {
+            isGameModes = true;
           }
         });
       }
 
-      if (filterOptions.location.length === 0) {
-        isLocation = true;
-      } else {
-        filterOptions.location.forEach((location) => {
-          if (tour.location === location) {
-            isLocation = true;
-          }
-        });
+      if (
+        filterOptions.platform.length === 0 ||
+        filterOptions.platform.includes(game.platform)
+      ) {
+        isPlatform = true;
       }
 
-      if (filterOptions.activities.length === 0) {
-        isActivities = true;
-      } else {
-        filterOptions.activities.forEach((activity) => {
-          if (tour.activities.includes(activity)) {
-            isActivities = true;
-          }
-        });
-      }
-
-      if (filterOptions.difficulty.length === 0) {
-        isDifficulty = true;
-      } else {
-        filterOptions.difficulty.forEach((difficulty) => {
-          if (tour.difficulty === difficulty) {
-            isDifficulty = true;
-          }
-        });
-      }
+      // if (filterOptions.prices.length === 0) {
+      //   isPrice = true;
+      // } else {
+      //   // For each price range in the filter options, check if the game's price falls within that range.
+      //   isPrice = filterOptions.prices.some((priceRange) => {
+      //     // Extract the minimum and maximum values from the price range string.
+      //     const [minPrice, maxPrice] = priceRange
+      //       .replace("$", "")
+      //       .split(" - ")
+      //       .map(Number);
+      //     // Return true if the game's price is within the price range, false otherwise.
+      //     return game.price >= minPrice && game.price <= maxPrice;
+      //   });
+      // }
 
       if (filterOptions.prices.length === 0) {
         isPrices = true;
@@ -151,8 +153,8 @@ const shop = ({ tours }: ShopProps) => {
               .trim();
             const lowerLimit = parseInt(cleanedPricePart, 10);
 
-            if (tour.price > lowerLimit) {
-              console.log(tour.price, lowerLimit);
+            if (game.price > lowerLimit) {
+              console.log(game.price, lowerLimit);
               priceMatched = true;
             }
           } else {
@@ -165,7 +167,7 @@ const shop = ({ tours }: ShopProps) => {
               10
             );
 
-            if (tour.price >= lowerLimit && tour.price <= upperLimit) {
+            if (game.price >= lowerLimit && game.price <= upperLimit) {
               priceMatched = true;
             }
           }
@@ -174,28 +176,24 @@ const shop = ({ tours }: ShopProps) => {
         isPrices = priceMatched;
       }
 
-      return (
-        isCategory && isLocation && isActivities && isDifficulty && isPrices
-      );
+      return isCategory && isPublisher && isGameModes && isPlatform && isPrices;
     });
 
-    setFilteredItems(filteredTours);
-  }, [filterOptions]);
+    setFilteredGames(filteredGames);
+  }, [filterOptions, games]);
 
   return (
-    <>
-      <Layout
-        tours={tours}
-        addFilterOption={addFilterOption}
-        removeFilterOption={removeFilterOption}
-        changeSortBy={(value: string) => setSortBy(value)}
-        count={filteredItems.length}
-        sortBy={sortBy}
-        searchQuery={searchQuery}
-      >
-        <Items tours={filteredItems} />
-      </Layout>
-    </>
+    <Layout
+      games={games}
+      addFilterOption={addFilterOption}
+      removeFilterOption={removeFilterOption}
+      changeSortBy={(value: string) => setSortBy(value)}
+      count={filteredGames?.length}
+      sortBy={sortBy}
+      searchQuery={searchQuery}
+    >
+      <Items games={filteredGames} />
+    </Layout>
   );
 };
 

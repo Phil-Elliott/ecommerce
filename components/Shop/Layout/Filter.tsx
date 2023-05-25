@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FilteredOptionsProps, TourProps } from "components/shared/Types/Types";
-
+import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 import { BsChevronDown, BsX } from "react-icons/bs";
-
 import { useWindowResize } from "../../shared/Hooks/useWindowResize";
 
 type FilterProps = {
-  tours: TourProps[];
+  games: GameProps[];
   addFilterOption: (name: keyof FilteredOptionsProps, option: string) => void;
   removeFilterOption: (
     name: keyof FilteredOptionsProps,
@@ -25,7 +23,7 @@ type FilterOption = {
 };
 
 const Filter = ({
-  tours,
+  games,
   addFilterOption,
   removeFilterOption,
   isMobileFilterOpen,
@@ -40,17 +38,17 @@ const Filter = ({
       show: true,
     },
     {
-      name: "Location",
+      name: "Publisher",
       options: [],
       show: true,
     },
     {
-      name: "Activities",
+      name: "Game Modes",
       options: [],
       show: true,
     },
     {
-      name: "Difficulty",
+      name: "Platform",
       options: [],
       show: true,
     },
@@ -61,15 +59,14 @@ const Filter = ({
     },
   ]);
 
-  // Utility function to map FilterOption name to FilteredOptionsProps key
   const mapFilterOptionNameToKey = (
     name: string
   ): keyof FilteredOptionsProps => {
     const nameKeyMap: Record<string, keyof FilteredOptionsProps> = {
       Category: "category",
-      Location: "location",
-      Activities: "activities",
-      Difficulty: "difficulty",
+      Publisher: "publisher",
+      "Game Modes": "gameModes",
+      Platform: "platform",
       Prices: "prices",
     };
 
@@ -80,7 +77,6 @@ const Filter = ({
     changeSortBy(e.target.value);
   };
 
-  // Toggles the show property of the filter option
   const toggleFilterOption = (name: string) => {
     setFilterOptions((prev) =>
       prev.map((filterOption) =>
@@ -91,33 +87,29 @@ const Filter = ({
     );
   };
 
-  // Finds all of the categories in the tours array and removes duplicates
-  const categories = tours
-    .map((tour) => tour.category)
+  const categories = games
+    .map((game) => game.category)
     .filter((category, index, self) => self.indexOf(category) === index);
 
-  // Finds all of the locations in the tours array and removes duplicates
-  const locations = tours
-    .map((tour) => tour.location)
-    .filter((location, index, self) => self.indexOf(location) === index);
+  const publishers = games
+    .map((game) => game.publisher)
+    .filter((publisher, index, self) => self.indexOf(publisher) === index);
 
-  // Finds all of the activities in the tours array and removes duplicates
-  const activities = tours
-    .map((tour) => tour.activities)
+  const gameModes = games
+    .map((game) => game.gameModes)
     .flat()
-    .filter((activity, index, self) => self.indexOf(activity) === index);
+    .filter((gameMode, index, self) => self.indexOf(gameMode) === index);
 
-  // Finds all of the difficulties in the tours array and removes duplicates
-  const difficulties = tours
-    .map((tour) => tour.difficulty)
-    .filter((difficulty, index, self) => self.indexOf(difficulty) === index);
+  const platforms = games
+    .map((game) => game.platform)
+    .filter((platform, index, self) => self.indexOf(platform) === index);
 
   const prices = [
-    "$0 - $500",
-    "$500 - $1,000",
-    "$1,000 - $1,500",
-    "$1,500 - $2,000",
-    "Over $2,000",
+    "$0 - $50",
+    "$50 - $100",
+    "$100 - $150",
+    "$150 - $200",
+    "Over $200",
   ];
 
   // Use the useWindowResize hook
@@ -145,18 +137,18 @@ const Filter = ({
         show: true,
       },
       {
-        name: "Location",
-        options: locations,
+        name: "Publisher",
+        options: publishers,
         show: true,
       },
       {
-        name: "Activities",
-        options: activities,
+        name: "Game Modes",
+        options: gameModes,
         show: true,
       },
       {
-        name: "Difficulty",
-        options: difficulties,
+        name: "Platform",
+        options: platforms,
         show: true,
       },
       {
@@ -167,7 +159,6 @@ const Filter = ({
     ]);
   }, []);
 
-  // used to add or remove a filter option when checkbox is clicked
   const handleFilterOption = (
     e: React.ChangeEvent<HTMLInputElement>,
     name: keyof FilteredOptionsProps

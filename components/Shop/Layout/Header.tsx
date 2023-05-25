@@ -29,7 +29,7 @@ const Header = ({
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
-    window.addEventListener("scroll", () => {
+    const handleScroll = () => {
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY) {
         setHiddenHeader(true);
@@ -37,8 +37,11 @@ const Header = ({
         setHiddenHeader(false);
       }
       lastScrollY = currentScrollY;
-    });
-  });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>

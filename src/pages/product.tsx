@@ -2,34 +2,30 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-import { TourProps } from "components/shared/Types/Types";
+import { GameProps } from "components/shared/Types/Types";
 
 import HeroImg from "/assets/hero.jpg";
 
 type ProductProps = {
-  tours: TourProps[];
+  games: GameProps[];
 };
 
-const product = ({ tours }: ProductProps) => {
-  const [tour, setTour] = React.useState<TourProps | null>(null);
+const product = ({ games }: ProductProps) => {
+  const [game, setGame] = React.useState<GameProps | null>(null);
 
   // Get the 'id' property from the router.query object and parse it as an integer
   const router = useRouter();
   const queryId = router.query.id;
   const id = queryId ? parseInt(queryId as string) : null;
 
-  // Find the tour with the given 'id' (if it exists)
+  // Find the game with the given 'id' (if it exists)
   useEffect(() => {
-    const currentTour = id ? tours.find((tour) => tour.id === id) : null;
+    const currentGame = id ? games.find((game) => game.id === id) : null;
 
-    if (currentTour) {
-      setTour(currentTour);
+    if (currentGame) {
+      setGame(currentGame);
     }
-  }, [id, tours]);
-
-  useEffect(() => {
-    console.log("tour", tour);
-  }, [tour]);
+  }, [id, games]);
 
   return (
     <div className="container mx-auto grid grid-cols-7 gap-20 py-32">
@@ -81,13 +77,13 @@ const product = ({ tours }: ProductProps) => {
       </div>
       <div className="col-span-3 flex flex-col justify-between py-2">
         <div>
-          <h1 className="text-3xl mb-2">{tour?.name}</h1>
-          <p className="text-lg text-gray-800">{tour?.category}</p>
-          <p className="text-lg text-gray-800 mt-5">{tour?.rating}</p>
+          <h1 className="text-3xl mb-2">{game?.name}</h1>
+          <p className="text-lg text-gray-800">{game?.category}</p>
+          <p className="text-lg text-gray-800 mt-5">{game?.rating}</p>
           <p className="text-lg text-gray-800 mt-5 border-gray border-b-2 pb-5">
-            ${tour?.price}
+            ${game?.price}
           </p>
-          <p className="text-lg text-gray-800 mt-5">{tour?.description}</p>
+          <p className="text-lg text-gray-800 mt-5">{game?.description}</p>
         </div>
         <div className="flex flex-col">
           <button className="bg-black text-white px-4 py-2 rounded mt-5">

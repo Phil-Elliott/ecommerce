@@ -3,13 +3,13 @@ import Deals from "components/Home/Deals/Deals";
 import Hero from "components/Home/Hero/Hero";
 import Items from "components/Home/Items/Items";
 import Head from "next/head";
-import { TourProps } from "components/shared/Types/Types";
+import { GameProps } from "components/shared/Types/Types";
 
 type HomeProps = {
-  tours: TourProps[];
+  games: GameProps[];
 };
 
-export default function Home({ tours }: HomeProps) {
+export default function Home({ games }: HomeProps) {
   return (
     <div className="mb-10">
       <Head>
@@ -20,8 +20,8 @@ export default function Home({ tours }: HomeProps) {
       </Head>
       <Hero />
       <Deals />
-      <Items name="Best Sellers" tours={tours} />
-      <Items name="New Tours" tours={tours} />
+      <Items name="Best Sellers" games={games} />
+      <Items name="New Tours" games={games} />
     </div>
   );
 }

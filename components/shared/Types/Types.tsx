@@ -1,24 +1,22 @@
-export type TourProps = {
+export type GameProps = {
   id: number;
   name: string;
   image: string;
   price: number;
   description: string;
   category: string;
-  location: string;
-  duration: string;
-  date: string;
+  publisher: string;
+  releaseDate: string;
   rating: number;
-  availability: number;
-  groupSize: number;
-  difficulty: string;
-  activities: string[];
+  playerCount: number;
+  platform: string;
+  gameModes: string[];
 };
 
 export type FilteredOptionsProps = {
   category: string[];
-  location: string[];
-  activities: string[];
-  difficulty: string[];
+  publisher: string[];
+  gameModes: string[];
+  platform: string[];
   prices: string[];
 };
