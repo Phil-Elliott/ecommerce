@@ -123,21 +123,6 @@ const shop = ({ games }: ShopProps) => {
         isPlatform = true;
       }
 
-      // if (filterOptions.prices.length === 0) {
-      //   isPrice = true;
-      // } else {
-      //   // For each price range in the filter options, check if the game's price falls within that range.
-      //   isPrice = filterOptions.prices.some((priceRange) => {
-      //     // Extract the minimum and maximum values from the price range string.
-      //     const [minPrice, maxPrice] = priceRange
-      //       .replace("$", "")
-      //       .split(" - ")
-      //       .map(Number);
-      //     // Return true if the game's price is within the price range, false otherwise.
-      //     return game.price >= minPrice && game.price <= maxPrice;
-      //   });
-      // }
-
       if (filterOptions.prices.length === 0) {
         isPrices = true;
       } else {

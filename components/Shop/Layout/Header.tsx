@@ -53,7 +53,7 @@ const Header = ({
         `}
         >
           <h1 className="text-2xl">
-            {searchQuery ? searchQuery : "Tour Packages"} ({count})
+            {searchQuery ? searchQuery : "Games"} ({count})
           </h1>
           <div className="flex space-x-6 relative">
             <div
