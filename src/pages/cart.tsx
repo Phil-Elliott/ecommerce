@@ -1,14 +1,63 @@
 import React from "react";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { BsTrash } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart } from "../../redux/slices/cartSlice";
+import { RootState } from "../../redux/store";
 
-const cart = () => {
+const Cart = () => {
+  const cart = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch();
+
   return (
-    <div>
-      <h1 className="text-4xl">Cart</h1>
+    <div className="flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
+      <h1 className="text-4xl mb-5">Shopping Cart</h1>
+      <div className="w-full flex flex-col items-center pt-10">
+        {cart.length > 0 ? (
+          cart.map((product) => (
+            <div
+              key={product.id}
+              className="flex justify-between items-center w-11/12 mb-6 p-4 bg-white rounded shadow-lg"
+            >
+              <div className="flex items-center">
+                <img
+                  className="w-16 h-16"
+                  src={`/images/${product.image}`}
+                  alt={product.name}
+                />
+                <div className="ml-4">
+                  <h2 className="text-lg font-bold">{product.name}</h2>
+                  <p className="text-sm text-gray-600">${product.price} each</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="number"
+                  min="1"
+                  className="border rounded w-20 text-center mr-2"
+                  value={product.quantity}
+                  readOnly // Let's make this readOnly for now, we'll handle quantity change differently
+                />
+                <BsTrash
+                  className="text-xl cursor-pointer text-red-500"
+                  onClick={() => dispatch(removeFromCart(product.id))}
+                />
+              </div>
+              <div className="flex items-center">
+                <p>Total: ${(product.price * product.quantity).toFixed(2)}</p>
+                <AiOutlineHeart className="ml-4 text-xl cursor-pointer text-red-500" />
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>Your cart is empty</p>
+        )}
+      </div>
     </div>
   );
 };
 
-export default cart;
+export default Cart;
 
 /*
 

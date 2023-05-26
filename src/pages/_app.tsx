@@ -7,7 +7,7 @@ import Signin from "components/Signin/Signin";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Provider } from "react-redux";
-import { store } from "../../redux/store";
+import store from "../../redux/store";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [games, setGames] = useState<GameProps[]>([

@@ -1,23 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GameProps } from "components/shared/Types/Types";
 
-interface CartState {
-  items: GameProps[];
-}
+type CartItem = GameProps & { quantity: number };
 
-const initialState: CartState = {
-  items: [],
-};
+const initialState: CartItem[] = [];
 
-export const cartSlice = createSlice({
+const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<GameProps>) => {
-      state.items.push(action.payload);
+      const item = state.find((item) => item.id === action.payload.id);
+      if (item) {
+        item.quantity += 1;
+      } else {
+        state.push({ ...action.payload, quantity: 1 });
+      }
     },
-    removeFromCart: (state, action: PayloadAction<string>) => {
-      //   state.items = state.items.filter((item) => item.id !== action.payload);
+    removeFromCart: (state, action: PayloadAction<number>) => {
+      const index = state.findIndex((item) => item.id === action.payload);
+      if (index !== -1) {
+        const item = state[index];
+        item.quantity -= 1;
+        if (item.quantity <= 0) {
+          state.splice(index, 1);
+        }
+      }
     },
   },
 });
