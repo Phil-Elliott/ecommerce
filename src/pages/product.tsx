@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/slices/cartSlice";
 
 import { GameProps } from "components/shared/Types/Types";
 
@@ -12,6 +14,8 @@ type ProductProps = {
 
 const product = ({ games }: ProductProps) => {
   const [game, setGame] = React.useState<GameProps | null>(null);
+
+  const dispatch = useDispatch();
 
   // Get the 'id' property from the router.query object and parse it as an integer
   const router = useRouter();
@@ -86,7 +90,10 @@ const product = ({ games }: ProductProps) => {
           <p className="text-lg text-gray-800 mt-5">{game?.description}</p>
         </div>
         <div className="flex flex-col">
-          <button className="bg-black text-white px-4 py-2 rounded mt-5">
+          <button
+            className="bg-black text-white px-4 py-2 rounded mt-5"
+            onClick={() => game && dispatch(addToCart(game))}
+          >
             Add to Cart
           </button>
           <button className="px-4 py-2 rounded mt-5 border-black border-2">

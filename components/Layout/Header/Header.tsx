@@ -67,11 +67,11 @@ const Header = ({ signInButton }: HeaderProps) => {
           </div>
 
           <Link
-            href="/watchList"
+            href="/wishList"
             className="flex items-center space-x-3 cursor-pointer"
           >
             <AiOutlineHeart className="text-xl" />
-            <p className="lg:block hidden">Wishlist</p>
+            <p className="lg:block hidden">WishList</p>
           </Link>
           <Link
             href="/cart"
