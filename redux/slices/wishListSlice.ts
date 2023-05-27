@@ -5,10 +5,6 @@ type WishItem = GameProps;
 
 const initialState: WishItem[] = [];
 
-const isLoggedIn = () => {
-  return localStorage.getItem("token") ? true : false;
-};
-
 const wishListSlice = createSlice({
   name: "wishList",
   initialState,
@@ -20,17 +16,12 @@ const wishListSlice = createSlice({
       } else {
         state.push({ ...action.payload });
       }
-      if (!isLoggedIn()) {
-        localStorage.setItem("wishlist", JSON.stringify(state));
-      }
     },
     removeFromList: (state, action: PayloadAction<number>) => {
       const index = state.findIndex((item) => item.id === action.payload);
       if (index !== -1) {
+        const item = state[index];
         state.splice(index, 1);
-      }
-      if (!isLoggedIn()) {
-        localStorage.setItem("wishlist", JSON.stringify(state));
       }
     },
   },

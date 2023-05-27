@@ -3,13 +3,7 @@ import { GameProps } from "components/shared/Types/Types";
 
 type CartItem = GameProps & { quantity: number };
 
-const initialState: CartItem[] = JSON.parse(
-  localStorage.getItem("cart") || "[]"
-);
-
-const isLoggedIn = () => {
-  return localStorage.getItem("token") ? true : false;
-};
+const initialState: CartItem[] = [];
 
 const cartSlice = createSlice({
   name: "cart",
@@ -22,9 +16,6 @@ const cartSlice = createSlice({
       } else {
         state.push({ ...action.payload, quantity: 1 });
       }
-      if (!isLoggedIn()) {
-        localStorage.setItem("cart", JSON.stringify(state));
-      }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
       const index = state.findIndex((item) => item.id === action.payload);
@@ -35,9 +26,6 @@ const cartSlice = createSlice({
           state.splice(index, 1);
         }
       }
-      if (!isLoggedIn()) {
-        localStorage.setItem("cart", JSON.stringify(state));
-      }
     },
     changeQuantity: (
       state,
@@ -46,9 +34,6 @@ const cartSlice = createSlice({
       const item = state.find((item) => item.id === action.payload.id);
       if (item) {
         item.quantity = action.payload.quantity;
-      }
-      if (!isLoggedIn()) {
-        localStorage.setItem("cart", JSON.stringify(state));
       }
     },
   },

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "components/Layout/Layout";
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
@@ -6,8 +6,10 @@ import { GameProps } from "components/shared/Types/Types";
 import Signin from "components/Signin/Signin";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "../../redux/store";
+import { addToCart } from "redux/slices/cartSlice";
+import { addToList } from "redux/slices/wishListSlice";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [games, setGames] = useState<GameProps[]>([
@@ -104,11 +106,36 @@ export default function App({ Component, pageProps }: AppProps) {
               </Dialog.Close>
             </Dialog.Content>
           </Dialog.Portal>
+          <SyncLocalStorageWithStore />
           <Component {...pageProps} games={games} />
         </Layout>
       </Dialog.Root>
     </Provider>
   );
+}
+
+function SyncLocalStorageWithStore() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const cartFromLocalStorage = JSON.parse(
+        localStorage.getItem("cart") || "[]"
+      );
+      const wishlistFromLocalStorage = JSON.parse(
+        localStorage.getItem("wishlist") || "[]"
+      );
+
+      cartFromLocalStorage.forEach((item: GameProps) =>
+        dispatch(addToCart(item))
+      );
+      wishlistFromLocalStorage.forEach((item: GameProps) =>
+        dispatch(addToList(item))
+      );
+    }
+  }, [dispatch]);
+
+  return null;
 }
 
 /*
