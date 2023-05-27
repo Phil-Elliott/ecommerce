@@ -2,7 +2,11 @@ import React from "react";
 
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
+import { removeFromList } from "redux/slices/wishListSlice";
+import { addToCart } from "redux/slices/cartSlice";
+
 import { BsTrash } from "react-icons/bs";
+import { FiShoppingCart } from "react-icons/fi";
 
 const WishList = () => {
   const list = useSelector((state: RootState) => state.wishList);
@@ -30,7 +34,11 @@ const WishList = () => {
               <div className="flex items-center">
                 <BsTrash
                   className="text-xl cursor-pointer text-red-500"
-                  // onClick={() => dispatch(removeFromCart(product.id))}
+                  onClick={() => dispatch(removeFromList(product.id))}
+                />
+                <FiShoppingCart
+                  className="ml-4 text-xl cursor-pointer text-green-500"
+                  onClick={() => dispatch(addToCart(product))}
                 />
               </div>
             </div>

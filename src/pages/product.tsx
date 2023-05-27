@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slices/cartSlice";
+import { addToList } from "redux/slices/wishListSlice";
 
 import { GameProps } from "components/shared/Types/Types";
 
@@ -96,7 +97,10 @@ const product = ({ games }: ProductProps) => {
           >
             Add to Cart
           </button>
-          <button className="px-4 py-2 rounded mt-5 border-black border-2">
+          <button
+            className="px-4 py-2 rounded mt-5 border-black border-2"
+            onClick={() => game && dispatch(addToList(game))}
+          >
             Save
           </button>
         </div>
