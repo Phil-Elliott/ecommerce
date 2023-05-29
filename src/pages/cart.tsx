@@ -11,6 +11,8 @@ const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
 
+  // console.log(cart);
+
   // function handleAddToList(product) {
   //   dispatch(addToList(product));
   // }

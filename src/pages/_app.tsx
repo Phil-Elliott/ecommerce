@@ -115,10 +115,17 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 function SyncLocalStorageWithStore() {
+  const [isClient, setClient] = useState(false);
   const dispatch = useDispatch();
 
+  // This useEffect will run once after the component mounts,
+  // indicating that we're now on the client-side.
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    setClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
       const cartFromLocalStorage = JSON.parse(
         localStorage.getItem("cart") || "[]"
       );
@@ -133,7 +140,7 @@ function SyncLocalStorageWithStore() {
         dispatch(addToList(item))
       );
     }
-  }, [dispatch]);
+  }, [dispatch, isClient]);
 
   return null;
 }

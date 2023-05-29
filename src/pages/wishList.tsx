@@ -3,27 +3,16 @@ import React from "react";
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromList } from "redux/slices/wishListSlice";
-import { addToCart } from "redux/slices/cartSlice";
 
 import { BsTrash } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
-import { GameProps } from "components/shared/Types/Types";
+import { useAddToCart } from "../../utils/useAddToCart";
 
 const WishList = () => {
   const list = useSelector((state: RootState) => state.wishList);
   const dispatch = useDispatch();
 
-  const handleAddToCart = (product: GameProps) => {
-    // Add to Redux state
-    dispatch(addToCart(product));
-
-    // Add to localStorage
-    if (typeof window !== "undefined") {
-      const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
-      currentCart.push(product);
-      localStorage.setItem("cart", JSON.stringify(currentCart));
-    }
-  };
+  const addToCart = useAddToCart();
 
   return (
     <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
@@ -51,7 +40,7 @@ const WishList = () => {
                 />
                 <FiShoppingCart
                   className="ml-4 text-xl cursor-pointer text-green-500"
-                  onClick={() => handleAddToCart(product)}
+                  onClick={() => addToCart(product)}
                 />
               </div>
             </div>
