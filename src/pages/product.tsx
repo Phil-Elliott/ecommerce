@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/slices/cartSlice";
 import { addToList } from "redux/slices/wishListSlice";
 
 import { GameProps } from "components/shared/Types/Types";
 
 import HeroImg from "/assets/hero.jpg";
+import { useAddToCart } from "utils/useAddToCart";
 
 type ProductProps = {
   games: GameProps[];
@@ -17,6 +17,8 @@ const product = ({ games }: ProductProps) => {
   const [game, setGame] = React.useState<GameProps | null>(null);
 
   const dispatch = useDispatch();
+
+  const addToCart = useAddToCart();
 
   // Get the 'id' property from the router.query object and parse it as an integer
   const router = useRouter();
@@ -93,7 +95,7 @@ const product = ({ games }: ProductProps) => {
         <div className="flex flex-col">
           <button
             className="bg-black text-white px-4 py-2 rounded mt-5"
-            onClick={() => game && dispatch(addToCart(game))}
+            onClick={() => game && addToCart(game)}
           >
             Add to Cart
           </button>
