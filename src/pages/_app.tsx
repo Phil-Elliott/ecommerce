@@ -133,6 +133,7 @@ function SyncLocalStorageWithStore() {
         localStorage.getItem("wishlist") || "[]"
       );
 
+      console.log(cartFromLocalStorage);
       cartFromLocalStorage.forEach((item: GameProps) =>
         dispatch(addToCart(item))
       );
@@ -146,6 +147,9 @@ function SyncLocalStorageWithStore() {
 }
 
 /*
+
+
+- quantity of cart is not reflecting whats in local storage
 
 Work on functionality and architecture now
 

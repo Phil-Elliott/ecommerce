@@ -11,6 +11,7 @@ export type GameProps = {
   playerCount: number;
   platform: string;
   gameModes: string[];
+  quantity?: number;
 };
 
 export type FilteredOptionsProps = {
