@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { addToList } from "redux/slices/wishListSlice";
 
 import { GameProps } from "components/shared/Types/Types";
 
 import HeroImg from "/assets/hero.jpg";
 import { useAddToCart } from "utils/useAddToCart";
+import { useAddToWishList } from "utils/useAddToWishList";
 
 type ProductProps = {
   games: GameProps[];
@@ -19,6 +19,7 @@ const product = ({ games }: ProductProps) => {
   const dispatch = useDispatch();
 
   const addToCart = useAddToCart();
+  const addToWishList = useAddToWishList();
 
   // Get the 'id' property from the router.query object and parse it as an integer
   const router = useRouter();
@@ -101,7 +102,7 @@ const product = ({ games }: ProductProps) => {
           </button>
           <button
             className="px-4 py-2 rounded mt-5 border-black border-2"
-            onClick={() => game && dispatch(addToList(game))}
+            onClick={() => game && addToWishList(game)}
           >
             Save
           </button>

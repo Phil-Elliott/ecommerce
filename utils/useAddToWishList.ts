@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { GameProps } from "components/shared/Types/Types";
-import { addToList } from "redux/slices/wishListSlice";
+import { addToList } from "../redux/slices/wishListSlice";
 
 export function useAddToWishList() {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export function useAddToWishList() {
         localStorage.getItem("wishlist") || "[]"
       );
       currentWishList.push(product);
-      localStorage.setItem("wishlist", JSON.stringify(currentWishList));
+      localStorage.setItem("wishList", JSON.stringify(currentWishList));
     }
   };
 }

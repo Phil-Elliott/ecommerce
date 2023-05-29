@@ -130,7 +130,7 @@ function SyncLocalStorageWithStore() {
         localStorage.getItem("cart") || "[]"
       );
       const wishlistFromLocalStorage = JSON.parse(
-        localStorage.getItem("wishlist") || "[]"
+        localStorage.getItem("wishList") || "[]"
       );
 
       console.log(cartFromLocalStorage);
