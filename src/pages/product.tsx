@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 import { GameProps } from "components/shared/Types/Types";
 
 import HeroImg from "/assets/hero.jpg";
-import { useAddToCart } from "utils/useAddToCart";
-import { useAddToWishList } from "utils/useAddToWishList";
+import { useAddToCart } from "utils/useAddToCart/useAddToCart";
+import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
 
 type ProductProps = {
   games: GameProps[];

@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { useAddToCart } from "./useAddToCart";
-import store from "../redux/store";
+import { useRemoveFromCart } from "./useRemoveFromCart";
+import store from "../../redux/store";
 import { GameProps } from "components/shared/Types/Types";
 
 // Mock game data for testing
@@ -20,7 +20,7 @@ const mockGame: GameProps = {
   gameModes: ["Singleplayer", "Multiplayer"],
 };
 
-describe("useAddToCart", () => {
+describe("useRemoveFromCart", () => {
   // Mock localStorage
   const spy = jest.spyOn(Storage.prototype, "setItem");
 
@@ -29,23 +29,25 @@ describe("useAddToCart", () => {
     jest.clearAllMocks();
   });
 
-  it("adds the game to the cart in redux state and localStorage", () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
+  it("removes the game from the cart in redux state and localStorage", () => {
+    const wrapper = ({ children }: { children: any }) => (
       <Provider store={store}>{children}</Provider>
     );
+    const { result } = renderHook(() => useRemoveFromCart(), { wrapper });
 
-    const { result } = renderHook(() => useAddToCart(), { wrapper });
+    // Manually adding the game to cart before trying to remove
+    store.dispatch({ type: "cart/addToCart", payload: mockGame });
+    localStorage.setItem("cart", JSON.stringify([mockGame]));
 
     act(() => {
-      result.current(mockGame);
+      result.current(mockGame.id);
     });
 
-    // Check if the game was added to the cart in the redux state
+    // Check if the game was removed from the cart in the redux state
     const { cart } = store.getState();
-    const expectedGame = { ...mockGame, quantity: 1 }; // add quantity property
-    expect(cart[0]).toEqual(expectedGame);
+    expect(cart).toEqual([]);
 
     // Check if localStorage was called with correct arguments
-    expect(spy).toHaveBeenCalledWith("cart", JSON.stringify([expectedGame]));
+    expect(spy).toHaveBeenCalledWith("cart", JSON.stringify([]));
   });
 });

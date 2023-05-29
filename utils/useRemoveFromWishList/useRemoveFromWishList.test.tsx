@@ -1,7 +1,7 @@
-import { useAddToWishList } from "../utils/useAddToWishList";
+import { useRemoveFromWishList } from "./useRemoveFromWishList";
 import { act, renderHook } from "@testing-library/react";
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import store from "../../redux/store";
 import { GameProps } from "components/shared/Types/Types";
 
 const mockGame: GameProps = {
@@ -19,8 +19,8 @@ const mockGame: GameProps = {
   gameModes: ["Singleplayer", "Multiplayer"],
 };
 
-describe("useAddToWishList", () => {
-  it("adds the game to the wishlist in redux state and localStorage", () => {
+describe("useRemoveFromWishList", () => {
+  it("removes the game from the wishlist in redux state and localStorage", () => {
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <Provider store={store}>{children}</Provider>
     );
@@ -28,19 +28,19 @@ describe("useAddToWishList", () => {
     const spy = jest.spyOn(window.localStorage.__proto__, "setItem");
     spy.mockImplementation(() => {});
 
-    const { result } = renderHook(() => useAddToWishList(), {
+    const { result } = renderHook(() => useRemoveFromWishList(), {
       wrapper,
     });
 
     act(() => {
-      result.current(mockGame);
+      result.current(mockGame.id);
     });
 
-    // Check if the game was added to the wishlist in the redux state
+    // Check if the game was removed from the wishlist in the redux state
     const { wishList } = store.getState();
-    expect(wishList[0]).toEqual(mockGame);
+    expect(wishList).toEqual([]);
 
     // Check if localStorage was called with correct arguments
-    expect(spy).toHaveBeenCalledWith("wishList", JSON.stringify([mockGame]));
+    expect(spy).toHaveBeenCalledWith("wishList", JSON.stringify([]));
   });
 });

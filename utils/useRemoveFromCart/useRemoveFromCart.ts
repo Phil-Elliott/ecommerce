@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { GameProps } from "components/shared/Types/Types";
-import { removeFromCart } from "../redux/slices/cartSlice";
+import { removeFromCart } from "../../redux/slices/cartSlice";
 
 export function useRemoveFromCart() {
   const dispatch = useDispatch();

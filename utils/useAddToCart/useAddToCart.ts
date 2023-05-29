@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { GameProps } from "components/shared/Types/Types";
-import { addToCart } from "../redux/slices/cartSlice";
+import { addToCart } from "../../redux/slices/cartSlice";
 
 export function useAddToCart() {
   const dispatch = useDispatch();

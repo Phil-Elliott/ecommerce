@@ -1,18 +1,19 @@
-import React from "react";
+import React, { use } from "react";
 
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromList } from "redux/slices/wishListSlice";
 
 import { BsTrash } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
-import { useAddToCart } from "../../utils/useAddToCart";
+import { useAddToCart } from "utils/useAddToCart/useAddToCart";
+import { useRemoveFromWishList } from "utils/useRemoveFromWishList/useRemoveFromWishList";
 
 const WishList = () => {
   const list = useSelector((state: RootState) => state.wishList);
   const dispatch = useDispatch();
 
   const addToCart = useAddToCart();
+  const removeFromList = useRemoveFromWishList();
 
   return (
     <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
@@ -36,7 +37,7 @@ const WishList = () => {
               <div className="flex items-center">
                 <BsTrash
                   className="text-xl cursor-pointer text-red-500"
-                  onClick={() => dispatch(removeFromList(product.id))}
+                  onClick={() => removeFromList(product.id)}
                 />
                 <FiShoppingCart
                   className="ml-4 text-xl cursor-pointer text-green-500"

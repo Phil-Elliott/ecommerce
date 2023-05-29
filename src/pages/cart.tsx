@@ -6,7 +6,7 @@ import { changeQuantity } from "../../redux/slices/cartSlice";
 import { addToList } from "redux/slices/wishListSlice";
 
 import { RootState } from "../../redux/store";
-import { useRemoveFromCart } from "utils/useRemoveFromCart";
+import { useRemoveFromCart } from "utils/useRemoveFromCart/useRemoveFromCart";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
