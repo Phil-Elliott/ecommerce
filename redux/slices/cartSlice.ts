@@ -22,11 +22,11 @@ const cartSlice = createSlice({
     removeFromCart: (state, action: PayloadAction<number>) => {
       const index = state.findIndex((item) => item.id === action.payload);
       if (index !== -1) {
-        const item = state[index];
-        item.quantity -= 1;
-        if (item.quantity <= 0) {
-          state.splice(index, 1);
-        }
+        // const item = state[index];
+        // item.quantity -= 1;
+        // if (item.quantity <= 0) {
+        state.splice(index, 1);
+        // }
       }
     },
     changeQuantity: (

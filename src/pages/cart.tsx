@@ -14,20 +14,6 @@ const Cart = () => {
 
   const removeFromCart = useRemoveFromCart();
 
-  // console.log(cart);
-
-  // function handleAddToList(product) {
-  //   dispatch(addToList(product));
-  // }
-
-  // function handleRemoveFromCart(id) {
-  //   dispatch(removeFromCart(id));
-  // }
-
-  // function handleQuantityChange(id, quantity) {
-  //   dispatch(changeQuantity({ id, quantity }));
-  // }
-
   return (
     <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
       <h1 className="text-4xl mb-5">Shopping Cart</h1>
