@@ -2,16 +2,17 @@ import React from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { changeQuantity, removeFromCart } from "../../redux/slices/cartSlice";
+import { changeQuantity } from "../../redux/slices/cartSlice";
 import { addToList } from "redux/slices/wishListSlice";
 
 import { RootState } from "../../redux/store";
+import { useRemoveFromCart } from "utils/useRemoveFromCart";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
 
-  console.log(cart);
+  const removeFromCart = useRemoveFromCart();
 
   // console.log(cart);
 
@@ -63,7 +64,7 @@ const Cart = () => {
                 />
                 <BsTrash
                   className="text-xl cursor-pointer text-red-500"
-                  onClick={() => dispatch(removeFromCart(product.id))}
+                  onClick={() => removeFromCart(product.id)}
                 />
               </div>
               <div className="flex items-center">
