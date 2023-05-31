@@ -12,81 +12,24 @@ import { addToCart } from "redux/slices/cartSlice";
 import { addToList } from "redux/slices/wishListSlice";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [games, setGames] = useState<GameProps[]>([
-    {
-      id: 1,
-      name: "Battle of the Century",
-      image: "battle-of-the-century.jpg",
-      price: 160,
-      description: "Engage in epic battles with diverse characters.",
-      category: "Fighting",
-      publisher: "Capcom",
-      releaseDate: "2023-05-15",
-      rating: 4.5,
-      playerCount: 2,
-      platform: "PC",
-      gameModes: ["Singleplayer", "Multiplayer"],
-    },
-    {
-      id: 2,
-      name: "Mystical Quest",
-      image: "mystical-quest.jpg",
-      price: 70,
-      description: "Embark on a mystical quest full of puzzles and danger.",
-      category: "Adventure",
-      publisher: "Ubisoft",
-      releaseDate: "2023-06-01",
-      rating: 4.7,
-      playerCount: 1,
-      platform: "PlayStation",
-      gameModes: ["Singleplayer"],
-    },
-    {
-      id: 3,
-      name: "Racing Frenzy",
-      image: "racing-frenzy.jpg",
-      price: 65,
-      description:
-        "Experience adrenaline-pumping racing action on diverse tracks.",
-      category: "Racing",
-      publisher: "EA",
-      releaseDate: "2023-07-20",
-      rating: 4.8,
-      playerCount: 12,
-      platform: "Xbox",
-      gameModes: ["Singleplayer", "Multiplayer"],
-    },
-    {
-      id: 4,
-      name: "Cyber City",
-      image: "cyber-city.jpg",
-      price: 75,
-      description: "Navigate through a dystopian cyberpunk city of the future.",
-      category: "RPG",
-      publisher: "CD Projekt Red",
-      releaseDate: "2023-08-01",
-      rating: 5,
-      playerCount: 1,
-      platform: "PC",
-      gameModes: ["Singleplayer"],
-    },
-    {
-      id: 5,
-      name: "Fantasy Soccer",
-      image: "fantasy-soccer.jpg",
-      price: 60,
-      description: "Take control of your favorite fantasy soccer team.",
-      category: "Sports",
-      publisher: "Konami",
-      releaseDate: "2023-09-15",
-      rating: 4.6,
-      playerCount: 2,
-      platform: "PlayStation",
-      gameModes: ["Singleplayer", "Multiplayer"],
-    },
-    // Add more games as required...
-  ]);
+  const [games, setGames] = useState<GameProps[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/v1/games")
+      .then((response) => response.json())
+      .then((data) => {
+        // If there is a status field and it's set to 'success', use the games data.
+        if (data.status === "success") {
+          setGames(data.data.games);
+        } else {
+          console.error("Error fetching games:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
 
   return (
     <Provider store={store}>
@@ -148,10 +91,19 @@ function SyncLocalStorageWithStore() {
 
 /*
 
+1) Get the game data from the server
+2) Fix the login and signup forms to save cookie for grabbing other data
+3) Plug in both wishList and cart to the server
+4) Work on quantity
+5) Start fixing up the styles
 
-- quantity of cart is not reflecting whats in local storage
 
-Work on functionality and architecture now
+1) Handle logging in the user (need to save jwt or something)
+2) Protect the wishlist and cart routes I think
+3) Have them get called from redux if user is logged in
+
+
+Work on quantity next
 
 1) add and get products to display in shop ( alot to do here )
 2) Finish configuring signup and signin

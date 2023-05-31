@@ -32,7 +32,8 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
         {
           email: email,
           password: password,
-        }
+        },
+        { withCredentials: true }
       );
       console.log(response);
       // let jwt = response.data.jwt;
@@ -49,8 +50,7 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
       //   // navigate("/dashboard/");
       // }
     } catch (error: any) {
-      console.log(error);
-      setError("error");
+      setError(error.response.data.message);
     }
   };
 
