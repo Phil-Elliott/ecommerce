@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,7 @@ type ProductProps = {
 };
 
 const product = ({ games }: ProductProps) => {
-  const [game, setGame] = React.useState<GameProps | null>(null);
+  const [game, setGame] = useState<GameProps | null>(null);
 
   const dispatch = useDispatch();
 
@@ -24,11 +24,13 @@ const product = ({ games }: ProductProps) => {
   // Get the 'id' property from the router.query object and parse it as an integer
   const router = useRouter();
   const queryId = router.query.id;
-  const id = queryId ? parseInt(queryId as string) : null;
+  const id = queryId ? queryId : null;
 
   // Find the game with the given 'id' (if it exists)
   useEffect(() => {
-    const currentGame = id ? games.find((game) => game.id === id) : null;
+    const currentGame = id ? games.find((game) => game._id === id) : null;
+
+    console.log(id);
 
     if (currentGame) {
       setGame(currentGame);

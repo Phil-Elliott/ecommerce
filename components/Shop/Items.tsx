@@ -16,7 +16,7 @@ const Items = ({ games }: ItemsProps) => {
           key={game.name}
           className="bg-white rounded-lg shadow hover:shadow-lg w-full inline-block cursor-pointer select-none h-96"
           onClick={() =>
-            router.push(`/product?id=${encodeURIComponent(game.id)}`)
+            router.push(`/product?id=${encodeURIComponent(game._id)}`)
           }
         >
           <Image

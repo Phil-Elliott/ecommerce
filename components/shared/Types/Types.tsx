@@ -1,5 +1,5 @@
 export type GameProps = {
-  id: number;
+  _id: string;
   name: string;
   image: string;
   price: number;

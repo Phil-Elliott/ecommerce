@@ -10,7 +10,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<GameProps>) => {
-      const item = state.find((item) => item.id === action.payload.id);
+      const item = state.find((item) => item._id === action.payload._id);
       if (item) {
         item.quantity += 1;
       } else if (action.payload.quantity) {
@@ -19,8 +19,8 @@ const cartSlice = createSlice({
         state.push({ ...action.payload, quantity: 1 });
       }
     },
-    removeFromCart: (state, action: PayloadAction<number>) => {
-      const index = state.findIndex((item) => item.id === action.payload);
+    removeFromCart: (state, action: PayloadAction<string>) => {
+      const index = state.findIndex((item) => item._id === action.payload);
       if (index !== -1) {
         // const item = state[index];
         // item.quantity -= 1;
@@ -31,9 +31,9 @@ const cartSlice = createSlice({
     },
     changeQuantity: (
       state,
-      action: PayloadAction<{ id: number; quantity: number }>
+      action: PayloadAction<{ id: string; quantity: number }>
     ) => {
-      const item = state.find((item) => item.id === action.payload.id);
+      const item = state.find((item) => item._id === action.payload.id);
       if (item) {
         item.quantity = action.payload.quantity;
       }

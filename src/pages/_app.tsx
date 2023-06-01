@@ -99,10 +99,15 @@ function SyncLocalStorageWithStore() {
 
 /*
 
-1) Could have a user that gets sit when logged in or signed up
-2) Fix the login and signup forms to save cookie for grabbing other data
-        - think it already does. Might not be much more for you to do
+
 3) Plug in both wishList and cart to the server
+
+- need to look at the code from before that checks if user is loggedin
+- Get that working
+- work on the slices that will make api calls
+- test that everything is working
+
+
 4) Work on quantity
 5) Start fixing up the styles
 
