@@ -6,7 +6,7 @@ import { GameProps } from "components/shared/Types/Types";
 import Signin from "components/Signin/Signin";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "../../redux/store";
 import { addToCart } from "redux/slices/cartSlice";
 import { addToList } from "redux/slices/wishListSlice";

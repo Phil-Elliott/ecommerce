@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "redux/slices/userSlice";
 
 type LoginProps = {
   handleFormChange: () => void;
@@ -21,6 +23,8 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
     setPassword(e.target.value);
   };
 
+  const dispatch = useDispatch();
+
   // Handling the form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,7 +39,7 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
         },
         { withCredentials: true }
       );
-      console.log(response.data.data.user);
+      dispatch(setUser(response.data.data.user));
     } catch (error: any) {
       console.log(error);
     }
