@@ -35,20 +35,6 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
         },
         { withCredentials: true }
       );
-      console.log(response);
-      // let jwt = response.data.jwt;
-      // localStorage.setItem("jwt", jwt);
-
-      // Redirect to the dashboard
-      // if (jwt) {
-      //   console.log(response.data.user);
-      //   closeModal();
-      //   localStorage.setItem("email", response.data.user.email);
-      //   localStorage.setItem("username", response.data.user.username);
-      //   // dispatch(setJwt(jwt));
-      //   // dispatch(setUser(response.data.user));
-      //   // navigate("/dashboard/");
-      // }
     } catch (error: any) {
       setError(error.response.data.message);
     }

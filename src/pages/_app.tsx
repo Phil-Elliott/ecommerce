@@ -10,25 +10,36 @@ import { Provider, useDispatch } from "react-redux";
 import store from "../../redux/store";
 import { addToCart } from "redux/slices/cartSlice";
 import { addToList } from "redux/slices/wishListSlice";
+import axios from "axios";
+import Spinner from "components/shared/Spinner/Spinner";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [games, setGames] = useState<GameProps[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/games")
-      .then((response) => response.json())
-      .then((data) => {
-        // If there is a status field and it's set to 'success', use the games data.
+    const fetchData = async () => {
+      try {
+        setIsLoading(true); // add this line
+        const response = await axios.get("http://localhost:3000/api/v1/games");
+        const data = response.data;
+
         if (data.status === "success") {
           setGames(data.data.games);
         } else {
           console.error("Error fetching games:", data);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error:", error);
-      });
+      } finally {
+        // setTimeout(() => {
+        setIsLoading(false);
+        // }, 1000);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -50,7 +61,7 @@ export default function App({ Component, pageProps }: AppProps) {
             </Dialog.Content>
           </Dialog.Portal>
           <SyncLocalStorageWithStore />
-          <Component {...pageProps} games={games} />
+          {isLoading ? null : <Component {...pageProps} games={games} />}
         </Layout>
       </Dialog.Root>
     </Provider>
@@ -61,8 +72,6 @@ function SyncLocalStorageWithStore() {
   const [isClient, setClient] = useState(false);
   const dispatch = useDispatch();
 
-  // This useEffect will run once after the component mounts,
-  // indicating that we're now on the client-side.
   useEffect(() => {
     setClient(true);
   }, []);
@@ -91,8 +100,9 @@ function SyncLocalStorageWithStore() {
 
 /*
 
-1) Get the game data from the server
+1) Could have a user that gets sit when logged in or signed up
 2) Fix the login and signup forms to save cookie for grabbing other data
+        - think it already does. Might not be much more for you to do
 3) Plug in both wishList and cart to the server
 4) Work on quantity
 5) Start fixing up the styles
