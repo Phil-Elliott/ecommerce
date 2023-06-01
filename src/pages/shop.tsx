@@ -21,6 +21,10 @@ const shop = ({ games }: ShopProps) => {
   });
   const [sortBy, setSortBy] = useState<string>("releaseDate");
 
+  useEffect(() => {
+    console.log("shop");
+  }, []);
+
   const router = useRouter();
   const searchQuery = router.query.search as string;
 
