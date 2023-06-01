@@ -13,7 +13,7 @@ const Items = ({ games }: ItemsProps) => {
     <div className="grid grid-cols-3 gap-10 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {games.map((game) => (
         <div
-          key={game.id}
+          key={game.name}
           className="bg-white rounded-lg shadow hover:shadow-lg w-full inline-block cursor-pointer select-none h-96"
           onClick={() =>
             router.push(`/product?id=${encodeURIComponent(game.id)}`)

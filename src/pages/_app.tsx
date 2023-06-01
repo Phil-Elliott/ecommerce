@@ -85,7 +85,6 @@ function SyncLocalStorageWithStore() {
         localStorage.getItem("wishList") || "[]"
       );
 
-      console.log(cartFromLocalStorage);
       cartFromLocalStorage.forEach((item: GameProps) =>
         dispatch(addToCart(item))
       );

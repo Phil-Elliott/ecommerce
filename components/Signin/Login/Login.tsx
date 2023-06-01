@@ -35,8 +35,9 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
         },
         { withCredentials: true }
       );
+      console.log(response.data.data.user);
     } catch (error: any) {
-      setError(error.response.data.message);
+      console.log(error);
     }
   };
 
