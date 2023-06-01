@@ -28,7 +28,6 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
   // Handling the form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email, password);
 
     try {
       const response = await axios.post(

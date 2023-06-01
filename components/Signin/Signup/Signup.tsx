@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "redux/slices/userSlice";
 
 type SignupProps = {
   handleFormChange: () => void;
@@ -12,6 +14,8 @@ const Signup = ({ handleFormChange, closeModal }: SignupProps) => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [attempted, setAttempted] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   // Handling the name change
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +37,7 @@ const Signup = ({ handleFormChange, closeModal }: SignupProps) => {
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setAttempted(true);
@@ -49,31 +53,20 @@ const Signup = ({ handleFormChange, closeModal }: SignupProps) => {
       return;
     }
 
-    axios
-      .post("http://localhost:3000/api/v1/auth/register", {
-        name: username,
-        email: email,
-        password: password,
-        passwordConfirm: confirmPassword,
-      })
-      .then((response) => {
-        console.log("User profile", response);
-        // console.log("User token", response.data.jwt);
-        // let jwt = response.data.jwt;
-        // localStorage.setItem("jwt", jwt);
-
-        // Redirect to the dashboard
-        // if (jwt) {
-        //   closeModal();
-        //   localStorage.setItem("email", response.data.user.email);
-        //   localStorage.setItem("username", response.data.user.username);
-        //   // dispatch(setJwt(jwt));   Might be able to survive on localstate
-        //   // dispatch(setUser(response.data.user)); could also put this in local state or just make context state or normal state
-        // }
-      })
-      .catch((error) => {
-        console.log("An error occurred:", error.response);
-      });
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/auth/register",
+        {
+          name: username,
+          email: email,
+          password: password,
+          passwordConfirm: confirmPassword,
+        }
+      );
+      dispatch(setUser(response.data.data.user));
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
