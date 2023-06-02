@@ -3,5 +3,6 @@ import { useWindowResize } from "./Hooks/useWindowResize";
 import Modal from "./Modal/Modal";
 import Popup from "./Popup/Popup";
 import Spinner from "./Spinner/Spinner";
+import { Ratings } from "./Ratings/Ratings";
 
-export { Button, useWindowResize, Modal, Popup, Spinner };
+export { Button, useWindowResize, Modal, Popup, Spinner, Ratings };

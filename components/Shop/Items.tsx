@@ -3,6 +3,7 @@ import Image from "next/image";
 import HeroImg from "/assets/hero.jpg";
 import { GameProps } from "components/shared/Types/Types";
 import router from "next/router";
+import { Ratings } from "components/shared";
 
 type ItemsProps = {
   games: GameProps[];
@@ -14,7 +15,7 @@ const Items = ({ games }: ItemsProps) => {
       {games.map((game) => (
         <div
           key={game.name}
-          className="bg-white rounded-lg shadow hover:shadow-lg w-full inline-block cursor-pointer select-none h-96"
+          className="bg-gray-50 rounded-lg hover:shadow-md w-full inline-block cursor-pointer select-none h-96"
           onClick={() =>
             router.push(`/product?id=${encodeURIComponent(game._id)}`)
           }
@@ -25,11 +26,18 @@ const Items = ({ games }: ItemsProps) => {
             className="w-full h-2/3 object-cover rounded-t-lg"
           />
           <div className="p-4 h-1/3 flex flex-col justify-between">
-            <h1 className="text-lg font-semibold pb-4 whitespace-normal">
-              {game.name}
-            </h1>
+            <div>
+              <h1 className="text-base font-medium pb-2 whitespace-normal">
+                {game.name} - {game.platform}
+              </h1>
+              <div className="flex space-x-2 items-center text-sm">
+                <Ratings rating={game.rating} />
+                <p>{game.rating}</p>
+                <p className="text-gray-500">(12)</p>
+              </div>
+            </div>
             {/* <p className="text-gray-500">{game.releaseDate}</p> */}
-            <p className="text-gray-500">${game.price}</p>
+            <p className="text-lg font-semibold">${game.price}</p>
           </div>
         </div>
       ))}
