@@ -14,6 +14,10 @@ const Cart = () => {
 
   const removeFromCart = useRemoveFromCart();
 
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
+
   return (
     <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
       <h1 className="text-4xl mb-5">Shopping Cart</h1>

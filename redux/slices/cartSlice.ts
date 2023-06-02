@@ -46,14 +46,20 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCartLocal: (state, action: PayloadAction<GameProps>) => {
-      const item = state.find((item) => item._id === action.payload._id);
-      if (item) {
-        item.quantity += 1;
-      } else if (action.payload.quantity) {
-        state.push({ ...action.payload, quantity: action.payload.quantity });
+      const itemIndex = state.findIndex(
+        (item) => item._id === action.payload._id
+      );
+
+      if (itemIndex !== -1) {
+        // item exists in cart already, increase quantity
+        state[itemIndex].quantity += 1;
       } else {
+        // item does not exist in cart, add it
         state.push({ ...action.payload, quantity: 1 });
       }
+    },
+    setCartFromLocal: (state, action: PayloadAction<CartItem[]>) => {
+      return action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -77,7 +83,7 @@ const cartSlice = createSlice({
 });
 
 export { addToCart, removeFromCart, fetchCart };
-export const { addToCartLocal } = cartSlice.actions;
+export const { addToCartLocal, setCartFromLocal } = cartSlice.actions;
 export default cartSlice.reducer;
 
 /*

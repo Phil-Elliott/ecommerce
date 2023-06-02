@@ -99,7 +99,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
 /*
 
-Allow logout
 Make sure local storage is working
 Start working on other cart functions
 Do all of the wishList stuff

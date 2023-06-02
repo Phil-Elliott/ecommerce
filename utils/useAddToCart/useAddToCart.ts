@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GameProps } from "components/shared/Types/Types";
-import { addToCart } from "../../redux/slices/cartSlice";
+import { addToCart, addToCartLocal } from "../../redux/slices/cartSlice";
 import { AppDispatch } from "redux/store";
 
 export function useAddToCart() {
@@ -8,10 +8,11 @@ export function useAddToCart() {
   const userData = useSelector((state: any) => state.user);
 
   return (product: GameProps) => {
-    if (userData) {
+    if (userData.email) {
       dispatch(addToCart(product));
     } else {
       if (typeof window !== "undefined") {
+        dispatch(addToCartLocal(product));
         const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
         const itemIndex = currentCart.findIndex(
           (item: GameProps) => item._id === product._id
@@ -22,6 +23,7 @@ export function useAddToCart() {
           currentCart[itemIndex].quantity += 1;
         } else {
           // If item doesn't exist in the cart, add it with quantity 1
+          console.log("what what");
           currentCart.push({ ...product, quantity: 1 });
         }
 
