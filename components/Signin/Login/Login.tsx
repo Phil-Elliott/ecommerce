@@ -39,6 +39,7 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
         { withCredentials: true }
       );
       dispatch(setUser(response.data.data.user));
+      closeModal();
     } catch (error: any) {
       console.log(error);
     }

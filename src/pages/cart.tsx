@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { changeQuantity } from "../../redux/slices/cartSlice";
+// import { changeQuantity } from "../../redux/slices/cartSlice";
 import { addToList } from "redux/slices/wishListSlice";
 
 import { RootState } from "../../redux/store";
@@ -21,7 +21,7 @@ const Cart = () => {
         {cart.length > 0 ? (
           cart.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="flex justify-between items-center w-full mb-6 p-4 bg-white rounded shadow-lg"
             >
               <img
@@ -39,18 +39,18 @@ const Cart = () => {
                   min="1"
                   className="border rounded w-20 text-center mr-2"
                   value={product.quantity}
-                  onChange={(e) =>
-                    dispatch(
-                      changeQuantity({
-                        id: product.id,
-                        quantity: parseInt(e.target.value),
-                      })
-                    )
-                  }
+                  // onChange={(e) =>
+                  //   dispatch(
+                  //     changeQuantity({
+                  //       id: product.id,
+                  //       quantity: parseInt(e.target.value),
+                  //     })
+                  //   )
+                  // }
                 />
                 <BsTrash
                   className="text-xl cursor-pointer text-red-500"
-                  onClick={() => removeFromCart(product.id)}
+                  // onClick={() => removeFromCart(product.id)}
                 />
               </div>
               <div className="flex items-center">

@@ -30,8 +30,6 @@ const product = ({ games }: ProductProps) => {
   useEffect(() => {
     const currentGame = id ? games.find((game) => game._id === id) : null;
 
-    console.log(id);
-
     if (currentGame) {
       setGame(currentGame);
     }

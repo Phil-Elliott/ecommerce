@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GameProps } from "components/shared/Types/Types";
 import { addToCart } from "../../redux/slices/cartSlice";
+import { AppDispatch } from "redux/store";
 
 export function useAddToCart() {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const userData = useSelector((state: any) => state.user);
 
   return (product: GameProps) => {
     if (userData) {
-      // dispatch(addToCart(product));
-      console.log("logged in");
+      dispatch(addToCart(product));
     } else {
       if (typeof window !== "undefined") {
         const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");

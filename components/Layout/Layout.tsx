@@ -4,6 +4,9 @@ import Footer from "./Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUser } from "redux/slices/userSlice";
+import { addToCartLocal, fetchCart } from "redux/slices/cartSlice";
+import { AppDispatch } from "redux/store";
+import { GameProps } from "components/shared/Types/Types";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -11,7 +14,7 @@ type LayoutProps = {
 };
 
 const Layout = ({ children, signInButton }: LayoutProps) => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
@@ -22,12 +25,19 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
           { withCredentials: true }
         );
 
-        console.log(response.data);
-
         if (response.data.status === "success") {
           dispatch(setUser(response.data.data.user));
+          // get server stuff
+          dispatch(fetchCart());
         } else {
           console.log("Not logged in");
+          // User is not logged in, so get local storage cart and wishList items
+          const cartFromLocalStorage = JSON.parse(
+            localStorage.getItem("cart") || "[]"
+          );
+          cartFromLocalStorage.forEach((item: GameProps) =>
+            dispatch(addToCartLocal(item))
+          );
         }
       } catch (err) {
         console.log(err);
@@ -54,3 +64,36 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
 };
 
 export default Layout;
+
+/*
+
+// function SyncLocalStorageWithStore() {
+//   const [isClient, setClient] = useState(false);
+//   const dispatch: AppDispatch = useDispatch();
+
+//   useEffect(() => {
+//     setClient(true);
+//   }, []);
+
+//   useEffect(() => {
+//     if (isClient) {
+//       const cartFromLocalStorage = JSON.parse(
+//         localStorage.getItem("cart") || "[]"
+//       );
+//       const wishlistFromLocalStorage = JSON.parse(
+//         localStorage.getItem("wishList") || "[]"
+//       );
+
+//       cartFromLocalStorage.forEach((item: GameProps) =>
+//         dispatch(addToCart(item))
+//       );
+//       wishlistFromLocalStorage.forEach((item: GameProps) =>
+//         dispatch(addToList(item))
+//       );
+//     }
+//   }, [dispatch, isClient]);
+
+//   return null;
+// }
+
+*/

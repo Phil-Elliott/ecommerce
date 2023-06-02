@@ -6,7 +6,7 @@ import { GameProps } from "components/shared/Types/Types";
 
 // Mock game data for testing
 const mockGame: GameProps = {
-  id: 1,
+  _id: "1234567890",
   name: "Test Game",
   image: "test-game.jpg",
   price: 50,

@@ -64,6 +64,7 @@ const Signup = ({ handleFormChange, closeModal }: SignupProps) => {
         }
       );
       dispatch(setUser(response.data.data.user));
+      closeModal();
     } catch (error: any) {
       console.log(error);
     }

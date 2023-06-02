@@ -7,7 +7,7 @@ import Signin from "components/Signin/Signin";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Provider, useDispatch, useSelector } from "react-redux";
-import store from "../../redux/store";
+import store, { AppDispatch } from "../../redux/store";
 import { addToCart } from "redux/slices/cartSlice";
 import { addToList } from "redux/slices/wishListSlice";
 import axios from "axios";
@@ -60,7 +60,7 @@ export default function App({ Component, pageProps }: AppProps) {
               </Dialog.Close>
             </Dialog.Content>
           </Dialog.Portal>
-          <SyncLocalStorageWithStore />
+          {/* <SyncLocalStorageWithStore /> */}
           {isLoading ? null : <Component {...pageProps} games={games} />}
         </Layout>
       </Dialog.Root>
@@ -68,36 +68,53 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 }
 
-function SyncLocalStorageWithStore() {
-  const [isClient, setClient] = useState(false);
-  const dispatch = useDispatch();
+// function SyncLocalStorageWithStore() {
+//   const [isClient, setClient] = useState(false);
+//   const dispatch: AppDispatch = useDispatch();
 
-  useEffect(() => {
-    setClient(true);
-  }, []);
+//   useEffect(() => {
+//     setClient(true);
+//   }, []);
 
-  useEffect(() => {
-    if (isClient) {
-      const cartFromLocalStorage = JSON.parse(
-        localStorage.getItem("cart") || "[]"
-      );
-      const wishlistFromLocalStorage = JSON.parse(
-        localStorage.getItem("wishList") || "[]"
-      );
+//   useEffect(() => {
+//     if (isClient) {
+//       const cartFromLocalStorage = JSON.parse(
+//         localStorage.getItem("cart") || "[]"
+//       );
+//       const wishlistFromLocalStorage = JSON.parse(
+//         localStorage.getItem("wishList") || "[]"
+//       );
 
-      cartFromLocalStorage.forEach((item: GameProps) =>
-        dispatch(addToCart(item))
-      );
-      wishlistFromLocalStorage.forEach((item: GameProps) =>
-        dispatch(addToList(item))
-      );
-    }
-  }, [dispatch, isClient]);
+//       cartFromLocalStorage.forEach((item: GameProps) =>
+//         dispatch(addToCart(item))
+//       );
+//       wishlistFromLocalStorage.forEach((item: GameProps) =>
+//         dispatch(addToList(item))
+//       );
+//     }
+//   }, [dispatch, isClient]);
 
-  return null;
-}
+//   return null;
+// }
 
 /*
+
+Allow logout
+Make sure local storage is working
+Start working on other cart functions
+Do all of the wishList stuff
+Style the fuck out of this thing
+
+MAybe change name of function
+1) Check if user is logged in (can do with selector state)
+2) Maybe put this in utils as well
+3) Could have it called on layout after login is processed
+
+1) Check if user is logged in
+2) If user is logged in, get the cart and wishlist from the server
+3) If user is not logged in, get the cart and wishlist from local storage
+
+1) Might need to go back and change the slice to include old stuff
 
 
 3) Plug in both wishList and cart to the server
@@ -110,6 +127,13 @@ function SyncLocalStorageWithStore() {
 
 4) Work on quantity
 5) Start fixing up the styles
+6) Have user show as signed in and close model after signing in
+7) Work on providing other options
+     - log out
+     - my account
+     - my orders
+     - change password
+     - forgot password
 
 
 1) Handle logging in the user (need to save jwt or something)
