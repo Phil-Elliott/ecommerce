@@ -6,7 +6,6 @@ const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
   const { data } = await axios.get("http://localhost:3000/api/v1/cart", {
     withCredentials: true,
   });
-  // console.log("fetched", data.data.cartItems[0].items);
   return data;
 });
 
@@ -20,7 +19,8 @@ const addToCart = createAsyncThunk(
         withCredentials: true,
       }
     );
-    return data;
+    console.log(data);
+    return product;
   }
 );
 
@@ -58,6 +58,12 @@ const cartSlice = createSlice({
         state.push({ ...action.payload, quantity: 1 });
       }
     },
+    removeFromCartLocal: (state, action: PayloadAction<string>) => {
+      const index = state.findIndex((item) => item._id === action.payload);
+      if (index !== -1) {
+        state.splice(index, 1);
+      }
+    },
     setCartFromLocal: (state, action: PayloadAction<CartItem[]>) => {
       return action.payload;
     },
@@ -74,7 +80,17 @@ const cartSlice = createSlice({
         });
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        return action.payload.cart;
+        const itemIndex = state.findIndex(
+          (item) => item._id === action.payload._id
+        );
+
+        if (itemIndex !== -1) {
+          // Item exists in cart already, increase quantity
+          state[itemIndex].quantity += 1;
+        } else {
+          // Item does not exist in cart, add it
+          state.push({ ...action.payload, quantity: 1 });
+        }
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
         return state.filter((item) => item._id !== action.payload._id);
@@ -83,7 +99,8 @@ const cartSlice = createSlice({
 });
 
 export { addToCart, removeFromCart, fetchCart };
-export const { addToCartLocal, setCartFromLocal } = cartSlice.actions;
+export const { addToCartLocal, setCartFromLocal, removeFromCartLocal } =
+  cartSlice.actions;
 export default cartSlice.reducer;
 
 /*

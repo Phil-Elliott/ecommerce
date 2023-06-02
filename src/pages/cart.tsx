@@ -54,7 +54,7 @@ const Cart = () => {
                 />
                 <BsTrash
                   className="text-xl cursor-pointer text-red-500"
-                  // onClick={() => removeFromCart(product.id)}
+                  onClick={() => removeFromCart(product._id)}
                 />
               </div>
               <div className="flex items-center">
