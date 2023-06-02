@@ -14,10 +14,6 @@ const Cart = () => {
 
   const removeFromCart = useRemoveFromCart();
 
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
-
   return (
     <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
       <h1 className="text-4xl mb-5">Shopping Cart</h1>
@@ -43,14 +39,7 @@ const Cart = () => {
                   min="1"
                   className="border rounded w-20 text-center mr-2"
                   value={product.quantity}
-                  // onChange={(e) =>
-                  //   dispatch(
-                  //     changeQuantity({
-                  //       id: product.id,
-                  //       quantity: parseInt(e.target.value),
-                  //     })
-                  //   )
-                  // }
+                  onChange={(e) => console.log("changed")}
                 />
                 <BsTrash
                   className="text-xl cursor-pointer text-red-500"
@@ -77,6 +66,8 @@ const Cart = () => {
 export default Cart;
 
 /*
+
+cart not updating when adding items to server (server working tho)
 
 Product List: This is a list or grid display of all the products in the cart. Each item in the list might display the product name, image, price, and quantity.
 

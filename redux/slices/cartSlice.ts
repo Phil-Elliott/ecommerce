@@ -19,7 +19,6 @@ const addToCart = createAsyncThunk(
         withCredentials: true,
       }
     );
-    console.log(data);
     return product;
   }
 );
@@ -28,12 +27,12 @@ const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async (id: string) => {
     const { data } = await axios.delete(
-      `http://localhost:3000/api/v1/cart/${id}`,
+      `http://localhost:3000/api/v1/cart/remove/${id}`,
       {
         withCredentials: true,
       }
     );
-    return data;
+    return id;
   }
 );
 
@@ -93,7 +92,10 @@ const cartSlice = createSlice({
         }
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
-        return state.filter((item) => item._id !== action.payload._id);
+        const index = state.findIndex((item) => item._id === action.payload);
+        if (index !== -1) {
+          state.splice(index, 1);
+        }
       });
   },
 });
