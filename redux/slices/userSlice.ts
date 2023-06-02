@@ -1,4 +1,22 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async (_, { dispatch }) => {
+    const response = await axios.get(
+      "http://localhost:3000/api/v1/auth/logout",
+      { withCredentials: true }
+    );
+
+    // Check if the logout was successful
+    if (response.status === 200 && response.data.status === "success") {
+      dispatch(clearUser()); // logout was successful, clear the user
+    } else {
+      throw new Error("Logout failed"); // logout failed, throw an error
+    }
+  }
+);
 
 type UserProps = {
   id: string;

@@ -5,6 +5,9 @@ import { AiOutlineSearch, AiOutlineHeart, AiFillShop } from "react-icons/ai";
 import { BsPersonCircle } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import router from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "redux/store";
+import { logoutUser } from "redux/slices/userSlice";
 
 type HeaderProps = {
   signInButton: VoidFunction;
@@ -13,6 +16,17 @@ type HeaderProps = {
 const Header = ({ signInButton }: HeaderProps) => {
   const [query, setQuery] = useState("");
   const [hiddenHeader, setHiddenHeader] = useState(false);
+  const user = useSelector((state: RootState) => state.user);
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const handleUserButton = () => {
+    if (user.email) {
+      dispatch(logoutUser());
+    } else {
+      signInButton();
+    }
+  };
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -61,9 +75,14 @@ const Header = ({ signInButton }: HeaderProps) => {
           />
         </div>
         <div className="flex items-center lg:space-x-12 space-x-6 cursor-pointer">
-          <div onClick={signInButton} className="flex items-center space-x-3">
+          <div
+            onClick={handleUserButton}
+            className="flex items-center space-x-3"
+          >
             <BsPersonCircle className="text-xl" />
-            <p className="lg:block hidden">Sign in</p>
+            <p className="lg:block hidden">
+              {user.email ? "Sign Out" : "Sign In"}
+            </p>
           </div>
 
           <Link
