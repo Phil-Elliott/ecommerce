@@ -11,6 +11,10 @@ import {
 } from "redux/slices/cartSlice";
 import { AppDispatch } from "redux/store";
 import { GameProps } from "components/shared/Types/Types";
+import {
+  fetchWishList,
+  setWishListFromLocal,
+} from "redux/slices/wishListSlice";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -27,6 +31,10 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
     dispatch(setCartFromLocal(cartItems));
   };
 
+  const setWishListFromLocalStorage = (wishListItems: GameProps[]) => {
+    dispatch(setWishListFromLocal(wishListItems));
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -39,12 +47,18 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
           dispatch(setUser(response.data.data.user));
           // get server stuff
           dispatch(fetchCart());
+          dispatch(fetchWishList());
         }
       } catch (err) {
         const cartFromLocalStorage: CartItem[] = JSON.parse(
           localStorage.getItem("cart") || "[]"
         );
         setCartFromLocalStorage(cartFromLocalStorage);
+
+        const wishListFromLocalStorage: GameProps[] = JSON.parse(
+          localStorage.getItem("wishList") || "[]"
+        );
+        setWishListFromLocalStorage(wishListFromLocalStorage);
       }
     };
 

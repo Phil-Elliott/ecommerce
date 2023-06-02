@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { useEffect } from "react";
 
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,10 @@ const WishList = () => {
   const addToCart = useAddToCart();
   const removeFromList = useRemoveFromWishList();
 
+  useEffect(() => {
+    console.log(list);
+  }, [list]);
+
   return (
     <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
       <h1 className="text-4xl mb-5">Wish List</h1>
@@ -22,7 +26,7 @@ const WishList = () => {
         {list.length > 0 ? (
           list.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="flex justify-between items-center w-full mb-6 p-4 bg-white rounded shadow-lg"
             >
               <img
@@ -37,7 +41,7 @@ const WishList = () => {
               <div className="flex items-center">
                 <BsTrash
                   className="text-xl cursor-pointer text-red-500"
-                  onClick={() => removeFromList(product.id)}
+                  onClick={() => removeFromList(product._id)}
                 />
                 <FiShoppingCart
                   className="ml-4 text-xl cursor-pointer text-green-500"

@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-// import { changeQuantity } from "../../redux/slices/cartSlice";
-import { addToList } from "redux/slices/wishListSlice";
 
 import { RootState } from "../../redux/store";
 import { useRemoveFromCart } from "utils/useRemoveFromCart/useRemoveFromCart";
+import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
 
   const removeFromCart = useRemoveFromCart();
+  const addToList = useAddToWishList();
 
   return (
     <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
@@ -50,7 +50,7 @@ const Cart = () => {
                 <p>Total: ${(product.price * product.quantity).toFixed(2)}</p>
                 <AiOutlineHeart
                   className="ml-4 text-xl cursor-pointer text-red-500"
-                  onClick={() => dispatch(addToList(product))}
+                  onClick={() => addToList(product)}
                 />
               </div>
             </div>
