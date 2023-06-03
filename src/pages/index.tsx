@@ -11,7 +11,7 @@ type HomeProps = {
 
 export default function Home({ games }: HomeProps) {
   return (
-    <div className="mb-10">
+    <div className="mb-10 bg-Primary">
       <Head>
         <title>Home</title>
         <meta name="description" content="Take a look at what we sell" />

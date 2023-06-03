@@ -49,12 +49,13 @@ module.exports = {
       },
 
       colors: {
-        Primary: "#0FF",
-        Secondary: "#39FF14",
-        Tertiary: "#FF1493",
+        Primary: "#FFFFFF",
+        Secondary: "#FF6C00",
+        Tertiary: "#EC0030",
         Quaternary: "#7D26CD",
         Border: "rgba(26, 28, 26, 0.9)",
         Black: "#1d1d1b",
+        LightWhite: "#F5F5F5",
       },
     },
   },

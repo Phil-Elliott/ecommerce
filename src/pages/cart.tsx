@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useRemoveFromCart } from "utils/useRemoveFromCart/useRemoveFromCart";
 import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
+import { Ratings } from "components/shared";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -38,12 +39,18 @@ const Cart = () => {
                       src={`/images/${product.image}`}
                       alt={product.name}
                     />
-                    <div className="ml-4">
-                      <h2 className="font-medium">{product.name}</h2>
+                    <div className="text-sm space-y-2">
+                      <h2 className="font-medium text-base">{product.name}</h2>
+                      <p>{product.platform}</p>
+                      <div className="flex space-x-2 items-center text-sm">
+                        <Ratings rating={product.rating} />
+                        <p>{product.rating}</p>
+                        <p className="text-gray-500">(12)</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 cursor-pointer">
+                  <div className="flex items-center gap-4 text-sm">
+                    <div className="flex items-center gap-1 cursor-pointer hover:text-red-500 transition duration-300">
                       <AiOutlineHeart
                         className="text-red-500"
                         onClick={() => addToList(product)}
@@ -51,7 +58,7 @@ const Cart = () => {
                       <p>Save</p>
                     </div>
                     <div
-                      className="flex items-center gap-2 cursor-pointer"
+                      className="flex items-center gap-1 cursor-pointer hover:text-red-500 transition duration-300"
                       onClick={() => removeFromCart(product._id)}
                     >
                       <BsTrash className="text-red-500" />
@@ -75,7 +82,7 @@ const Cart = () => {
               </div>
             ))
           ) : (
-            <p>Your cart is empty</p>
+            <p className="p-20 text-center">Your cart is empty</p>
           )}
         </div>
       </div>
