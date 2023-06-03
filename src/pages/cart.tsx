@@ -15,8 +15,105 @@ const Cart = () => {
   const addToList = useAddToWishList();
 
   return (
-    <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
-      <h1 className="text-4xl mb-5">Shopping Cart</h1>
+    <div className="container mx-auto grid grid-cols-3 gap-5 items-start min-h-screen pb-10 pt-28 bg-gray-100">
+      <div className="bg-white w-full col-span-2 rounded">
+        <h1 className="text-3xl mb-0 p-4">Your Shopping Cart</h1>
+        <div className="grid grid-cols-5 gap-4 items-center w-full p-4 border-b-2 border-gray-200">
+          <p className="col-span-2">Item</p>
+          <p>Price</p>
+          <p>Quantity</p>
+          <p>Total</p>
+        </div>
+        <div>
+          {cart.length > 0 ? (
+            cart.map((product) => (
+              <div
+                key={product._id}
+                className="grid grid-cols-5 gap-4  w-full p-4 bg-white rounded border-b-2 border-gray-200"
+              >
+                <div className="col-span-2 space-y-5">
+                  <div className="flex space-x-10 ">
+                    <img
+                      className="w-16 h-16"
+                      src={`/images/${product.image}`}
+                      alt={product.name}
+                    />
+                    <div className="ml-4">
+                      <h2 className="font-medium">{product.name}</h2>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 cursor-pointer">
+                      <AiOutlineHeart
+                        className="text-red-500"
+                        onClick={() => addToList(product)}
+                      />
+                      <p>Save</p>
+                    </div>
+                    <div
+                      className="flex items-center gap-2 cursor-pointer"
+                      onClick={() => removeFromCart(product._id)}
+                    >
+                      <BsTrash className="text-red-500" />
+                      <p>Remove</p>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600">${product.price}</p>
+                <div className="flex items-start">
+                  <input
+                    type="number"
+                    min="1"
+                    className="border rounded w-20 text-center mr-2"
+                    value={product.quantity}
+                    onChange={(e) => console.log("changed")}
+                  />
+                </div>
+                <div className="flex ">
+                  <p>{(product.price * product.quantity).toFixed(2)}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>Your cart is empty</p>
+          )}
+        </div>
+      </div>
+      <div className="bg-white w-full rounded">
+        <h1 className="text-xl mb-0 border-b-2 border-gray-200 p-4">
+          Order Summary
+        </h1>
+        <div className="p-4">
+          <div className="flex justify-between items-center mb-4">
+            <p>Subtotal</p>
+            <p>${cart.reduce((acc, curr) => acc + curr.price, 0)}</p>
+          </div>
+          <div className="flex justify-between items-center mb-4">
+            <p>Shipping</p>
+            <p>Free</p>
+          </div>
+          <div className="flex justify-between items-center pb-4 mb-4 border-b-2 border-gray-200">
+            <p>Tax</p>
+            <p>${cart.reduce((acc, curr) => acc + curr.price, 0) * 0.1}</p>
+          </div>
+          <div className="flex justify-between items-center mb-4">
+            <p>Total</p>
+            <p> ${cart.reduce((acc, curr) => acc + curr.price, 0) * 1.1}</p>
+          </div>
+          <button className="w-full bg-black text-white py-2 rounded">
+            Proceed to Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Cart;
+
+/*
+
+<h1 className="text-4xl mb-5">Shopping Cart</h1>
       <div className="w-full flex flex-col items-center pt-10">
         {cart.length > 0 ? (
           cart.map((product) => (
@@ -59,13 +156,6 @@ const Cart = () => {
           <p>Your cart is empty</p>
         )}
       </div>
-    </div>
-  );
-};
-
-export default Cart;
-
-/*
 
 cart not updating when adding items to server (server working tho)
 

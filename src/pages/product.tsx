@@ -8,6 +8,7 @@ import { GameProps } from "components/shared/Types/Types";
 import HeroImg from "/assets/hero.jpg";
 import { useAddToCart } from "utils/useAddToCart/useAddToCart";
 import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
+import { Ratings } from "components/shared";
 
 type ProductProps = {
   games: GameProps[];
@@ -83,19 +84,31 @@ const product = ({ games }: ProductProps) => {
           />
         </div>
       </div>
-      <div className="col-span-3 flex flex-col justify-between py-2">
-        <div>
-          <h1 className="text-3xl mb-2">{game?.name}</h1>
-          <p className="text-lg text-gray-800">{game?.category}</p>
-          <p className="text-lg text-gray-800 mt-5">{game?.rating}</p>
-          <p className="text-lg text-gray-800 mt-5 border-gray border-b-2 pb-5">
+      <div className="col-span-3 flex flex-col justify-between py-2 space-y-4">
+        <div className="flex justify-between flex-col h-full space-y-4">
+          <div>
+            <h1 className="text-4xl font-semibold mb-2">{game?.name}</h1>
+            <p className="text-lg text-gray-600">
+              Publisher: {game?.publisher}
+            </p>
+            <p className="text-lg text-gray-600">System: {game?.platform}</p>
+            <p className="text-lg text-gray-600">Category: {game?.category}</p>
+            <p className="text-lg text-gray-600">
+              Game Modes: {game?.gameModes.join(", ")}
+            </p>
+            <div className="flex space-x-2 items-center">
+              <Ratings rating={game?.rating || 5} />
+              <p>{game?.rating}</p>
+              <p className="text-gray-500">(12) Ratings</p>
+            </div>
+          </div>
+          <p className="text-2xl font-semibold text-gray-800 mt-5 border-gray border-b-0 pb-5">
             ${game?.price}
           </p>
-          <p className="text-lg text-gray-800 mt-5">{game?.description}</p>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col space-y-2">
           <button
-            className="bg-black text-white px-4 py-2 rounded mt-5"
+            className="bg-black text-white px-4 py-2 rounded"
             onClick={() => game && addToCart(game)}
           >
             Add to Cart

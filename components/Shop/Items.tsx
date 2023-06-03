@@ -15,7 +15,7 @@ const Items = ({ games }: ItemsProps) => {
       {games.map((game) => (
         <div
           key={game.name}
-          className="bg-gray-50 rounded-lg hover:shadow-md w-full inline-block cursor-pointer select-none h-96"
+          className="bg-white shadow rounded-lg hover:shadow-md w-full inline-block cursor-pointer select-none h-96"
           onClick={() =>
             router.push(`/product?id=${encodeURIComponent(game._id)}`)
           }
