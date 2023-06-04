@@ -10,7 +10,8 @@ import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 import { logoutUser } from "redux/slices/userSlice";
-import { MobileHeader } from "components/shared";
+import { MobileHeader, Popup } from "components/shared";
+import { ChevronRightIcon } from "@radix-ui/react-icons";
 
 type HeaderProps = {
   signInButton: VoidFunction;
@@ -61,13 +62,49 @@ const Header = ({ signInButton }: HeaderProps) => {
             <BiGame className="text-2xl" />
             <h1 className="text-xl font-bold">RetroGames</h1>
           </Link>
+
           <p className="cursor-pointer lg:block hidden  h-full rounded hover:bg-gradient-bg py-1 px-3">
             <Link href="/shop">Shop</Link>
           </p>
-          <div className="cursor-pointer lg:flex items-center gap-2 hidden rounded hover:bg-gradient-bg py-1 px-3">
+
+          {/* categories */}
+          <Popup
+            header={
+              <div className="cursor-pointer lg:flex items-center gap-2 hidden rounded hover:bg-gradient-bg py-1 px-3">
+                <p>Categories</p>
+                <BsChevronDown className="" />
+              </div>
+            }
+          >
+            <div className="flex flex-col h-full w-full mt-3">
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+                <p className="pr-10">Video Games</p>
+                <ChevronRightIcon />
+              </div>
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+                <p className="pr-10">Consoles and hardware</p>
+                <ChevronRightIcon />
+              </div>
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+                <p className="">Gamine Accessories</p>
+                <ChevronRightIcon />
+              </div>
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+                <p className="">Clothing</p>
+                <ChevronRightIcon />
+              </div>
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+                <p className="">Deals</p>
+                <ChevronRightIcon />
+              </div>
+            </div>
+          </Popup>
+
+          {/* <div className="cursor-pointer lg:flex items-center gap-2 hidden rounded hover:bg-gradient-bg py-1 px-3">
             <p>Categories</p>
             <BsChevronDown className="" />
-          </div>
+          </div> */}
+
           <div className="relative justify-center items-center lg:w-2/5 w-3/5 lg:flex hidden">
             <AiOutlineSearch className="absolute left-0 ml-3 text-gray-400 text-xl cursor-pointer" />
             <input

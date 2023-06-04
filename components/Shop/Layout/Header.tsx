@@ -70,38 +70,40 @@ const Header = ({
                 </div>
               }
             >
-              <p
-                className="cursor-pointer hover:text-gray-500"
-                onClick={() => {
-                  changeSortBy("date");
-                }}
-              >
-                Start date
-              </p>
-              <p
-                className="cursor-pointer hover:text-gray-500"
-                onClick={() => {
-                  changeSortBy("rating");
-                }}
-              >
-                Rating
-              </p>
-              <p
-                className="cursor-pointer hover:text-gray-500"
-                onClick={() => {
-                  changeSortBy("priceAsc");
-                }}
-              >
-                Price: Low-High
-              </p>
-              <p
-                className="cursor-pointer hover:text-gray-500"
-                onClick={() => {
-                  changeSortBy("priceDesc");
-                }}
-              >
-                Price: High-Low
-              </p>
+              <div className="p-4 flex flex-col items-end">
+                <p
+                  className="cursor-pointer hover:text-gray-500"
+                  onClick={() => {
+                    changeSortBy("date");
+                  }}
+                >
+                  Start date
+                </p>
+                <p
+                  className="cursor-pointer hover:text-gray-500"
+                  onClick={() => {
+                    changeSortBy("rating");
+                  }}
+                >
+                  Rating
+                </p>
+                <p
+                  className="cursor-pointer hover:text-gray-500"
+                  onClick={() => {
+                    changeSortBy("priceAsc");
+                  }}
+                >
+                  Price: Low-High
+                </p>
+                <p
+                  className="cursor-pointer hover:text-gray-500"
+                  onClick={() => {
+                    changeSortBy("priceDesc");
+                  }}
+                >
+                  Price: High-Low
+                </p>
+              </div>
             </Popup>
           </div>
         </div>
