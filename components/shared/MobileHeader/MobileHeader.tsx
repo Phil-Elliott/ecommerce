@@ -35,7 +35,7 @@ const MobileHeader = ({
                 <BsX />
               </button>
             </div>
-            <div className="flex flex-col overflow-y-scroll h-full w-full scrollbar px-4 py-4 pb-20">
+            <div className="flex flex-col overflow-y-scroll h-full w-full scrollbar pb-20">
               {children}
             </div>
           </div>

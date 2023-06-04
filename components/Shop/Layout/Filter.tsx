@@ -230,7 +230,7 @@ const Filter = ({
         closeHandler={closeMobileFilter}
         title="Filter"
       >
-        <div className="pb-4 border-b-2">
+        <div className="p-4 border-b-2">
           <h1 className="text-xl text-base font-medium mb-2">Sort By</h1>
           <div className="flex flex-col space-y-2 font-normal pt-4">
             {["date", "rating", "priceAsc", "priceDesc"].map((option) => (
@@ -266,9 +266,9 @@ const Filter = ({
         {filterOptions.map((filterOption, i) => (
           <div
             key={filterOption.name}
-            className={`border-gray pb-4 ${
+            className={`border-gray p-4 ${
               i !== filterOptions.length - 1 ? "border-b-2" : "border-b-0"
-            } pt-4`}
+            }`}
           >
             <div
               className="flex justify-between items-center cursor-pointer mb-2"

@@ -50,13 +50,20 @@ module.exports = {
 
       colors: {
         Primary: "#FFFFFF",
-        Secondary: "#FF6C00",
-        Tertiary: "#EC0030",
-        Quaternary: "#7D26CD",
+        Secondary: "#EC0030",
+        Tertiary: "#b80025", // darker shade of red
         Border: "rgba(26, 28, 26, 0.9)",
-        Black: "#1d1d1b",
         LightWhite: "#F5F5F5",
       },
+
+      backgroundImage: {
+        "gradient-bg": "linear-gradient(45deg, #EC0030 0%, #b80025 100%)",
+      },
+    },
+  },
+  variants: {
+    extend: {
+      backgroundImage: ["hover", "focus"],
     },
   },
   plugins: [],
