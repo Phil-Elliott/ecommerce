@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { AiOutlineSearch, AiOutlineHeart, AiFillShop } from "react-icons/ai";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { BiGame } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
@@ -49,19 +48,26 @@ const Header = ({ signInButton }: HeaderProps) => {
         hiddenHeader ? "-translate-y-20 " : " translate-y-0"
       }`}
     >
-      <div className="py-3 container mx-auto flex justify-between items-center text-md font-medium select-none h-full">
-        <Link
-          href="/"
-          className="flex gap-2 items-center text-LightWhite hover:text-Primary h-full"
-        >
-          <BiGame className="text-2xl" />
-          <h1 className="text-xl font-bold">RetroGames</h1>
-        </Link>
-        <p className="cursor-pointer lg:block hidden text-LightWhite hover:text-Primary h-full">
+      <div className="container mx-auto flex justify-between items-center text-md font-medium select-none h-full">
+        <div className="cursor-pointer flex space-x-6 py-3">
+          <Link
+            href="/"
+            className="flex gap-2 items-center text-LightWhite hover:text-Primary h-full"
+          >
+            {/* <AiFillShop className="text-2xl" /> */}
+            <BiGame className="text-2xl" />
+            <h1 className="text-xl font-bold">Retro Games</h1>
+          </Link>
+          <p className="cursor-pointer sm:hidden block">
+            <Link href="/shop">Shop</Link>
+          </p>
+          {/* <p className="cursor-pointer sm:hidden block">Categories</p> */}
+        </div>
+        <p className="py-3 cursor-pointer sm:block hidden text-LightWhite hover:text-Primary h-full">
           <Link href="/shop">Shop</Link>
         </p>
-        <p className="cursor-pointer lg:block hidden">Categories</p>
-        <div className="relative justify-center items-center lg:w-2/5 w-3/5 lg:flex hidden">
+        <p className="cursor-pointer sm:block hidden">Categories</p>
+        <div className="relative justify-center items-center lg:w-2/5 w-3/5 sm:flex hidden">
           <AiOutlineSearch className="absolute left-0 ml-3 text-gray-400 text-xl cursor-pointer" />
           <input
             className="bg-gray-100 py-1 px-3 pl-10 rounded text-sm focus:outline-none w-full font-normal text-gray-700"
@@ -74,31 +80,45 @@ const Header = ({ signInButton }: HeaderProps) => {
             }
           />
         </div>
-        <div
-          onClick={handleUserButton}
-          className="lg:flex hidden  items-center space-x-3 text-LightWhite hover:text-Primary"
-        >
-          <BsPersonCircle className="text-xl" />
-          <p className="lg:block hidden">
-            {user.email ? "Sign Out" : "Sign In"}
-          </p>
+        <div className="flex items-center lg:space-x-12 space-x-6 cursor-pointer">
+          <div
+            onClick={handleUserButton}
+            className="flex items-center space-x-3 text-LightWhite hover:text-Primary"
+          >
+            <BsPersonCircle className="text-xl" />
+            <p className="lg:block hidden">
+              {user.email ? "Sign Out" : "Sign In"}
+            </p>
+          </div>
+
+          <Link
+            href="/wishList"
+            className="flex items-center space-x-3 cursor-pointer text-LightWhite hover:text-Primary"
+          >
+            <AiOutlineHeart className="text-xl" />
+            <p className="lg:block hidden">WishList</p>
+          </Link>
+          <Link
+            href="/cart"
+            className="flex items-center space-x-3 cursor-pointer text-LightWhite hover:text-Primary"
+          >
+            <FiShoppingCart className="text-xl" />
+            {/* <p className="lg:block hidden">$0.00</p> */}
+          </Link>
         </div>
-        <Link
-          href="/wishList"
-          className="lg:flex hidden items-center space-x-3 cursor-pointer text-LightWhite hover:text-Primary"
-        >
-          <AiOutlineHeart className="text-xl" />
-          <p className="lg:block hidden">WishList</p>
-        </Link>
-        <Link
-          href="/cart"
-          className="lg:flex hidden  items-center space-x-3 cursor-pointer text-LightWhite hover:text-Primary"
-        >
-          <FiShoppingCart className="text-xl" />
-        </Link>
-        <div className="lg:hidden block text-xl cursor-pointer">
-          <GiHamburgerMenu />
-        </div>
+      </div>
+      <div className="relative justify-center items-center w-full px-4 pb-4 sm:hidden flex">
+        <AiOutlineSearch className="absolute left-0 ml-6 text-gray-400 text-xl cursor-pointer" />
+        <input
+          className="bg-gray-100 py-2 px-3 pl-10 rounded text-base focus:outline-none w-full font-normal text-gray-700"
+          type="text"
+          placeholder="What can we help you find"
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyPress={(e) =>
+            e.key === "Enter" &&
+            router.push(`/shop?search=${encodeURIComponent(query)}`)
+          }
+        />
       </div>
     </div>
   );
