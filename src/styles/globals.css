@@ -90,5 +90,18 @@
 }
 
 .text-shadow {
-  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.open {
+  animation: 0.5s ease-out 0s 1 slideInFromLeft;
 }

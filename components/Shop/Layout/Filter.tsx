@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 import { BsChevronDown, BsX } from "react-icons/bs";
 import { useWindowResize } from "../../shared/Hooks/useWindowResize";
+import { MobileHeader } from "components/shared";
 
 type FilterProps = {
   games: GameProps[];
@@ -224,105 +225,114 @@ const Filter = ({
         </div>
       </div>
 
-      {/* Mobile Filter */}
-      {isMobileFilterOpen ? (
-        <div className="lg:hidden fixed z-50 w-full h-full bg-white top-0 left-0">
-          <div className="flex justify-between items-center px-4 py-4 border-b-2 border-gray-300">
-            <h1 className="text-xl font-medium">Filter</h1>
-            <button className="text-3xl" onClick={closeMobileFilter}>
-              <BsX />
-            </button>
+      <MobileHeader
+        isOpen={isMobileFilterOpen}
+        closeHandler={closeMobileFilter}
+        title="Filter"
+      >
+        <div className="pb-4 border-b-2">
+          <h1 className="text-xl text-base font-medium mb-2">Sort By</h1>
+          <div className="flex flex-col space-y-2 font-normal pt-4">
+            {["date", "rating", "priceAsc", "priceDesc"].map((option) => (
+              <div
+                key={option}
+                className="flex items-center space-x-2 pb-2 relative text-base"
+              >
+                <div className="relative flex">
+                  <input
+                    type="radio"
+                    name="sortBy"
+                    id={option}
+                    value={option}
+                    className="cursor-pointer custom-radio"
+                    checked={
+                      sortBy === option ||
+                      (sortBy === undefined && option === "date")
+                    }
+                    onChange={handleSortByOption}
+                  />
+                </div>
+                <label className="cursor-pointer" htmlFor={option}>
+                  {option === "date" && "Start date"}
+                  {option === "rating" && "Rating"}
+                  {option === "priceAsc" && "Price: Low-High"}
+                  {option === "priceDesc" && "Price: High-Low"}
+                </label>
+              </div>
+            ))}
           </div>
-          <div className="flex flex-col overflow-y-scroll h-full w-full scrollbar px-4 py-4 pb-20">
-            {/* Sort By section */}
-            <div className="pb-4 border-b-2">
-              <h1 className="text-xl text-base font-medium mb-2">Sort By</h1>
-              <div className="flex flex-col space-y-2 font-normal pt-4">
-                {["date", "rating", "priceAsc", "priceDesc"].map((option) => (
+        </div>
+        {/* Filter section */}
+        {filterOptions.map((filterOption, i) => (
+          <div
+            key={filterOption.name}
+            className={`border-gray pb-4 ${
+              i !== filterOptions.length - 1 ? "border-b-2" : "border-b-0"
+            } pt-4`}
+          >
+            <div
+              className="flex justify-between items-center cursor-pointer mb-2"
+              onClick={() => toggleFilterOption(filterOption.name)}
+            >
+              <h1 className="text-xl text-base font-medium">
+                {filterOption.name}s
+              </h1>
+              <BsChevronDown className="text-lg" />
+            </div>
+            {filterOption.show ? (
+              <div className="pt-4">
+                {filterOption.options.map((option) => (
                   <div
                     key={option}
                     className="flex items-center space-x-2 pb-2 relative text-base"
                   >
                     <div className="relative flex">
                       <input
-                        type="radio"
-                        name="sortBy"
-                        id={option}
+                        type="checkbox"
+                        name={filterOption.name}
+                        id={`mobile-${option}`}
                         value={option}
-                        className="cursor-pointer custom-radio"
-                        checked={
-                          sortBy === option ||
-                          (sortBy === undefined && option === "date")
-                        }
-                        onChange={handleSortByOption}
+                        className="cursor-pointer custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
+                        onChange={(e) => {
+                          handleFilterOption(
+                            e,
+                            mapFilterOptionNameToKey(filterOption.name)
+                          );
+                        }}
                       />
                     </div>
-                    <label className="cursor-pointer" htmlFor={option}>
-                      {option === "date" && "Start date"}
-                      {option === "rating" && "Rating"}
-                      {option === "priceAsc" && "Price: Low-High"}
-                      {option === "priceDesc" && "Price: High-Low"}
+                    <label
+                      className="cursor-pointer"
+                      htmlFor={`mobile-${option}`}
+                    >
+                      {option}
                     </label>
                   </div>
                 ))}
               </div>
-            </div>
-            {/* Filter section */}
-            {filterOptions.map((filterOption, i) => (
-              <div
-                key={filterOption.name}
-                className={`border-gray pb-4 ${
-                  i !== filterOptions.length - 1 ? "border-b-2" : "border-b-0"
-                } pt-4`}
-              >
-                <div
-                  className="flex justify-between items-center cursor-pointer mb-2"
-                  onClick={() => toggleFilterOption(filterOption.name)}
-                >
-                  <h1 className="text-xl text-base font-medium">
-                    {filterOption.name}s
-                  </h1>
-                  <BsChevronDown className="text-lg" />
-                </div>
-                {filterOption.show ? (
-                  <div className="pt-4">
-                    {filterOption.options.map((option) => (
-                      <div
-                        key={option}
-                        className="flex items-center space-x-2 pb-2 relative text-base"
-                      >
-                        <div className="relative flex">
-                          <input
-                            type="checkbox"
-                            name={filterOption.name}
-                            id={`mobile-${option}`}
-                            value={option}
-                            className="cursor-pointer custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
-                            onChange={(e) => {
-                              handleFilterOption(
-                                e,
-                                mapFilterOptionNameToKey(filterOption.name)
-                              );
-                            }}
-                          />
-                        </div>
-                        <label
-                          className="cursor-pointer"
-                          htmlFor={`mobile-${option}`}
-                        >
-                          {option}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            ))}
+            ) : null}
           </div>
-        </div>
-      ) : null}
+        ))}
+      </MobileHeader>
     </>
   );
 };
 
 export default Filter;
+
+// {/* Mobile Filter */}
+// /*
+//         {isMobileFilterOpen ? (
+//         <div className="lg:hidden fixed z-50 w-full h-full bg-white top-0 left-0">
+//           <div className="flex justify-between items-center px-4 py-4 border-b-2 border-gray-300">
+//             <h1 className="text-xl font-medium">Filter</h1>
+//             <button className="text-3xl" onClick={closeMobileFilter}>
+//               <BsX />
+//             </button>
+//           </div>
+//           <div className="flex flex-col overflow-y-scroll h-full w-full scrollbar px-4 py-4 pb-20"> */}
+//         {/* Sort By section */}
+
+//          {/* </div>
+//         </div>
+//       ) : null} */

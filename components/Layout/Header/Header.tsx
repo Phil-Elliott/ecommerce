@@ -128,7 +128,18 @@ export default Header;
 
 /*
 
-need to change to shop page when the user presses enter
-need to also pass the search query to the shop page
+1) Go and make filter responsive menu into a component
+       - check that you can make it smaller first and stick to the side
+2) Completely redo the header (copy and past code when you can)
+3) Plug in the filter responsive menu component you made
+4) Also add a categories button
+5) Change the onKeyPress buttons to something newer
+6) Maybe you can add animations to the responsive header
+7) Work on categories dropdown and make it functional
+
+
+Have it change to responsive menu earlier
+Need a hamburger menu - could do it really similar to the shop page
+     Make it into a shared component
 
 */
