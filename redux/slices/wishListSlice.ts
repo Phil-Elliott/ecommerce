@@ -67,7 +67,6 @@ const wishListSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchWishList.fulfilled, (state, action) => {
-        console.log(action.payload);
         return action.payload.map((item: any) => item.game);
       })
       .addCase(addToList.fulfilled, (state, action) => {
