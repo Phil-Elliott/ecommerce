@@ -77,26 +77,34 @@ const Header = ({ signInButton }: HeaderProps) => {
             }
           >
             <div className="flex flex-col h-full w-full mt-3">
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
+              <Link
+                className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                href={`/shop?category=${encodeURIComponent("Game")}`}
+              >
                 <p className="pr-10">Video Games</p>
                 <ChevronRightIcon />
-              </div>
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
+              </Link>
+              <Link
+                className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                href={`/shop?category=${encodeURIComponent("Console")}`}
+              >
                 <p className="pr-10">Consoles and hardware</p>
                 <ChevronRightIcon />
-              </div>
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
-                <p className="">Gamine Accessories</p>
+              </Link>
+              <Link
+                className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                href={`/shop?category=${encodeURIComponent("Accessories")}`}
+              >
+                <p className="pr-10">Gamine Accessories</p>
                 <ChevronRightIcon />
-              </div>
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
-                <p className="">Clothing</p>
+              </Link>
+              <Link
+                className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                href={`/shop?category=${encodeURIComponent("Clothes")}`}
+              >
+                <p className="pr-10">Clothing</p>
                 <ChevronRightIcon />
-              </div>
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
-                <p className="">Deals</p>
-                <ChevronRightIcon />
-              </div>
+              </Link>
             </div>
           </Popup>
 

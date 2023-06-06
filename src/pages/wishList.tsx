@@ -7,6 +7,7 @@ import { BsTrash } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { useAddToCart } from "utils/useAddToCart/useAddToCart";
 import { useRemoveFromWishList } from "utils/useRemoveFromWishList/useRemoveFromWishList";
+import { CldImage } from "next-cloudinary";
 
 const WishList = () => {
   const list = useSelector((state: RootState) => state.wishList);
@@ -15,10 +16,6 @@ const WishList = () => {
   const addToCart = useAddToCart();
   const removeFromList = useRemoveFromWishList();
 
-  useEffect(() => {
-    console.log(list);
-  }, [list]);
-
   return (
     <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
       <h1 className="text-4xl mb-5">Wish List</h1>
@@ -26,13 +23,17 @@ const WishList = () => {
         {list.length > 0 ? (
           list.map((product) => (
             <div
-              key={product._id}
+              key={product?._id}
               className="flex justify-between items-center w-full mb-6 p-4 bg-white rounded shadow-lg"
             >
-              <img
+              {product.name}
+
+              <CldImage
+                src={product.image[0] || "2"}
+                width="600"
+                height="600"
+                alt={product?.name || "Game picture"}
                 className="w-16 h-16"
-                src={`/images/${product.image}`}
-                alt={product.name}
               />
               <div className="ml-4">
                 <h2 className="text-lg font-bold">{product.name}</h2>
@@ -51,7 +52,7 @@ const WishList = () => {
             </div>
           ))
         ) : (
-          <p>Your cart is empty</p>
+          <p>Your Wish List is empty</p>
         )}
       </div>
     </div>

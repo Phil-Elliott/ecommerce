@@ -27,14 +27,17 @@ const shop = ({ games }: ShopProps) => {
 
   const router = useRouter();
   const searchQuery = router.query.search as string;
+  const filterQuery = router.query.category as string;
 
   const [initialSearchQuery, setInitialSearchQuery] = useState("");
+  const [initialFilterQuery, setInitialFilterQuery] = useState("");
 
   useEffect(() => {
     if (router.isReady) {
       setInitialSearchQuery(searchQuery);
+      setInitialFilterQuery(filterQuery);
     }
-  }, [router.isReady, searchQuery]);
+  }, [router.isReady, searchQuery, filterQuery]);
 
   useEffect(() => {
     if (initialSearchQuery && initialSearchQuery.trim() !== "") {
@@ -48,6 +51,25 @@ const shop = ({ games }: ShopProps) => {
       setFilteredGames(games);
     }
   }, [initialSearchQuery]);
+
+  useEffect(() => {
+    if (initialFilterQuery && initialFilterQuery.trim() !== "") {
+      const filteredGames = games.filter((game) =>
+        game.category.includes(initialFilterQuery)
+      );
+      setFilteredGames(filteredGames);
+    } else {
+      setFilteredGames(games);
+    }
+
+    setFilterOptions({
+      category: initialFilterQuery ? [initialFilterQuery] : [],
+      publisher: [],
+      gameModes: [],
+      platform: [],
+      prices: [],
+    });
+  }, [initialFilterQuery]);
 
   useEffect(() => {
     const sortedGames = [...filteredGames].sort((a, b) => {
@@ -88,6 +110,16 @@ const shop = ({ games }: ShopProps) => {
     }));
   };
 
+  const clearFilterOptions = () => {
+    setFilterOptions({
+      category: [],
+      publisher: [],
+      gameModes: [],
+      platform: [],
+      prices: [],
+    });
+  };
+
   useEffect(() => {
     const filteredGames = games.filter((game) => {
       let isCategory = false;
@@ -98,7 +130,7 @@ const shop = ({ games }: ShopProps) => {
 
       if (
         filterOptions.category.length === 0 ||
-        filterOptions.category.includes(game.category)
+        game.category.some((cat) => filterOptions.category.includes(cat))
       ) {
         isCategory = true;
       }

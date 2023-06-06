@@ -7,6 +7,7 @@ import { RootState } from "../../redux/store";
 import { useRemoveFromCart } from "utils/useRemoveFromCart/useRemoveFromCart";
 import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
 import { Ratings } from "components/shared";
+import { CldImage } from "next-cloudinary";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -34,10 +35,12 @@ const Cart = () => {
               >
                 <div className="col-span-2 space-y-5">
                   <div className="flex space-x-10 ">
-                    <img
+                    <CldImage
+                      src={product.image[0] || "2"}
+                      width="100"
+                      height="100"
+                      alt={product?.name || "Game picture"}
                       className="w-16 h-16"
-                      src={`/images/${product.image}`}
-                      alt={product.name}
                     />
                     <div className="text-sm space-y-2">
                       <h2 className="font-medium text-base">{product.name}</h2>
