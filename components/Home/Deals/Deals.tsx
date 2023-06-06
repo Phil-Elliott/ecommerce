@@ -7,17 +7,17 @@ import Button from "components/shared/Button/Button";
 const dealsInfo = [
   {
     id: 1,
-    description: "Lorem ipsum dolor sit amet consectetur",
+    description: "Games",
     image: HeroImg,
   },
   {
     id: 2,
-    description: "Lorem ipsum dolor sit amet consectetur",
+    description: "Consoles",
     image: HeroImg,
   },
   {
     id: 3,
-    description: "Lorem ipsum dolor sit amet consectetur",
+    description: "Deals",
     image: HeroImg,
   },
 ];
@@ -34,7 +34,7 @@ const Deals = () => {
           className="relative bg-cover bg-center rounded-sm cursor-pointer flex flex-col justify-center items-center px-10 py-20"
         >
           <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 rounded-sm"></div>
-          <p className="z-10 text-white font-semibold text-xl my-5 text-center">
+          <p className="z-10 text-white font-semibold text-2xl my-5 text-center">
             {deal.description}
           </p>
           <Button

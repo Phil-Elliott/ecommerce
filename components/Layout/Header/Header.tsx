@@ -77,33 +77,28 @@ const Header = ({ signInButton }: HeaderProps) => {
             }
           >
             <div className="flex flex-col h-full w-full mt-3">
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
                 <p className="pr-10">Video Games</p>
                 <ChevronRightIcon />
               </div>
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
                 <p className="pr-10">Consoles and hardware</p>
                 <ChevronRightIcon />
               </div>
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
                 <p className="">Gamine Accessories</p>
                 <ChevronRightIcon />
               </div>
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
                 <p className="">Clothing</p>
                 <ChevronRightIcon />
               </div>
-              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer text-lg">
+              <div className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer">
                 <p className="">Deals</p>
                 <ChevronRightIcon />
               </div>
             </div>
           </Popup>
-
-          {/* <div className="cursor-pointer lg:flex items-center gap-2 hidden rounded hover:bg-gradient-bg py-1 px-3">
-            <p>Categories</p>
-            <BsChevronDown className="" />
-          </div> */}
 
           <div className="relative justify-center items-center lg:w-2/5 w-3/5 lg:flex hidden">
             <AiOutlineSearch className="absolute left-0 ml-3 text-gray-400 text-xl cursor-pointer" />
@@ -118,6 +113,7 @@ const Header = ({ signInButton }: HeaderProps) => {
               }
             />
           </div>
+
           <div
             onClick={handleUserButton}
             className="lg:flex hidden cursor-pointer items-center space-x-3 rounded hover:bg-gradient-bg py-1 px-3"
@@ -127,6 +123,7 @@ const Header = ({ signInButton }: HeaderProps) => {
               {user.email ? "Sign Out" : "Sign In"}
             </p>
           </div>
+
           <Link
             href="/wishList"
             className="lg:flex hidden items-center space-x-3 cursor-pointer rounded hover:bg-gradient-bg py-1 px-3"

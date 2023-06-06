@@ -6,6 +6,7 @@ import HeroImg from "/assets/hero.jpg";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { GameProps } from "components/shared/Types/Types";
 import Button from "components/shared/Button/Button";
+import { CldImage } from "next-cloudinary";
 
 type ItemProps = {
   name: string;
@@ -74,15 +75,14 @@ const Items = ({ name, games }: ItemProps) => {
               onClick={() =>
                 router.push(`/product?id=${encodeURIComponent(game._id)}`)
               }
-              className="bg-white rounded-lg shadow w-64 inline-block mb-10 cursor-pointer select-none"
+              className="bg-white rounded-lg shadow hover:shadow-lg w-64 inline-block mb-10 cursor-pointer select-none"
             >
-              <Image
-                src={HeroImg}
+              <CldImage
+                src={game.image[0] || "2"}
+                width="600"
+                height="600"
                 alt={game.name}
                 className="w-full h-64 object-cover rounded-t-lg"
-                onError={(e) => {
-                  e.currentTarget.src = "/path/to/default/image.jpg";
-                }}
               />
               <div className="p-4 w-64">
                 <h1 className="text-lg font-semibold pb-4 whitespace-normal">

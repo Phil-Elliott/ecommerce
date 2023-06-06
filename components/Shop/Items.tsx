@@ -4,6 +4,7 @@ import HeroImg from "/assets/hero.jpg";
 import { GameProps } from "components/shared/Types/Types";
 import router from "next/router";
 import { Ratings } from "components/shared";
+import { CldImage } from "next-cloudinary";
 
 type ItemsProps = {
   games: GameProps[];
@@ -20,8 +21,10 @@ const Items = ({ games }: ItemsProps) => {
             router.push(`/product?id=${encodeURIComponent(game._id)}`)
           }
         >
-          <Image
-            src={HeroImg}
+          <CldImage
+            src={game.image[0] || "2"}
+            width="600"
+            height="600"
             alt={game.name}
             className="w-full h-2/3 object-cover rounded-t-lg"
           />
