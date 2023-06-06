@@ -88,9 +88,9 @@ const Filter = ({
     );
   };
 
-  const categories = games
-    .map((game) => game.category)
-    .filter((category, index, self) => self.indexOf(category) === index);
+  const categories = Array.from(
+    new Set(games.flatMap((game) => game.category))
+  );
 
   const publishers = games
     .map((game) => game.publisher)

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import { useDispatch } from "react-redux";
 
 import { GameProps } from "components/shared/Types/Types";
 
-import HeroImg from "/assets/hero.jpg";
 import { useAddToCart } from "utils/useAddToCart/useAddToCart";
 import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
 import { Ratings } from "components/shared";

@@ -4,7 +4,7 @@ export type GameProps = {
   image: string[];
   price: number;
   description: string;
-  category: string;
+  category: string[];
   publisher: string;
   releaseDate: string;
   rating: number;
