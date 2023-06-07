@@ -83,6 +83,15 @@ const cartSlice = createSlice({
     setCartFromLocal: (state, action: PayloadAction<CartItem[]>) => {
       return action.payload;
     },
+    changeQuantityLocal: (
+      state,
+      action: PayloadAction<{ id: string; quantity: number }>
+    ) => {
+      const item = state.find((item) => item._id === action.payload.id);
+      if (item) {
+        item.quantity = action.payload.quantity;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -91,7 +100,7 @@ const cartSlice = createSlice({
         return action.payload.data.cartItems[0].items.map((item: any) => {
           return {
             ...item.game,
-            quantity: item.quantity, 
+            quantity: item.quantity,
           };
         });
       })
@@ -119,14 +128,17 @@ const cartSlice = createSlice({
         if (item) {
           item.quantity = action.payload.quantity;
         }
-      }
-    );
+      });
   },
 });
 
 export { addToCart, removeFromCart, fetchCart, changeQuantity };
-export const { addToCartLocal, setCartFromLocal, removeFromCartLocal } =
-  cartSlice.actions;
+export const {
+  addToCartLocal,
+  setCartFromLocal,
+  removeFromCartLocal,
+  changeQuantityLocal,
+} = cartSlice.actions;
 export default cartSlice.reducer;
 
 /*
