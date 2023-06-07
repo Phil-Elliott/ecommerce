@@ -96,7 +96,7 @@ const Cart = () => {
         <div className="p-4">
           <div className="flex justify-between items-center mb-4">
             <p>Subtotal</p>
-            <p>${cart.reduce((acc, curr) => acc + curr.price, 0)}</p>
+            <p>${cart.reduce((acc, curr) => acc + curr.price * curr.quantity, 0).toFixed(2)}</p>
           </div>
           <div className="flex justify-between items-center mb-4">
             <p>Shipping</p>
@@ -104,11 +104,11 @@ const Cart = () => {
           </div>
           <div className="flex justify-between items-center pb-4 mb-4 border-b-2 border-gray-200">
             <p>Tax</p>
-            <p>${cart.reduce((acc, curr) => acc + curr.price, 0) * 0.1}</p>
+            <p>${(cart.reduce((acc, curr) => acc + curr.price, 0) * 0.1).toFixed(2)}</p>
           </div>
           <div className="flex justify-between items-center mb-4">
             <p>Total</p>
-            <p> ${cart.reduce((acc, curr) => acc + curr.price, 0) * 1.1}</p>
+            <p> ${(cart.reduce((acc, curr) => acc + curr.price * curr.quantity, 0) * 1.1).toFixed(2)}</p>
           </div>
           <button className="w-full bg-black text-white py-2 rounded">
             Proceed to Checkout

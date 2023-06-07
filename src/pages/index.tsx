@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Deals from "components/Home/Deals/Deals";
 import Hero from "components/Home/Hero/Hero";
 import Items from "components/Home/Items/Items";
 import Head from "next/head";
 import { GameProps } from "components/shared/Types/Types";
+import Categories from "components/Home/Categories/Categories";
 
 type HomeProps = {
   games: GameProps[];
@@ -19,9 +19,9 @@ export default function Home({ games }: HomeProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero />
-      <Deals />
+      <Categories />
       <Items name="Best Sellers" games={games} />
-      <Items name="New Tours" games={games} />
+      {/* <Items name="New Tours" games={games} /> */}
     </div>
   );
 }
