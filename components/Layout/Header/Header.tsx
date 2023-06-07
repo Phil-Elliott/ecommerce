@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { AiOutlineSearch, AiOutlineHeart, AiFillShop } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -12,6 +13,12 @@ import { AppDispatch, RootState } from "redux/store";
 import { logoutUser } from "redux/slices/userSlice";
 import { MobileHeader, Popup } from "components/shared";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
+import Hero from "assets/hero.jpg" 
+import AccessoriesImage from "assets/accessories.jpg";
+import ConsoleImage from "assets/consoles.webp";
+import GameImage from "assets/games.webp";
+import ClothesImage from "assets/clothing.jpg";
+import DealsImage from "assets/discount.jpg";
 
 type HeaderProps = {
   signInButton: VoidFunction;
@@ -21,6 +28,7 @@ const Header = ({ signInButton }: HeaderProps) => {
   const [query, setQuery] = useState("");
   const [hiddenHeader, setHiddenHeader] = useState(false);
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
+  const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
 
   const user = useSelector((state: RootState) => state.user);
 
@@ -46,6 +54,33 @@ const Header = ({ signInButton }: HeaderProps) => {
       lastScrollY = currentScrollY;
     });
   });
+
+  const mobileCategories = [
+    {
+      name: "Video Games",
+      link: "/shop?category=Game",
+      image: GameImage,
+    },
+    {
+      name: "Consoles and hardware",
+      link: "/shop?category=Console",
+      image: ConsoleImage,
+    },
+    {
+      name: "Gaming Accessories",
+      link: "/shop?category=Accessories",
+      image: AccessoriesImage,
+    },
+    {
+      name: "Clothing",
+      link: "/shop?category=Clothes",
+      image: ClothesImage,
+    },{
+      name: "Deals",
+      link: "/shop?category=Clothes",
+      image: DealsImage,
+    },
+  ];
 
   return (
     <>
@@ -76,7 +111,7 @@ const Header = ({ signInButton }: HeaderProps) => {
               </div>
             }
           >
-            <div className="flex flex-col h-full w-full mt-3">
+            <div className="flex flex-col h-full w-full mt-3 text-sm">
               <Link
                 className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
                 href={`/shop?category=${encodeURIComponent("Game")}`}
@@ -103,6 +138,13 @@ const Header = ({ signInButton }: HeaderProps) => {
                 href={`/shop?category=${encodeURIComponent("Clothes")}`}
               >
                 <p className="pr-10">Clothing</p>
+                <ChevronRightIcon />
+              </Link>
+              <Link
+                className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                href={`/shop?category=${encodeURIComponent("Clothes")}`}
+              >
+                <p className="pr-10">Deals</p>
                 <ChevronRightIcon />
               </Link>
             </div>
@@ -166,14 +208,25 @@ const Header = ({ signInButton }: HeaderProps) => {
             </Link>
           </div>
         </div>
-        <div className="p-4 border-b-2">
+        <div className="p-4 border-b-2 select-none">
           <div
-            className="flex justify-between items-center cursor-pointer "
-            // onClick={() => toggleFilterOption(filterOption.name)}
-          >
+            className="flex justify-between items-center cursor-pointer " onClick={() => setIsMobileCategoriesOpen(!isMobileCategoriesOpen)}>
             <p className="text-xl text-base font-medium">Categories</p>
             <BsChevronDown className="text-lg" />
           </div>
+          { isMobileCategoriesOpen &&
+            <div className="grid grid-cols-3 pt-6 pb-2 gap-6">
+            {mobileCategories.map((category) => (
+              <Link
+                key={category.name}
+                href={category.link}
+                className="cursor-pointer text-sm font-medium flex flex-col items-center justify-start hover:text-Secondary"
+              >
+                <Image src={category.image} width={70} height={70} alt="category.name" className="rounded-full h-16 w-16 object-cover"/>
+                <p className="text-center pt-2">{category.name}</p>
+              </Link>
+            ))}
+          </div>}
         </div>
         <div className="p-4 border-b-2">
           <div className="flex justify-between items-center cursor-pointer ">

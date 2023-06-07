@@ -6,7 +6,9 @@ import {
 } from "../../redux/slices/cartSlice";
 import { AppDispatch } from "redux/store";
 
-export function useRemoveFromCart() {
+type RemoveFromCartHandler = (id: string) => void;
+
+export function useRemoveFromCart(): RemoveFromCartHandler {
   const userData = useSelector((state: any) => state.user);
 
   const dispatch: AppDispatch = useDispatch();

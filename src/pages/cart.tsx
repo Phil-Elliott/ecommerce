@@ -4,10 +4,10 @@ import { BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../redux/store";
+import { Ratings } from "components/shared/Ratings/Ratings";
+import { CldImage } from "next-cloudinary";
 import { useRemoveFromCart } from "utils/useRemoveFromCart/useRemoveFromCart";
 import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
-import { Ratings } from "components/shared";
-import { CldImage } from "next-cloudinary";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);

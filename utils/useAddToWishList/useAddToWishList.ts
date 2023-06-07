@@ -7,7 +7,9 @@ import {
 } from "../../redux/slices/wishListSlice";
 import { AppDispatch } from "redux/store";
 
-export function useAddToWishList() {
+type AddToWishListHandler = (product: GameProps) => void;
+
+export function useAddToWishList(): AddToWishListHandler {
   const dispatch: AppDispatch = useDispatch();
   const userData = useSelector((state: any) => state.user);
 
