@@ -3,7 +3,7 @@ import { GameProps } from "components/shared/Types/Types";
 import { addToCart, addToCartLocal } from "../../redux/slices/cartSlice";
 import { AppDispatch } from "redux/store";
 
-export function useAddToCart() {
+export function useAddToCart() { 
   const dispatch: AppDispatch = useDispatch();
   const userData = useSelector((state: any) => state.user);
 

@@ -1,19 +1,54 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { GameProps } from "components/shared/Types/Types";
 
-const CartSummary = () => {
-  const cart = useSelector((state: RootState) => state.cart);
+type CartSummaryProps = {
+  cart: GameProps[];
+};
 
-  const subtotal = cart.reduce((acc, curr) => acc + curr.price, 0);
-  const tax = subtotal * 0.1;
-  const total = subtotal + tax;
-
+const CartSummary = ({ cart }: CartSummaryProps) => {
   return (
-    <div>
-      <p>Subtotal: ${subtotal}</p>
-      <p>Tax: ${tax}</p>
-      <p>Total: ${total}</p>
+    <div className="bg-white w-full rounded">
+      <h1 className="text-xl mb-0 border-b-2 border-gray-200 p-4">
+        Order Summary
+      </h1>
+      <div className="p-4">
+        <div className="flex justify-between items-center mb-4">
+          <p>Subtotal</p>
+          <p>
+            $
+            {cart
+              .reduce((acc, curr) => acc + curr.price * (curr.quantity ?? 0), 0)
+              .toFixed(2)}
+          </p>
+        </div>
+        <div className="flex justify-between items-center mb-4">
+          <p>Shipping</p>
+          <p>Free</p>
+        </div>
+        <div className="flex justify-between items-center pb-4 mb-4 border-b-2 border-gray-200">
+          <p>Tax</p>
+          <p>
+            $
+            {(cart.reduce((acc, curr) => acc + curr.price, 0) * 0.1).toFixed(2)}
+          </p>
+        </div>
+        <div className="flex justify-between items-center mb-4">
+          <p>Total</p>
+          <p>
+            {" "}
+            $
+            {(
+              cart.reduce(
+                (acc, curr) => acc + curr.price * (curr.quantity ?? 0),
+                0
+              ) * 1.1
+            ).toFixed(2)}
+          </p>
+        </div>
+        <button className="w-full bg-black text-white py-2 rounded">
+          Proceed to Checkout
+        </button>
+      </div>
     </div>
   );
 };

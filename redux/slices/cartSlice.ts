@@ -36,6 +36,23 @@ const removeFromCart = createAsyncThunk(
   }
 );
 
+const changeQuantity = createAsyncThunk(
+  "cart/changeQuantity",
+  async ({ id, quantity }: { id: string; quantity: number }) => {
+    const { data } = await axios.patch(
+      `http://localhost:3000/api/v1/cart`,
+      {
+        gameId: id,
+        quantity,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    return { id, quantity };
+  }
+);
+
 type CartItem = GameProps & { quantity: number };
 
 const initialState: CartItem[] = [];
@@ -74,7 +91,7 @@ const cartSlice = createSlice({
         return action.payload.data.cartItems[0].items.map((item: any) => {
           return {
             ...item.game,
-            quantity: item.quantity,
+            quantity: item.quantity, 
           };
         });
       })
@@ -96,11 +113,18 @@ const cartSlice = createSlice({
         if (index !== -1) {
           state.splice(index, 1);
         }
-      });
+      })
+      .addCase(changeQuantity.fulfilled, (state, action) => {
+        const item = state.find((item) => item._id === action.payload.id);
+        if (item) {
+          item.quantity = action.payload.quantity;
+        }
+      }
+    );
   },
 });
 
-export { addToCart, removeFromCart, fetchCart };
+export { addToCart, removeFromCart, fetchCart, changeQuantity };
 export const { addToCartLocal, setCartFromLocal, removeFromCartLocal } =
   cartSlice.actions;
 export default cartSlice.reducer;
