@@ -1,59 +1,35 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { RootState } from "../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { BsTrash } from "react-icons/bs";
-import { FiShoppingCart } from "react-icons/fi";
-import { useAddToCart } from "utils/useAddToCart/useAddToCart";
-import { useRemoveFromWishList } from "utils/useRemoveFromWishList/useRemoveFromWishList";
-import { CldImage } from "next-cloudinary";
+import WishListItem from "components/WishList/WishListItem";
 
 const WishList = () => {
   const list = useSelector((state: RootState) => state.wishList);
-  const dispatch = useDispatch();
-
-  const addToCart = useAddToCart();
-  const removeFromList = useRemoveFromWishList();
 
   return (
-    <div className="container mx-auto flex flex-col items-center min-h-screen pb-10 pt-32 bg-gray-100">
-      <h1 className="text-4xl mb-5">Wish List</h1>
-      <div className="w-full flex flex-col items-center pt-10">
-        {list.length > 0 ? (
-          list.map((product) => (
-            <div
-              key={product?._id}
-              className="flex justify-between items-center w-full mb-6 p-4 bg-white rounded shadow-lg"
-            >
-              {product.name}
-
-              <CldImage
-                src={product.image[0] || "2"}
-                width="600"
-                height="600"
-                alt={product?.name || "Game picture"}
-                className="w-16 h-16"
-              />
-              <div className="ml-4">
-                <h2 className="text-lg font-bold">{product.name}</h2>
-                <p className="text-sm text-gray-600">${product.price} each</p>
-              </div>
-              <div className="flex items-center">
-                <BsTrash
-                  className="text-xl cursor-pointer text-red-500"
-                  onClick={() => removeFromList(product._id)}
-                />
-                <FiShoppingCart
-                  className="ml-4 text-xl cursor-pointer text-green-500"
-                  onClick={() => addToCart(product)}
-                />
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>Your Wish List is empty</p>
-        )}
+    <div className="bg-gray-100">
+      <div className="container mx-auto min-h-screen pb-10 pt-28 ">
+        <div className="bg-white w-full rounded">
+          <h1 className="text-3xl mb-0 py-4 px-6">Your Wishlist</h1>
+          <div className="grid grid-cols-6 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
+            <p className="col-span-2">Item</p>
+            <p>Category</p>
+            <p>Publisher</p>
+            <p>Platform</p>
+            <p>Price</p>
+          </div>
+          <div>
+            {list.length > 0 ? (
+              list.map((product) => (
+                <WishListItem key={product._id} product={product} />
+              ))
+            ) : (
+              <p className="p-20 text-center">Your wish list is empty</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

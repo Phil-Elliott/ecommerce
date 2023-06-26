@@ -67,10 +67,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
 /*
 
-Tob Brands section on home page
-1) Make it responsive
-2) Get the correct assets
-3) Add the correct links
+1) Fix wishlist page
+2) Fix product page
+3) Fix cart page
+4) Add links to product page
+5) Add reviews 
+6) Hook up stripe and make it actually functional
+7) Fix and add things to sign in modal
 
 
 

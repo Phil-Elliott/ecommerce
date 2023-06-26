@@ -10,26 +10,28 @@ const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
 
   return (
-    <div className="container mx-auto grid grid-cols-3 gap-5 items-start min-h-screen pb-10 pt-28 bg-gray-100">
-      <div className="bg-white w-full col-span-2 rounded">
-        <h1 className="text-3xl mb-0 p-4">Your Shopping Cart</h1>
-        <div className="grid grid-cols-5 gap-4 items-center w-full p-4 border-b-2 border-gray-200">
-          <p className="col-span-2">Item</p>
-          <p>Price</p>
-          <p>Quantity</p>
-          <p>Total</p>
+    <div className="bg-gray-100">
+      <div className="container mx-auto grid grid-cols-3 gap-5 items-start min-h-screen pb-10 pt-28 ">
+        <div className="bg-white w-full col-span-2 rounded">
+          <h1 className="text-3xl mb-0 p-4">Your Shopping Cart</h1>
+          <div className="grid grid-cols-5 gap-4 items-center w-full p-4 border-b-2 border-gray-200">
+            <p className="col-span-2">Item</p>
+            <p>Price</p>
+            <p>Quantity</p>
+            <p>Total</p>
+          </div>
+          <div>
+            {cart.length > 0 ? (
+              cart.map((product) => (
+                <CartItem key={product._id} product={product} />
+              ))
+            ) : (
+              <p className="p-20 text-center">Your cart is empty</p>
+            )}
+          </div>
         </div>
-        <div>
-          {cart.length > 0 ? (
-            cart.map((product) => (
-              <CartItem key={product._id} product={product} />
-            ))
-          ) : (
-            <p className="p-20 text-center">Your cart is empty</p>
-          )}
-        </div>
+        <CartSummary cart={cart} />
       </div>
-      <CartSummary cart={cart} />
     </div>
   );
 };
