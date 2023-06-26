@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { GameProps } from "components/shared/Types/Types";
-import Nintendo from "assets/logos/nintendo.jpg";
+import Nintendo from "assets/logos/nintendo.png";
 import Konami from "assets/logos/Konami.png";
 import Capcom from "assets/logos/capcon.png";
 import Square from "assets/logos/square.jpg";
@@ -55,9 +55,13 @@ const TopBrands = ({ games }: TopBrandsProps) => {
           {LogoLinks.map((logo) => (
             <div
               key={logo.title}
-              className="h-full w-full bg-white p-6 flex items-center justify-center rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+              className="h-64 sm:h-48 w-full bg-white p-6 flex items-center justify-center rounded-lg shadow-md hover:shadow-lg cursor-pointer"
             >
-              <Image src={logo.logo} alt={logo.title} className="w-full" />
+              <Image
+                src={logo.logo}
+                alt={logo.title}
+                className="w-full h-3/4 object-contain"
+              />
             </div>
           ))}
         </div>
