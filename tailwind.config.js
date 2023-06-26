@@ -50,14 +50,14 @@ module.exports = {
 
       colors: {
         Primary: "#FFFFFF",
-        Secondary: "#EC0030",
-        Tertiary: "#b80025", // darker shade of red
+        Secondary: "#FF4B5C",
+        Tertiary: "#EC0030",
         Border: "rgba(26, 28, 26, 0.9)",
         LightWhite: "#F5F5F5",
       },
 
       backgroundImage: {
-        "gradient-bg": "linear-gradient(45deg, #EC0030 0%, #b80025 100%)",
+        "gradient-bg": "linear-gradient(45deg, #EC0030 0%, #FF4B5C 100%)",
       },
     },
   },

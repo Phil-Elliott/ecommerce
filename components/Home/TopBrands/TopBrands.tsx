@@ -2,6 +2,10 @@ import React from "react";
 import Image from "next/image";
 import { GameProps } from "components/shared/Types/Types";
 import Nintendo from "assets/logos/nintendo.jpg";
+import Konami from "assets/logos/Konami.png";
+import Capcom from "assets/logos/capcon.png";
+import Square from "assets/logos/square.jpg";
+import Sega from "assets/logos/sega.png";
 
 type TopBrandsProps = {
   games: GameProps[];
@@ -14,38 +18,23 @@ const LogoLinks = [
     link: "/",
   },
   {
-    title: "Nintendo",
-    logo: Nintendo,
+    title: "Capcon",
+    logo: Capcom,
     link: "/",
   },
   {
-    title: "Nintendo",
-    logo: Nintendo,
+    title: "Square",
+    logo: Square,
     link: "/",
   },
   {
-    title: "Nintendo",
-    logo: Nintendo,
+    title: "Konami",
+    logo: Konami,
     link: "/",
   },
   {
-    title: "Nintendo",
-    logo: Nintendo,
-    link: "/",
-  },
-  {
-    title: "Nintendo",
-    logo: Nintendo,
-    link: "/",
-  },
-  {
-    title: "Nintendo",
-    logo: Nintendo,
-    link: "/",
-  },
-  {
-    title: "Nintendo",
-    logo: Nintendo,
+    title: "Sega",
+    logo: Sega,
     link: "/",
   },
 ];
@@ -62,7 +51,7 @@ const TopBrands = ({ games }: TopBrandsProps) => {
         <h1 className="text-3xl font-semibold leading-relaxed">
           Top Brands. <span className="text-gray-500">Take Your Pick.</span>
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 pt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pt-10">
           {LogoLinks.map((logo) => (
             <div
               key={logo.title}
