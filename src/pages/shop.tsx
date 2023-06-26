@@ -24,14 +24,17 @@ const shop = ({ games }: ShopProps) => {
   const router = useRouter();
   const searchQuery = router.query.search as string;
   const filterQuery = router.query.category as string;
+  const publisherQuery = router.query.publisher as string;
 
   const [initialSearchQuery, setInitialSearchQuery] = useState("");
   const [initialFilterQuery, setInitialFilterQuery] = useState("");
+  const [initialPublisherQuery, setInitialPublisherQuery] = useState("");
 
   useEffect(() => {
     if (router.isReady) {
       setInitialSearchQuery(searchQuery);
       setInitialFilterQuery(filterQuery);
+      setInitialPublisherQuery(publisherQuery);
     }
   }, [router.isReady, searchQuery, filterQuery]);
 
@@ -66,6 +69,25 @@ const shop = ({ games }: ShopProps) => {
       prices: [],
     });
   }, [initialFilterQuery]);
+
+  useEffect(() => {
+    if (initialPublisherQuery && initialPublisherQuery.trim() !== "") {
+      const filteredGames = games.filter((game) =>
+        game.publisher ? game.publisher.includes(initialPublisherQuery) : false
+      );
+      setFilteredGames(filteredGames);
+    } else {
+      setFilteredGames(games);
+    }
+
+    setFilterOptions({
+      category: [],
+      publisher: initialPublisherQuery ? [initialPublisherQuery] : [],
+      gameModes: [],
+      platform: [],
+      prices: [],
+    });
+  }, [initialPublisherQuery]);
 
   useEffect(() => {
     const sortedGames = [...filteredGames].sort((a, b) => {
@@ -205,4 +227,3 @@ const shop = ({ games }: ShopProps) => {
 };
 
 export default shop;
- 
