@@ -55,11 +55,11 @@ const CartItem = ({ product }: CartItemProps) => {
           </div>
         </div>
         <div className="flex items-center gap-4 text-sm">
-          <div className="flex items-center gap-1 cursor-pointer hover:text-red-500 transition duration-300">
-            <AiOutlineHeart
-              className="text-red-500"
-              onClick={() => addToList(product)}
-            />
+          <div
+            className="flex items-center gap-1 cursor-pointer hover:text-red-500 transition duration-300"
+            onClick={() => addToList(product)}
+          >
+            <AiOutlineHeart className="text-red-500" />
             <p>Save</p>
           </div>
           <div
