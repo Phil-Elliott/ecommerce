@@ -34,7 +34,7 @@ const Items = ({ name, games }: ItemProps) => {
   };
 
   return (
-    <div className="container mx-auto pt-10">
+    <div className="container mx-auto py-16">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-semibold">{name}</h1>
         <div className="text-base flex items-center space-x-4">

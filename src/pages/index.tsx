@@ -4,6 +4,7 @@ import Items from "components/Home/Items/Items";
 import Head from "next/head";
 import { GameProps } from "components/shared/Types/Types";
 import Categories from "components/Home/Categories/Categories";
+import TopBrands from "components/Home/TopBrands/TopBrands";
 
 type HomeProps = {
   games: GameProps[];
@@ -20,8 +21,8 @@ export default function Home({ games }: HomeProps) {
       </Head>
       <Hero />
       <Categories />
+      <TopBrands games={games} />
       <Items name="Best Sellers" games={games} />
-      {/* <Items name="New Tours" games={games} /> */}
     </div>
   );
 }

@@ -21,10 +21,6 @@ const shop = ({ games }: ShopProps) => {
   });
   const [sortBy, setSortBy] = useState<string>("releaseDate");
 
-  useEffect(() => {
-    console.log("shop");
-  }, []);
-
   const router = useRouter();
   const searchQuery = router.query.search as string;
   const filterQuery = router.query.category as string;
@@ -108,16 +104,6 @@ const shop = ({ games }: ShopProps) => {
       ...prev,
       [name]: prev[name].filter((item) => item !== option),
     }));
-  };
-
-  const clearFilterOptions = () => {
-    setFilterOptions({
-      category: [],
-      publisher: [],
-      gameModes: [],
-      platform: [],
-      prices: [],
-    });
   };
 
   useEffect(() => {
@@ -219,3 +205,4 @@ const shop = ({ games }: ShopProps) => {
 };
 
 export default shop;
+ 

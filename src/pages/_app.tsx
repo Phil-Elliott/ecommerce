@@ -67,10 +67,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
 /*
 
-1) Find out how to add images to the products
-2) Add a lot of different products
-3) Fix up categories
-4) Work on quantity
+Tob Brands section on home page
+1) Make it responsive
+2) Get the correct assets
+3) Add the correct links
+
+
+
+
 5) Work on Home page styles
 7) Work on providing other options
      - log out

@@ -94,6 +94,7 @@ const Filter = ({
 
   const publishers = games
     .map((game) => game.publisher)
+    .filter((publisher) => publisher && publisher.trim() !== "") // Add this line
     .filter((publisher, index, self) => self.indexOf(publisher) === index);
 
   const gameModes = games
@@ -173,7 +174,7 @@ const Filter = ({
 
   return (
     <>
-      <div className="w-1/4 lg:block hidden">
+      <div className="w-1/4 lg:block hidden select-none">
         <div className="flex flex-col overflow-y-scroll max-h-filter-height w-full sticky top-16 scrollbar">
           {filterOptions.map((filterOption, i) => (
             <div

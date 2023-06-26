@@ -16,10 +16,10 @@ module.exports = {
       center: true,
       padding: {
         DEFAULT: "1rem",
-        sm: "2rem",
+        sm: "1rem",
         lg: "2rem",
-        xl: "5rem",
-        "2xl": "9rem",
+        xl: "4rem",
+        "2xl": "6rem",
       },
     },
     screens: {
