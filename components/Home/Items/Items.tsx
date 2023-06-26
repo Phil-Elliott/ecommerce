@@ -7,6 +7,7 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { GameProps } from "components/shared/Types/Types";
 import Button from "components/shared/Button/Button";
 import { CldImage } from "next-cloudinary";
+import Link from "next/link";
 
 type ItemProps = {
   name: string;
@@ -38,25 +39,21 @@ const Items = ({ name, games }: ItemProps) => {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-semibold">{name}</h1>
         <div className="text-base flex items-center space-x-4">
-          <Button
-            ariaLabel="Show All"
-            className="text-base"
-            // onClick={() => {
-            //   /* Add your onClick functionality here */
-            // }}
-          >
-            Show All
-          </Button>
+          <Link href="/shop">
+            <Button ariaLabel="Show All" className="text-base">
+              Show All
+            </Button>
+          </Link>
           <Button
             ariaLabel="Scroll Left"
-            className="bg-gray-500 text-white p-1 rounded-full cursor-pointer"
+            className="hidden sm:block bg-gray-500 text-white p-1 rounded-full cursor-pointer"
             onClick={scrollLeft}
           >
             <BsChevronLeft />
           </Button>
           <Button
             ariaLabel="Scroll Right"
-            className="bg-gray-500 text-white p-1 rounded-full cursor-pointer"
+            className="hidden sm:block bg-gray-500 text-white p-1 rounded-full cursor-pointer"
             onClick={scrollRight}
           >
             <BsChevronRight />
