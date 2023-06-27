@@ -1,6 +1,4 @@
 import React from "react";
-import Image from "next/image";
-import HeroImg from "/assets/hero.jpg";
 import { GameProps } from "components/shared/Types/Types";
 import router from "next/router";
 import { Ratings } from "components/shared";

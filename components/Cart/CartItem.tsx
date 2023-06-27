@@ -7,6 +7,7 @@ import { GameProps } from "components/shared/Types/Types";
 import { useRemoveFromCart } from "utils/useRemoveFromCart/useRemoveFromCart";
 import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
 import { useChangeCartQuantity } from "utils/useeChangeCartQuantity/useeChangeCartQuantity";
+import router from "next/router";
 
 type CartItemProps = {
   product: GameProps;
@@ -45,7 +46,14 @@ const CartItem = ({ product }: CartItemProps) => {
             className="w-16 h-16"
           />
           <div className="text-sm space-y-2">
-            <h2 className="font-medium text-base">{product.name}</h2>
+            <h2
+              className="font-medium text-base cursor-pointer hover:text-red-500 transition duration-300"
+              onClick={() =>
+                router.push(`/product?id=${encodeURIComponent(product._id)}`)
+              }
+            >
+              {product.name}
+            </h2>
             <p>{product.platform}</p>
             <p className="text-sm text-gray-600 block lg:hidden">
               ${product.price}

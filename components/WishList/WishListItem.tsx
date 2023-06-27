@@ -6,6 +6,7 @@ import { GameProps } from "components/shared/Types/Types";
 import { FiShoppingCart } from "react-icons/fi";
 import { useAddToCart } from "utils/useAddToCart/useAddToCart";
 import { useRemoveFromWishList } from "utils/useRemoveFromWishList/useRemoveFromWishList";
+import router from "next/router";
 
 type WishListItemProps = {
   product: GameProps;
@@ -30,7 +31,14 @@ const WishListItem = ({ product }: WishListItemProps) => {
             className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded"
           />
           <div className="text-sm flex flex-col justify-between space-y-2">
-            <h2 className="font-medium text-base">{product.name}</h2>
+            <h2
+              className="font-medium text-base cursor-pointer hover:text-red-500 transition duration-300"
+              onClick={() =>
+                router.push(`/product?id=${encodeURIComponent(product._id)}`)
+              }
+            >
+              {product.name}
+            </h2>
             <p className="text-sm text-gray-600 block lg:hidden">
               {product.platform}
             </p>
