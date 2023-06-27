@@ -45,7 +45,7 @@ const CartSummary = ({ cart }: CartSummaryProps) => {
             ).toFixed(2)}
           </p>
         </div>
-        <button className="w-full bg-black text-white py-2 rounded">
+        <button className="w-full bg-black text-white py-2 rounded hover:opacity-75">
           Proceed to Checkout
         </button>
       </div>

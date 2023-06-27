@@ -94,13 +94,13 @@ const product = ({ games }: ProductProps) => {
         </div>
         <div className="flex flex-col space-y-2">
           <button
-            className="bg-black text-white px-4 py-2 rounded"
+            className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
             onClick={() => game && addToCart(game)}
           >
             Add to Cart
           </button>
           <button
-            className="px-4 py-2 rounded mt-5 border-black border-2"
+            className="px-4 py-2 rounded mt-5 border-black border-2 hover:shadow-lg"
             onClick={() => game && addToWishList(game)}
           >
             Save
