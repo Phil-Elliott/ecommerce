@@ -33,7 +33,7 @@ const CartItem = ({ product }: CartItemProps) => {
   return (
     <div
       key={product._id}
-      className="grid grid-cols-5 gap-4  w-full p-4 bg-white rounded border-b-2 border-gray-200"
+      className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4  w-full p-4 bg-white rounded border-b-2 border-gray-200"
     >
       <div className="col-span-2 space-y-5">
         <div className="flex space-x-10 ">
@@ -47,6 +47,23 @@ const CartItem = ({ product }: CartItemProps) => {
           <div className="text-sm space-y-2">
             <h2 className="font-medium text-base">{product.name}</h2>
             <p>{product.platform}</p>
+            <p className="text-sm text-gray-600 block lg:hidden">
+              ${product.price}
+            </p>
+
+            <div className="flex items-start space-x-2 block sm:hidden">
+              <p>Quantity:</p>
+              <input
+                type="number"
+                min="1"
+                className="border rounded w-20 text-center mr-2"
+                value={cartQuantity}
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div className="flex block sm:hidden">
+              <p>Total: ${(product.price * cartQuantity).toFixed(2)}</p>
+            </div>
             <div className="flex space-x-2 items-center text-sm">
               <Ratings rating={product.rating} />
               <p>{product.rating}</p>
@@ -71,8 +88,8 @@ const CartItem = ({ product }: CartItemProps) => {
           </div>
         </div>
       </div>
-      <p className="text-sm text-gray-600">${product.price}</p>
-      <div className="flex items-start">
+      <p className="text-sm text-gray-600 hidden lg:block">${product.price}</p>
+      <div className="flex items-start hidden sm:block">
         <input
           type="number"
           min="1"
@@ -81,7 +98,7 @@ const CartItem = ({ product }: CartItemProps) => {
           onChange={(e) => handleChange(e)}
         />
       </div>
-      <div className="flex ">
+      <div className="flex hidden sm:block">
         <p>{(product.price * cartQuantity).toFixed(2)}</p>
       </div>
     </div>

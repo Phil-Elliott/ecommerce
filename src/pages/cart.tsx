@@ -11,14 +11,14 @@ const Cart = () => {
 
   return (
     <div className="bg-gray-100">
-      <div className="container mx-auto grid grid-cols-3 gap-5 items-start min-h-screen pb-10 pt-28 ">
+      <div className="container mx-auto xl:grid grid-cols-3 gap-5 items-start min-h-screen pb-10 pt-28 ">
         <div className="bg-white w-full col-span-2 rounded">
           <h1 className="text-3xl mb-0 p-4">Your Shopping Cart</h1>
-          <div className="grid grid-cols-5 gap-4 items-center w-full p-4 border-b-2 border-gray-200">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4 items-center w-full p-4 border-b-2 border-gray-200">
             <p className="col-span-2">Item</p>
-            <p>Price</p>
-            <p>Quantity</p>
-            <p>Total</p>
+            <p className="hidden lg:block">Price</p>
+            <p className="hidden sm:block">Quantity</p>
+            <p className="hidden sm:block">Total</p>
           </div>
           <div>
             {cart.length > 0 ? (

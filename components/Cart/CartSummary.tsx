@@ -7,7 +7,7 @@ type CartSummaryProps = {
 
 const CartSummary = ({ cart }: CartSummaryProps) => {
   return (
-    <div className="bg-white w-full rounded">
+    <div className="bg-white w-full rounded mt-4 xl:mt-0">
       <h1 className="text-xl mb-0 border-b-2 border-gray-200 p-4">
         Order Summary
       </h1>
