@@ -18,7 +18,7 @@ const WishListItem = ({ product }: WishListItemProps) => {
   return (
     <div
       key={product._id}
-      className="grid grid-cols-6 gap-4  w-full py-4 px-6 bg-white rounded border-b-2 border-gray-200"
+      className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 w-full py-4 px-6 bg-white rounded border-b-2 border-gray-200"
     >
       <div className="col-span-2 space-y-5">
         <div className="flex space-x-10 ">
@@ -27,10 +27,16 @@ const WishListItem = ({ product }: WishListItemProps) => {
             width="100"
             height="100"
             alt={product?.name || "Game picture"}
-            className="w-16 h-16"
+            className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded"
           />
-          <div className="text-sm flex flex-col justify-between">
+          <div className="text-sm flex flex-col justify-between space-y-2">
             <h2 className="font-medium text-base">{product.name}</h2>
+            <p className="text-sm text-gray-600 block lg:hidden">
+              {product.platform}
+            </p>
+            <p className="text-sm text-gray-600 block sm:hidden">
+              ${product.price}
+            </p>
             <div className="flex space-x-2 items-center text-sm">
               <Ratings rating={product.rating} />
               <p>{product.rating}</p>
@@ -55,10 +61,16 @@ const WishListItem = ({ product }: WishListItemProps) => {
           </div>
         </div>
       </div>
-      <p className="text-sm text-gray-600">{product.category[0]}</p>
-      <p className="text-sm text-gray-600">{product.publisher}</p>
-      <p className="text-sm text-gray-600">{product.platform}</p>
-      <p className="text-sm text-gray-600">${product.price}</p>
+      <p className="text-sm text-gray-600 hidden sm:block">
+        {product.category[0]}
+      </p>
+      <p className="text-sm text-gray-600 hidden md:block">
+        {product.publisher}
+      </p>
+      <p className="text-sm text-gray-600 hidden lg:block">
+        {product.platform}
+      </p>
+      <p className="text-sm text-gray-600 hidden sm:block">${product.price}</p>
     </div>
   );
 };

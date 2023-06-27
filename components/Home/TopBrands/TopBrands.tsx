@@ -19,9 +19,9 @@ const LogoLinks = [
     link: "/shop?publisher=Nintendo",
   },
   {
-    title: "Capcon",
+    title: "Capcom",
     logo: Capcom,
-    link: "/shop?publisher=Capcon",
+    link: "/shop?publisher=Capcom",
   },
   {
     title: "Square",
@@ -36,7 +36,7 @@ const LogoLinks = [
   {
     title: "Sega",
     logo: Sega,
-    link: "/shop?publisher=Nintendo",
+    link: "/shop?publisher=Sega",
   },
 ];
 
