@@ -9,6 +9,7 @@ import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
 import { Ratings } from "components/shared";
 
 import { CldImage } from "next-cloudinary";
+import Link from "next/link";
 
 type ProductProps = {
   games: GameProps[];
@@ -45,7 +46,7 @@ const product = ({ games }: ProductProps) => {
   return (
     <div className="container mx-auto grid grid-cols-7 gap-20 py-32">
       {/* Images and main image container */}
-      <div className="flex gap-5 h-full h-[75vh] col-span-4">
+      <div className="flex gap-10 h-full h-[75vh] col-span-4">
         <div className="grid grid-rows-6 gap-2 h-full w-32">
           {game?.image.map((img, index) => (
             <CldImage
@@ -54,7 +55,9 @@ const product = ({ games }: ProductProps) => {
               width="600"
               height="600"
               alt="Game picture"
-              className="w-full h-full object-cover rounded-lg cursor-pointer"
+              className={`w-full h-full object-cover rounded-lg cursor-pointer ${
+                mainImage === img ? "border-2 border-black" : ""
+              }`}
               onClick={() => setMainImage(img)}
             />
           ))}
@@ -72,25 +75,32 @@ const product = ({ games }: ProductProps) => {
       {/* Product description and buttons */}
       <div className="col-span-3 flex flex-col justify-between py-2 space-y-4">
         <div className="flex justify-between flex-col h-full space-y-4">
-          <div>
-            <h1 className="text-4xl font-semibold mb-2">{game?.name}</h1>
-            <p className="text-lg text-gray-600">
-              Publisher: {game?.publisher}
-            </p>
-            <p className="text-lg text-gray-600">System: {game?.platform}</p>
-            <p className="text-lg text-gray-600">Category: {game?.category}</p>
-            <p className="text-lg text-gray-600">
-              Game Modes: {game?.gameModes.join(", ")}
-            </p>
+          <div className="space-y-2">
+            <h1 className="text-2xl font-semibold mb-2">
+              {game?.name} - {game?.platform}
+            </h1>
+            <Link href={`/shop?publisher=${game?.publisher}`}>
+              <p className="underline cursor-pointer hover:text-red-500 transition duration-300">
+                {game?.publisher}
+              </p>
+            </Link>
             <div className="flex space-x-2 items-center">
               <Ratings rating={game?.rating || 5} />
               <p>{game?.rating}</p>
               <p className="text-gray-500">(12) Ratings</p>
             </div>
+
+            <p className="text-3xl font-semibold text-gray-800">
+              ${game?.price}
+            </p>
+
+            <p className="text-lg text-gray-600">{game?.description}</p>
+
+            <p className="text-lg text-gray-600">Category: {game?.category}</p>
+            <p className="text-lg text-gray-600">
+              Game Modes: {game?.gameModes.join(", ")}
+            </p>
           </div>
-          <p className="text-2xl font-semibold text-gray-800 mt-5 border-gray border-b-0 pb-5">
-            ${game?.price}
-          </p>
         </div>
         <div className="flex flex-col space-y-2">
           <button

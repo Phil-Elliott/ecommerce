@@ -8,10 +8,6 @@ import Capcom from "assets/logos/capcon.png";
 import Square from "assets/logos/square.jpg";
 import Sega from "assets/logos/sega.png";
 
-type TopBrandsProps = {
-  games: GameProps[];
-};
-
 const LogoLinks = [
   {
     title: "Nintendo",
@@ -40,12 +36,7 @@ const LogoLinks = [
   },
 ];
 
-const TopBrands = ({ games }: TopBrandsProps) => {
-  const publishers = games
-    .map((game) => game.publisher)
-    .filter((publisher) => publisher && publisher.trim() !== "")
-    .filter((publisher, index, self) => self.indexOf(publisher) === index);
-
+const TopBrands = () => {
   return (
     <div className="bg-gray-100 py-16 mt-16">
       <div className="container mx-auto ">
