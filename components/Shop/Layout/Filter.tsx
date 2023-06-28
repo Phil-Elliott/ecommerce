@@ -94,16 +94,18 @@ const Filter = ({
 
   const publishers = games
     .map((game) => game.publisher)
-    .filter((publisher) => publisher && publisher.trim() !== "") // Add this line
+    .filter((publisher) => publisher && publisher.trim() !== "")
     .filter((publisher, index, self) => self.indexOf(publisher) === index);
 
   const gameModes = games
     .map((game) => game.gameModes)
     .flat()
+    .filter((gameMode) => gameMode && gameMode.trim() !== "")
     .filter((gameMode, index, self) => self.indexOf(gameMode) === index);
 
   const platforms = games
     .map((game) => game.platform)
+    .filter((platform) => platform && platform.trim() !== "")
     .filter((platform, index, self) => self.indexOf(platform) === index);
 
   const prices = [

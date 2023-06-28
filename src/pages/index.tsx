@@ -21,7 +21,7 @@ export default function Home({ games }: HomeProps) {
       </Head>
       <Hero />
       <Categories />
-      <TopBrands games={games} />
+      <TopBrands />
       <Items name="Best Sellers" games={games} />
     </div>
   );

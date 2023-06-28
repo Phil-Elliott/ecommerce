@@ -66,7 +66,7 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 /*
-- fix category links (not working on first click-takes you to shop page only) - works when start in shop page
+
 - fix blank platform in filter
 
 2) Fix product page
