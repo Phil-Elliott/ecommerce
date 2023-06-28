@@ -19,7 +19,23 @@ const shop = ({ games }: ShopProps) => {
     platform: [],
     prices: [],
   });
-  const [sortBy, setSortBy] = useState<string>("releaseDate");
+  const [sortBy, setSortBy] = useState<string>("");
+
+  // Gives the items time to get filtered
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // useEffect(() => {
+  //   setLoading(false);
+  //   setTimeout(() => {
+  //     setLoading(true);
+  //   }, 1000);
+  // }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log(filteredGames, "state changed");
+    }, 1000);
+  }, [filteredGames]);
 
   // Reading and setting query parameters
   const router = useRouter();
@@ -36,28 +52,28 @@ const shop = ({ games }: ShopProps) => {
           game.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
         );
         setFilteredGames(searchedGames);
+        console.log(searchedGames);
       } else if (filterQuery && filterQuery.trim() !== "") {
-        const filteredGames = games.filter((game) =>
+        const newFilteredGames = games.filter((game) =>
           game.category.includes(filterQuery)
         );
-        setFilteredGames(filteredGames);
+        setFilteredGames(newFilteredGames);
+        console.log(newFilteredGames, filteredGames);
       } else if (publisherQuery && publisherQuery.trim() !== "") {
-        const filteredGames = games.filter((game) =>
+        const newFilteredGames = games.filter((game) =>
           game.publisher ? game.publisher.includes(publisherQuery) : false
         );
-        setFilteredGames(filteredGames);
+        setFilteredGames(newFilteredGames);
+        console.log(newFilteredGames);
       }
     }
-  }, [router.isReady, searchQuery, filterQuery, publisherQuery]);
+  }, [router.isReady, router.query, searchQuery, filterQuery, publisherQuery]);
 
   // On change of sortBy, sort games accordingly
   useEffect(() => {
+    if (sortBy === "") return;
     const sortedGames = [...filteredGames].sort((a, b) => {
-      if (sortBy === "releaseDate") {
-        return (
-          new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime()
-        );
-      } else if (sortBy === "priceAsc") {
+      if (sortBy === "priceAsc") {
         return a.price - b.price;
       } else if (sortBy === "priceDesc") {
         return b.price - a.price;
@@ -94,100 +110,114 @@ const shop = ({ games }: ShopProps) => {
 
   // Filter games based on the current filterOptions state
   useEffect(() => {
-    const filteredGames = games.filter((game) => {
-      let isCategory = false;
-      let isPublisher = false;
-      let isGameModes = false;
-      let isPlatform = false;
-      let isPrices = false;
+    if (
+      filterOptions.category.length !== 0 ||
+      filterOptions.publisher.length !== 0 ||
+      filterOptions.gameModes.length !== 0 ||
+      filterOptions.platform.length !== 0 ||
+      filterOptions.prices.length !== 0
+    ) {
+      const filteredGames = games.filter((game) => {
+        let isCategory = false;
+        let isPublisher = false;
+        let isGameModes = false;
+        let isPlatform = false;
+        let isPrices = false;
 
-      if (
-        filterOptions.category.length === 0 ||
-        game.category.some((cat) => filterOptions.category.includes(cat))
-      ) {
-        isCategory = true;
-      }
+        if (
+          filterOptions.category.length === 0 ||
+          game.category.some((cat) => filterOptions.category.includes(cat))
+        ) {
+          isCategory = true;
+        }
 
-      if (
-        filterOptions.publisher.length === 0 ||
-        filterOptions.publisher.includes(game.publisher)
-      ) {
-        isPublisher = true;
-      }
+        if (
+          filterOptions.publisher.length === 0 ||
+          filterOptions.publisher.includes(game.publisher)
+        ) {
+          isPublisher = true;
+        }
 
-      if (filterOptions.gameModes.length === 0) {
-        isGameModes = true;
-      } else {
-        game.gameModes.forEach((gameMode) => {
-          if (filterOptions.gameModes.includes(gameMode)) {
-            isGameModes = true;
-          }
-        });
-      }
-
-      if (
-        filterOptions.platform.length === 0 ||
-        filterOptions.platform.includes(game.platform)
-      ) {
-        isPlatform = true;
-      }
-
-      if (filterOptions.prices.length === 0) {
-        isPrices = true;
-      } else {
-        let priceMatched = false;
-
-        filterOptions.prices.forEach((price) => {
-          const priceParts = price.split("-");
-
-          if (priceParts.length === 1) {
-            const cleanedPricePart = priceParts[0]
-              .replace(/[$,]/g, "")
-              .replace("Over", "")
-              .trim();
-            const lowerLimit = parseInt(cleanedPricePart, 10);
-
-            if (game.price > lowerLimit) {
-              console.log(game.price, lowerLimit);
-              priceMatched = true;
+        if (filterOptions.gameModes.length === 0) {
+          isGameModes = true;
+        } else {
+          game.gameModes.forEach((gameMode) => {
+            if (filterOptions.gameModes.includes(gameMode)) {
+              isGameModes = true;
             }
-          } else {
-            const lowerLimit = parseInt(
-              priceParts[0].replace(/[$,]/g, "").trim(),
-              10
-            );
-            const upperLimit = parseInt(
-              priceParts[1].replace(/[$,]/g, "").trim(),
-              10
-            );
+          });
+        }
 
-            if (game.price >= lowerLimit && game.price <= upperLimit) {
-              priceMatched = true;
+        if (
+          filterOptions.platform.length === 0 ||
+          filterOptions.platform.includes(game.platform)
+        ) {
+          isPlatform = true;
+        }
+
+        if (filterOptions.prices.length === 0) {
+          isPrices = true;
+        } else {
+          let priceMatched = false;
+
+          filterOptions.prices.forEach((price) => {
+            const priceParts = price.split("-");
+
+            if (priceParts.length === 1) {
+              const cleanedPricePart = priceParts[0]
+                .replace(/[$,]/g, "")
+                .replace("Over", "")
+                .trim();
+              const lowerLimit = parseInt(cleanedPricePart, 10);
+
+              if (game.price > lowerLimit) {
+                console.log(game.price, lowerLimit);
+                priceMatched = true;
+              }
+            } else {
+              const lowerLimit = parseInt(
+                priceParts[0].replace(/[$,]/g, "").trim(),
+                10
+              );
+              const upperLimit = parseInt(
+                priceParts[1].replace(/[$,]/g, "").trim(),
+                10
+              );
+
+              if (game.price >= lowerLimit && game.price <= upperLimit) {
+                priceMatched = true;
+              }
             }
-          }
-        });
+          });
 
-        isPrices = priceMatched;
-      }
+          isPrices = priceMatched;
+        }
 
-      return isCategory && isPublisher && isGameModes && isPlatform && isPrices;
-    });
+        return (
+          isCategory && isPublisher && isGameModes && isPlatform && isPrices
+        );
+      });
 
-    setFilteredGames(filteredGames);
-  }, [filterOptions, games]);
+      setFilteredGames(filteredGames);
+    }
+  }, [filterOptions]);
 
   return (
-    <Layout
-      games={games}
-      addFilterOption={addFilterOption}
-      removeFilterOption={removeFilterOption}
-      changeSortBy={(value: string) => setSortBy(value)}
-      count={filteredGames?.length}
-      sortBy={sortBy}
-      searchQuery={searchQuery}
-    >
-      <Items games={filteredGames} />
-    </Layout>
+    <>
+      {loading && (
+        <Layout
+          games={games}
+          addFilterOption={addFilterOption}
+          removeFilterOption={removeFilterOption}
+          changeSortBy={(value: string) => setSortBy(value)}
+          count={filteredGames?.length}
+          sortBy={sortBy}
+          searchQuery={searchQuery}
+        >
+          <Items games={filteredGames} />
+        </Layout>
+      )}
+    </>
   );
 };
 

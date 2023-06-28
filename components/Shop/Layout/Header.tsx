@@ -74,14 +74,6 @@ const Header = ({
                 <p
                   className="cursor-pointer hover:text-gray-500"
                   onClick={() => {
-                    changeSortBy("date");
-                  }}
-                >
-                  Start date
-                </p>
-                <p
-                  className="cursor-pointer hover:text-gray-500"
-                  onClick={() => {
                     changeSortBy("rating");
                   }}
                 >
