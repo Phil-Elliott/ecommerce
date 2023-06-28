@@ -66,10 +66,10 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 /*
+- fix category links (not working on first click-takes you to shop page only) - works when start in shop page
+- fix blank platform in filter
 
-1) Fix wishlist page
 2) Fix product page
-3) Fix cart page
 4) Add links to product page
 5) Add reviews 
 6) Hook up stripe and make it actually functional

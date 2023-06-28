@@ -194,9 +194,9 @@ const Filter = ({
               </div>
               {filterOption.show ? (
                 <div className="pt-4">
-                  {filterOption.options.map((option) => (
+                  {filterOption.options.map((option, i) => (
                     <div
-                      key={option}
+                      key={`${filterOption.name}-${option}`}
                       className="flex items-center space-x-2 pb-2 relative text-base"
                     >
                       <div className="relative flex ">
@@ -284,7 +284,7 @@ const Filter = ({
               <div className="pt-4">
                 {filterOption.options.map((option) => (
                   <div
-                    key={option}
+                    key={`${filterOption.name}-${option}`}
                     className="flex items-center space-x-2 pb-2 relative text-base"
                   >
                     <div className="relative flex">

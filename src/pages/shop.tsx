@@ -21,74 +21,36 @@ const shop = ({ games }: ShopProps) => {
   });
   const [sortBy, setSortBy] = useState<string>("releaseDate");
 
+  // Reading and setting query parameters
   const router = useRouter();
+
   const searchQuery = router.query.search as string;
   const filterQuery = router.query.category as string;
   const publisherQuery = router.query.publisher as string;
 
-  const [initialSearchQuery, setInitialSearchQuery] = useState("");
-  const [initialFilterQuery, setInitialFilterQuery] = useState("");
-  const [initialPublisherQuery, setInitialPublisherQuery] = useState("");
-
+  // Once router is ready, set initial queries to actual query parameters
   useEffect(() => {
     if (router.isReady) {
-      setInitialSearchQuery(searchQuery);
-      setInitialFilterQuery(filterQuery);
-      setInitialPublisherQuery(publisherQuery);
+      if (searchQuery && searchQuery.trim() !== "") {
+        const searchedGames = games.filter((game) =>
+          game.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+        );
+        setFilteredGames(searchedGames);
+      } else if (filterQuery && filterQuery.trim() !== "") {
+        const filteredGames = games.filter((game) =>
+          game.category.includes(filterQuery)
+        );
+        setFilteredGames(filteredGames);
+      } else if (publisherQuery && publisherQuery.trim() !== "") {
+        const filteredGames = games.filter((game) =>
+          game.publisher ? game.publisher.includes(publisherQuery) : false
+        );
+        setFilteredGames(filteredGames);
+      }
     }
-  }, [router.isReady, searchQuery, filterQuery]);
+  }, [router.isReady, searchQuery, filterQuery, publisherQuery]);
 
-  useEffect(() => {
-    if (initialSearchQuery && initialSearchQuery.trim() !== "") {
-      const searchedGames = games.filter((game) =>
-        game.name
-          .toLowerCase()
-          .includes(initialSearchQuery.toLowerCase().trim())
-      );
-      setFilteredGames(searchedGames);
-    } else {
-      setFilteredGames(games);
-    }
-  }, [initialSearchQuery]);
-
-  useEffect(() => {
-    if (initialFilterQuery && initialFilterQuery.trim() !== "") {
-      const filteredGames = games.filter((game) =>
-        game.category.includes(initialFilterQuery)
-      );
-      setFilteredGames(filteredGames);
-    } else {
-      setFilteredGames(games);
-    }
-
-    setFilterOptions({
-      category: initialFilterQuery ? [initialFilterQuery] : [],
-      publisher: [],
-      gameModes: [],
-      platform: [],
-      prices: [],
-    });
-  }, [initialFilterQuery]);
-
-  useEffect(() => {
-    if (initialPublisherQuery && initialPublisherQuery.trim() !== "") {
-      const filteredGames = games.filter((game) =>
-        game.publisher ? game.publisher.includes(initialPublisherQuery) : false
-      );
-      setFilteredGames(filteredGames);
-    } else {
-      setFilteredGames(games);
-    }
-
-    setFilterOptions({
-      category: [],
-      publisher: initialPublisherQuery ? [initialPublisherQuery] : [],
-      gameModes: [],
-      platform: [],
-      prices: [],
-    });
-  }, [initialPublisherQuery]);
-
+  // On change of sortBy, sort games accordingly
   useEffect(() => {
     const sortedGames = [...filteredGames].sort((a, b) => {
       if (sortBy === "releaseDate") {
@@ -108,6 +70,7 @@ const shop = ({ games }: ShopProps) => {
     setFilteredGames(sortedGames);
   }, [sortBy]);
 
+  // Function to add a filter option
   const addFilterOption = (
     name: keyof FilteredOptionsProps,
     option: string
@@ -118,6 +81,7 @@ const shop = ({ games }: ShopProps) => {
     }));
   };
 
+  // Function to remove a filter option
   const removeFilterOption = (
     name: keyof FilteredOptionsProps,
     option: string
@@ -128,6 +92,7 @@ const shop = ({ games }: ShopProps) => {
     }));
   };
 
+  // Filter games based on the current filterOptions state
   useEffect(() => {
     const filteredGames = games.filter((game) => {
       let isCategory = false;
