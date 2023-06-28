@@ -44,7 +44,7 @@ const Layout = ({
         openMobileFilter={() => setIsMobileFilterOpen(true)}
         searchQuery={searchQuery}
       />
-      <div className="container mx-auto flex gap-12 pt-4 lg:pt-48 pb-32">
+      <div className="container mx-auto flex gap-12 pt-4 lg:pt-40 pb-32">
         {showFilter ? (
           <Filter
             games={games}

@@ -49,7 +49,7 @@ const Header = ({
         <div
           className={`container mx-auto hidden lg:flex justify-between items-center font-medium bg-white pb-4 z-30
           transition-all duration-500 ease-in-out
-        ${hiddenHeader ? "pt-4" : "pt-28"}
+        ${hiddenHeader ? "pt-4" : "pt-24"}
         `}
         >
           <h1 className="text-2xl">
