@@ -6,18 +6,16 @@ import { GameProps } from "components/shared/Types/Types";
 import Signin from "components/Signin/Signin";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import store, { AppDispatch } from "../../redux/store";
-import { addToCart } from "redux/slices/cartSlice";
-import { addToList } from "redux/slices/wishListSlice";
+import { Provider } from "react-redux";
+import store from "../../redux/store";
 import axios from "axios";
-import Spinner from "components/shared/Spinner/Spinner";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [games, setGames] = useState<GameProps[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Fetches game data when the app loads
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -67,44 +65,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
 /*
 
-- fix blank platform in filter
-
-2) Fix product page
-4) Add links to product page
-5) Add reviews 
-6) Hook up stripe and make it actually functional
-7) Fix and add things to sign in modal
-
-
-
-
-5) Work on Home page styles
-7) Work on providing other options
-     - log out
-     - my account
-     - my orders
-     - change password
-     - forgot password
-
-
-
-
-
-1) add and get products to display in shop ( alot to do here )
-2) Finish configuring signup and signin
-3) Create cart page
-    - Add to cart functionality
-    - Remove from cart functionality
-    - Update cart functionality
-    - Checkout functionality
-4) Create wishlist page
-    - Add to wishlist functionality
-    - Remove from wishlist functionality
-    - Update wishlist functionality
-5) Create checkout page
-    - Add payment functionality
-    - Add shipping functionality
-    - Add order functionality
+1) Fix product page
+2) Add Reviews
+3) Fix sign up component
+4) Add checkout and functionality (do everything else first)
 
 
 */

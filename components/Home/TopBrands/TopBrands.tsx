@@ -64,10 +64,3 @@ const TopBrands = () => {
 };
 
 export default TopBrands;
-
-/*
-
-1) Make an array of data for each link
-        - title, logo, link
-
-*/

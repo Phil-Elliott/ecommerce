@@ -122,29 +122,3 @@ const product = ({ games }: ProductProps) => {
 };
 
 export default product;
-
-/*
-
-
-1) Left
-  - Image
-  Right
-  - Name
-  - Rating
-  - Price
-  - number of purchases
-  - buttons (add to cart, save)
-
-2) Description
-  - Description
-  - Itinerary
-  - Includes
-  - Excludes
-  - Reviews
-
-  3) Related Packages
-
-
-
-
-*/

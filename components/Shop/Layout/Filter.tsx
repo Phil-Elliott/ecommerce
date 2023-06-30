@@ -322,20 +322,3 @@ const Filter = ({
 };
 
 export default Filter;
-
-// {/* Mobile Filter */}
-// /*
-//         {isMobileFilterOpen ? (
-//         <div className="lg:hidden fixed z-50 w-full h-full bg-white top-0 left-0">
-//           <div className="flex justify-between items-center px-4 py-4 border-b-2 border-gray-300">
-//             <h1 className="text-xl font-medium">Filter</h1>
-//             <button className="text-3xl" onClick={closeMobileFilter}>
-//               <BsX />
-//             </button>
-//           </div>
-//           <div className="flex flex-col overflow-y-scroll h-full w-full scrollbar px-4 py-4 pb-20"> */}
-//         {/* Sort By section */}
-
-//          {/* </div>
-//         </div>
-//       ) : null} */

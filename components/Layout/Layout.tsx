@@ -82,36 +82,3 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
 };
 
 export default Layout;
-
-/*
-
-// function SyncLocalStorageWithStore() {
-//   const [isClient, setClient] = useState(false);
-//   const dispatch: AppDispatch = useDispatch();
-
-//   useEffect(() => {
-//     setClient(true);
-//   }, []);
-
-//   useEffect(() => {
-//     if (isClient) {
-//       const cartFromLocalStorage = JSON.parse(
-//         localStorage.getItem("cart") || "[]"
-//       );
-//       const wishlistFromLocalStorage = JSON.parse(
-//         localStorage.getItem("wishList") || "[]"
-//       );
-
-//       cartFromLocalStorage.forEach((item: GameProps) =>
-//         dispatch(addToCart(item))
-//       );
-//       wishlistFromLocalStorage.forEach((item: GameProps) =>
-//         dispatch(addToList(item))
-//       );
-//     }
-//   }, [dispatch, isClient]);
-
-//   return null;
-// }
-
-*/
