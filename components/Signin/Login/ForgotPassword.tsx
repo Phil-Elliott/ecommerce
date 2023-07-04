@@ -7,10 +7,16 @@ type ForgotPasswordProps = {
 
 const ForgotPassword = ({ handleForgotPassword }: ForgotPasswordProps) => {
   const [email, setEmail] = useState("");
+  const [attempted, setAttempted] = useState<boolean>(false);
 
   // Handling the form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (email === "") {
+      setAttempted(true);
+      return;
+    }
 
     try {
       const response = await axios.post(
@@ -48,6 +54,11 @@ const ForgotPassword = ({ handleForgotPassword }: ForgotPasswordProps) => {
           onChange={handleEmail}
           value={email}
         />
+        {email === "" && attempted && (
+          <p className="text-sm text-red-600 mb-2">
+            👋 Please enter a valid email
+          </p>
+        )}
         <div className="">
           <button
             className="bg-black hover:opacity-90 text-white font-semibold mt-2 py-1 px-2 w-full rounded-md focus:outline-none focus:ring-offset-2"

@@ -47,16 +47,7 @@ export default Signin;
 
 /*
 
-// const jwt = useSelector((state: RootState) => state.project.jwt);
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("jwt") !== null) {
-  //     navigate("/dashboard/");
-  //   }
-  // }, [jwt]);
-
-  // console.log(jwt, "signin jwt");
-
+- need to add more validation to the forms (use regex)
 
 
 

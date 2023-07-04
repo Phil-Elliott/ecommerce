@@ -122,8 +122,6 @@ export default Login;
 /*
 
 Forgot password
-1) Create a component to display form
 2) Send req to backend
-3) Maybe create routes for it instead of a ternary operator
 
 */
