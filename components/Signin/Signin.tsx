@@ -31,10 +31,7 @@ const Signin = ({ closeModal }: signInProps) => {
             handleForgotPassword={() => handleForgotPassword()}
           />
         ) : (
-          <ForgotPassword
-          // closeModal={closeModal}
-          // handleFormChange={() => handleFormChange()}
-          />
+          <ForgotPassword handleForgotPassword={() => handleForgotPassword()} />
         )
       ) : (
         <Signup
