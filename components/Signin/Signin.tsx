@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Login from "./Login/Login";
 import Signup from "./Signup/Signup";
+import ForgotPassword from "./Login/ForgotPassword";
 
 type signInProps = {
   closeModal: () => void;
@@ -8,18 +9,33 @@ type signInProps = {
 
 const Signin = ({ closeModal }: signInProps) => {
   const [login, setLogin] = useState(true);
+  const [forgotPassword, setForgotPassword] = useState(false);
 
+  // changes the form from login to signup
   const handleFormChange = () => {
     setLogin(!login);
+  };
+
+  // changes the form from login to forgot password
+  const handleForgotPassword = () => {
+    setForgotPassword(!forgotPassword);
   };
 
   return (
     <div>
       {login ? (
-        <Login
-          closeModal={closeModal}
-          handleFormChange={() => handleFormChange()}
-        />
+        !forgotPassword ? (
+          <Login
+            closeModal={closeModal}
+            handleFormChange={() => handleFormChange()}
+            handleForgotPassword={() => handleForgotPassword()}
+          />
+        ) : (
+          <ForgotPassword
+          // closeModal={closeModal}
+          // handleFormChange={() => handleFormChange()}
+          />
+        )
       ) : (
         <Signup
           closeModal={closeModal}

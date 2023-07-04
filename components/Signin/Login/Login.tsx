@@ -5,10 +5,15 @@ import { setUser } from "redux/slices/userSlice";
 
 type LoginProps = {
   handleFormChange: () => void;
+  handleForgotPassword: () => void;
   closeModal: () => void;
 };
 
-const Login = ({ handleFormChange, closeModal }: LoginProps) => {
+const Login = ({
+  handleFormChange,
+  handleForgotPassword,
+  closeModal,
+}: LoginProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -80,9 +85,14 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
             👋 Invalid email or password
           </p>
         )}
-        <p className="text-sm text-gray-700 cursor-pointer hover:underline mb-2">
+
+        <p
+          className="text-sm text-gray-700 cursor-pointer hover:underline mb-2"
+          onClick={() => handleForgotPassword()}
+        >
           Forgot Password
         </p>
+
         <div className="">
           <button
             className="bg-black hover:opacity-90 text-white font-semibold mt-2 py-1 px-2 w-full rounded-md focus:outline-none focus:ring-offset-2"
@@ -108,3 +118,12 @@ const Login = ({ handleFormChange, closeModal }: LoginProps) => {
 };
 
 export default Login;
+
+/*
+
+Forgot password
+1) Create a component to display form
+2) Send req to backend
+3) Maybe create routes for it instead of a ternary operator
+
+*/

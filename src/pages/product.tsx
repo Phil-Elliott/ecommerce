@@ -41,7 +41,7 @@ const product = ({ games }: ProductProps) => {
   }, [mainImage]);
 
   return (
-    <div className="container mx-auto grid grid-cols-7 gap-20 py-32">
+    <div className="container mx-auto grid grid-col grid-cols-7 gap-20 py-32">
       {/* Images and main image container */}
       <div className="flex gap-10 h-full h-[65vh] col-span-4">
         <div className="grid grid-rows-6 gap-10 h-full w-32">
@@ -52,8 +52,8 @@ const product = ({ games }: ProductProps) => {
               width="600"
               height="600"
               alt="Game picture"
-              className={`w-full h-20 object-cover rounded-lg cursor-pointer ${
-                mainImage === img ? "border-2 border-black" : ""
+              className={`w-full h-20 object-cover rounded-lg cursor-pointer p-2 ${
+                mainImage === img ? "border-2 border-gray-200" : ""
               }`}
               onClick={() => setMainImage(img)}
             />
@@ -118,3 +118,13 @@ const product = ({ games }: ProductProps) => {
 };
 
 export default product;
+
+/*
+
+Responsive design
+1) Under large - have extra pictures go below
+2) Under medium -  have cols but pics on top
+
+
+
+*/
