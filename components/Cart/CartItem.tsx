@@ -23,6 +23,8 @@ const CartItem = ({ product }: CartItemProps) => {
   const changeQuantity = useChangeCartQuantity();
 
   function handleChange(e: any) {
+    if (e.target.value > product.stock) return;
+
     setCartQuantity(e.target.value);
 
     changeQuantity({

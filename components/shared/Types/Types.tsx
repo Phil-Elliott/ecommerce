@@ -11,6 +11,7 @@ export type GameProps = {
   playerCount: number;
   platform: string;
   gameModes: string[];
+  stock: number;
   quantity?: number;
 };
 

@@ -38,7 +38,7 @@ const product = ({ games }: ProductProps) => {
 
   return (
     <div className="container mx-auto">
-      <div className="grid grid-rows-2 lg:grid-cols-7 gap-10 py-20 lg:py-32">
+      <div className="grid grid-rows-2 lg:grid-rows-1 lg:grid-cols-7 gap-10 py-20 lg:py-32">
         {/* Images and main image container */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-full col-span-4">
           <div className="order-2 lg:order-none grid grid-cols-6 lg:grid-cols-1 lg:grid-rows-6 gap-3 sm:gap-5 h-full max-h-[70vh] w-full">
