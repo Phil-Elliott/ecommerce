@@ -38,8 +38,8 @@ const RatingsContainer = ({ game }: RatingsProps) => {
   return (
     <div className="pt-10 mt-10 border-t-2 border-gray-200">
       <h2 className="text-2xl font-semibold mb-5">Ratings and Reviews</h2>
-      <div className="grid grid-cols-2 gap-10 pt-10 space-x-5">
-        <div className="flex flex-col space-y-2 items-center w-full border-r-2 border-gray-400 pr-10">
+      <div className="grid  lg:grid-cols-2 gap-10 pt-10 lg:space-x-5">
+        <div className="flex flex-col space-y-2 items-center w-full border-b-2 lg:border-b-0 lg:border-r-2 border-gray-400 lg:pr-10 pb-10">
           <p className="text-3xl">{game?.rating}</p>
           <Ratings rating={game?.rating || 5} />
           <p className="text-gray-500">(12) Ratings</p>
@@ -85,3 +85,19 @@ const RatingsContainer = ({ game }: RatingsProps) => {
 };
 
 export default RatingsContainer;
+
+/*
+
+1) Have ratings data created from the ratings in the database 
+      - Need to actually create the ratings in the database first
+      - Have the ratings get grabbed from the database and then displayed here when user goes to product page (check out aggrigation of data in mongoose)
+2) Make this responsive
+3) Add the ability to write a review
+4) Add the ability to show all reviews
+5) Add the ability to sort reviews by rating
+6) Add the ability to sort reviews by date
+7) Show top reviews by default
+8) Add the ability to update an old review
+
+
+*/
