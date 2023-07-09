@@ -3,12 +3,10 @@ import { useRouter } from "next/router";
 
 import { GameProps } from "components/shared/Types/Types";
 
-import { Ratings } from "components/shared";
-
-import Link from "next/link";
 import ProductImages from "components/Product/ProductImages";
 import MainImage from "components/Product/MainImage";
 import ProductDetails from "components/Product/ProductDetails";
+import RatingsContainer from "components/Product/Ratings/RatingsContainer";
 
 type ProductProps = {
   games: GameProps[];
@@ -34,9 +32,8 @@ const product = ({ games }: ProductProps) => {
   }, [id, games]);
 
   return (
-    <div className="container mx-auto">
-      <div className="grid grid-rows-2 lg:grid-rows-1 lg:grid-cols-7 gap-10 py-20 lg:py-32">
-        {/* Images and main image container */}
+    <div className="container mx-auto py-20 lg:py-32">
+      <div className="grid grid-cols-1 lg:grid-cols-7 gap-10 ">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-full col-span-4">
           <ProductImages
             game={game}
@@ -45,9 +42,9 @@ const product = ({ games }: ProductProps) => {
           />
           <MainImage game={game} mainImage={mainImage} />
         </div>
-        {/* Product description and buttons */}
         <ProductDetails game={game} />
       </div>
+      <RatingsContainer game={game} />
     </div>
   );
 };
@@ -55,6 +52,11 @@ const product = ({ games }: ProductProps) => {
 export default product;
 
 /*
+
+- Add more like this section
+- Add reviews section 
+- Add top reviews section or All reviews if that is clicked
+- Add scrolling or arrows to images on smaller screens
 
 Responsive design
 1) Under large - have extra pictures go below

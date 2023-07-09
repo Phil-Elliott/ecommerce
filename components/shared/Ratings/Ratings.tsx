@@ -15,11 +15,11 @@ export const Ratings = ({ rating }: StarRatingProps) => {
       {Array(fullStars)
         .fill(null)
         .map((_, i) => (
-          <AiFillStar key={i} className="text-yellow-500" />
+          <AiFillStar key={i} className="text-black-500" />
         ))}
       {halfStar > 0 && (
         <div className="relative">
-          <AiOutlineStar className="text-yellow-500" />
+          <AiOutlineStar className="text-black-500" />
           <div
             style={{
               width: `${halfStar * 100}%`,
@@ -29,14 +29,14 @@ export const Ratings = ({ rating }: StarRatingProps) => {
               left: 0,
             }}
           >
-            <AiFillStar className="text-yellow-500" />
+            <AiFillStar className="text-black-500" />
           </div>
         </div>
       )}
       {Array(emptyStars)
         .fill(null)
         .map((_, i) => (
-          <AiOutlineStar key={i + fullStars + 1} className="text-yellow-500" />
+          <AiOutlineStar key={i + fullStars + 1} className="text-black-500" />
         ))}
     </div>
   );
