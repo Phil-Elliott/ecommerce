@@ -118,10 +118,3 @@ const Login = ({
 };
 
 export default Login;
-
-/*
-
-Forgot password
-2) Send req to backend
-
-*/

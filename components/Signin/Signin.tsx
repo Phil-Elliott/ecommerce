@@ -44,11 +44,3 @@ const Signin = ({ closeModal }: signInProps) => {
 };
 
 export default Signin;
-
-/*
-
-- need to add more validation to the forms (use regex)
-
-
-
-*/

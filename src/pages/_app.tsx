@@ -68,9 +68,12 @@ export default function App({ Component, pageProps }: AppProps) {
 1) Fix product page
   - make responsive
 2) Add Reviews and put at bottom of product page
-3) Fix sign up component
-  - add forgot password
-4) Add checkout and functionality (do everything else first)
+3) Fix up sign up components effects and add styles to forgot password
+4) Add checkout and functionality
+5) Add view user account and change some details
+  - chang password
+  - order history
+  - review history - can change reviews
 
 
 
