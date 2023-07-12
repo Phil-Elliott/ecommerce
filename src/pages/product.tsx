@@ -52,6 +52,13 @@ const product = ({ games }: ProductProps) => {
 export default product;
 
 /*
+Today
+- Display correct review data
+- Add ability for user to add a review and rating
+- Display the reviews
+- Add ability for user to update or delete reviews
+
+
 
 - Add more like this section
 - Add reviews section 

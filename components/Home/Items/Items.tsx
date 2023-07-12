@@ -66,7 +66,7 @@ const Items = ({ name, games }: ItemProps) => {
           ref={scrollRef}
           className="flex gap-4 whitespace-nowrap overflow-x-scroll scrollbar px-1"
         >
-          {games.slice(0, 10).map((game) => (
+          {games?.slice(0, 10).map((game) => (
             <div
               key={game._id}
               onClick={() =>

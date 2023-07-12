@@ -28,9 +28,9 @@ const ProductDetails = ({ game }: ProductDetailsProps) => {
             </p>
           </Link>
           <div className="flex space-x-2 items-center">
-            <Ratings rating={game?.rating || 5} />
-            <p>{game?.rating}</p>
-            <p className="text-gray-500">(12) Ratings</p>
+            <Ratings rating={game?.ratingsAverage || 5} />
+            <p>{game?.ratingsAverage}</p>
+            <p className="text-gray-500">({game?.ratingsQuantity}) Ratings</p>
           </div>
 
           <p className="text-3xl font-semibold text-gray-800">${game?.price}</p>

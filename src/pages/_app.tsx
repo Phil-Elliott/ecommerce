@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
         const data = response.data;
 
         if (data.status === "success") {
-          setGames(data.data.games);
+          setGames(data.data.data);
         } else {
           console.error("Error fetching games:", data);
         }

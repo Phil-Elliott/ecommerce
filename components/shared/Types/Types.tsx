@@ -7,7 +7,9 @@ export type GameProps = {
   category: string[];
   publisher: string;
   releaseDate: string;
-  rating: number;
+  ratingsAverage: number;
+  ratingsQuantity: number;
+  starRatings: Record<string, number>;
   playerCount: number;
   platform: string;
   gameModes: string[];

@@ -32,9 +32,9 @@ const Items = ({ games }: ItemsProps) => {
                 {game.name} - {game.platform}
               </h1>
               <div className="flex space-x-2 items-center text-sm">
-                <Ratings rating={game.rating} />
-                <p>{game.rating}</p>
-                <p className="text-gray-500">(12)</p>
+                <Ratings rating={game.ratingsAverage} />
+                <p>{game.ratingsAverage}</p>
+                <p className="text-gray-500">({game.ratingsQuantity})</p>
               </div>
             </div>
             {/* <p className="text-gray-500">{game.releaseDate}</p> */}
