@@ -6,6 +6,7 @@ type MobileHeaderProps = {
   closeHandler: () => void;
   title: string;
   children: React.ReactNode;
+  full?: boolean;
 };
 
 const MobileHeader = ({
@@ -13,11 +14,12 @@ const MobileHeader = ({
   closeHandler,
   title,
   children,
+  full,
 }: MobileHeaderProps) => {
   return (
     <>
       {isOpen ? (
-        <div className="fixed inset-0 z-50 flex lg:hidden">
+        <div className={`fixed inset-0 z-50 flex ${!full && "lg:hidden"} `}>
           {/* Overlay */}
           <div
             className="absolute inset-0 bg-black opacity-50 transition-opacity"

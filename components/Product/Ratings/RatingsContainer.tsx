@@ -4,9 +4,10 @@ import { Ratings } from "components/shared";
 
 type RatingsProps = {
   game: GameProps | null;
+  openReview: () => void;
 };
 
-const RatingsContainer = ({ game }: RatingsProps) => {
+const RatingsContainer = ({ game, openReview }: RatingsProps) => {
   const transformedStarRatings = game
     ? Object.entries(game.starRatings).map(([star, count]) => ({
         rating: `${star} Stars`,
@@ -28,7 +29,7 @@ const RatingsContainer = ({ game }: RatingsProps) => {
           <div className="flex flex-col space-y-3 w-full pt-5">
             <button
               className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
-              // onClick={() => game && addToCart(game)}
+              onClick={() => openReview()}
             >
               Write A Review
             </button>
@@ -74,8 +75,6 @@ export default RatingsContainer;
 How can i get the star data from the database
 - 
 
-1) Have ratings data created from the ratings in the database 
-      - Have the ratings get grabbed from the database and then displayed here when user goes to product page (check out aggrigation of data in mongoose)
 3) Add the ability to write a review
 4) Add the ability to show all reviews
 5) Add the ability to sort reviews by rating
