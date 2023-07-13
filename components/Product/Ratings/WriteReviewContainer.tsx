@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MobileHeader } from "components/shared";
 import axios from "axios";
 import { GameProps } from "components/shared/Types/Types";
+import { CldImage } from "next-cloudinary";
 
 type WriteReviewContainerProps = {
   isMobileContainerOpen: boolean;
@@ -50,6 +51,20 @@ const WriteReviewContainer = ({
       full
     >
       <div className="flex flex-col space-y-5 p-5">
+        <div className="flex items-center bg-gray-200 p-4">
+          {game?.image[0] && (
+            <CldImage
+              src={game.image[0]}
+              width="100"
+              height="100"
+              alt="Game picture"
+              className="w-20 h-20 object-cover rounded-lg"
+            />
+          )}
+          <p className="pl-12 text-lg">
+            {game?.name} - {game?.platform}
+          </p>
+        </div>
         <div className="flex flex-col space-y-2">
           <label htmlFor="headline">Review Headline</label>
           <input

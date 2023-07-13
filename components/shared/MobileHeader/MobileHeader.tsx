@@ -27,7 +27,7 @@ const MobileHeader = ({
           />
           {/* Panel */}
           <div
-            className={`relative w-full sm:w-1/2 md:w-1/3 bg-white h-full shadow-lg ${
+            className={`relative w-full sm:w-1/2 md:w-1/2 lg:w-1/3 bg-white h-full shadow-lg ${
               isOpen ? "open" : ""
             }`}
           >
