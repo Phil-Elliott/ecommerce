@@ -1,13 +1,18 @@
 import React from "react";
-import { GameProps } from "components/shared/Types/Types";
+import { GameProps, Review } from "components/shared/Types/Types";
 import { Ratings } from "components/shared";
 
 type RatingsProps = {
   game: GameProps | null;
   openReview: () => void;
+  userHasReviewed: Review | null;
 };
 
-const RatingsContainer = ({ game, openReview }: RatingsProps) => {
+const RatingsContainer = ({
+  game,
+  openReview,
+  userHasReviewed,
+}: RatingsProps) => {
   const transformedStarRatings = game
     ? Object.entries(game.starRatings).map(([star, count]) => ({
         rating: `${star} Stars`,
@@ -31,7 +36,7 @@ const RatingsContainer = ({ game, openReview }: RatingsProps) => {
               className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
               onClick={() => openReview()}
             >
-              Write A Review
+              {userHasReviewed !== null ? "Update Review" : "Write a Review"}
             </button>
             <button
               className="px-4 py-2 rounded border-black border-2 hover:shadow-lg"
@@ -70,6 +75,8 @@ const RatingsContainer = ({ game, openReview }: RatingsProps) => {
 export default RatingsContainer;
 
 /*
+
+
 
 
 How can i get the star data from the database

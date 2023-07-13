@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { GameProps } from "components/shared/Types/Types";
+import { GameProps, Review } from "components/shared/Types/Types";
 
 import ProductImages from "components/Product/ProductImages";
 import MainImage from "components/Product/MainImage";
@@ -10,6 +10,8 @@ import RatingsContainer from "components/Product/Ratings/RatingsContainer";
 import WriteReviewContainer from "components/Product/Ratings/WriteReviewContainer";
 import TopReviews from "components/Product/Reviews/TopReviews";
 import AllReviews from "components/Product/Reviews/AllReviews";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
 type ProductProps = {
   games: GameProps[];
@@ -20,6 +22,10 @@ const product = ({ games }: ProductProps) => {
   const [mainImage, setMainImage] = useState<string | null>(null);
   const [isMobileContainerOpen, setIsMobileContainerOpen] = useState(false);
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const [reviews, setReviews] = useState<Review[] | null>([]);
+  const [userHasReviewed, setUserHasReviewed] = useState<Review | null>(null);
+
+  const user = useSelector((state: RootState) => state.user);
 
   // Get the 'id' property from the router.query object and parse it as an integer
   const router = useRouter();
@@ -35,6 +41,42 @@ const product = ({ games }: ProductProps) => {
       setMainImage(currentGame.image[0]);
     }
   }, [id, games]);
+
+  // Get reviews from database
+  useEffect(() => {
+    if (game) {
+      const fetchReviews = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/v1/games/${game._id}/reviews`
+          );
+          const data = await response.json();
+          setReviews(data.data.data);
+          console.log(data.data.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchReviews();
+    }
+  }, [game]);
+
+  // check if user has already reviewed this game
+  function userHasReviewedCheck() {
+    if (user && reviews) {
+      const userReview = reviews.find((review) => review.user._id === user.id);
+      if (userReview) {
+        return userReview;
+      }
+    }
+    return null;
+  }
+
+  useEffect(() => {
+    if (user && reviews) {
+      setUserHasReviewed(userHasReviewedCheck());
+    }
+  }, [user, reviews]);
 
   return (
     <>
@@ -53,6 +95,7 @@ const product = ({ games }: ProductProps) => {
         <RatingsContainer
           game={game}
           openReview={() => setIsMobileContainerOpen(true)}
+          userHasReviewed={userHasReviewed}
         />
         <div>{!showAllReviews ? <TopReviews /> : <AllReviews />}</div>
       </div>
@@ -60,6 +103,8 @@ const product = ({ games }: ProductProps) => {
         isMobileContainerOpen={isMobileContainerOpen}
         setIsMobileContainerOpen={setIsMobileContainerOpen}
         game={game}
+        user={user}
+        userHasReviewed={userHasReviewed}
       />
     </>
   );

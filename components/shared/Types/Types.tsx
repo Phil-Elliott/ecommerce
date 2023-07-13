@@ -24,3 +24,16 @@ export type FilteredOptionsProps = {
   platform: string[];
   prices: string[];
 };
+
+export type Review = {
+  createdAt: string;
+  game: string;
+  headline: string;
+  id: string;
+  rating: number;
+  review: string;
+  user: {
+    name: string;
+    _id: string;
+  };
+};

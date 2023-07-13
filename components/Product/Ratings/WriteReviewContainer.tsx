@@ -1,28 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MobileHeader } from "components/shared";
 import axios from "axios";
-import { GameProps } from "components/shared/Types/Types";
+import { GameProps, Review } from "components/shared/Types/Types";
 import { CldImage } from "next-cloudinary";
-import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
 
 type WriteReviewContainerProps = {
   isMobileContainerOpen: boolean;
   setIsMobileContainerOpen: (isOpen: boolean) => void;
   game: GameProps | null;
+  user: RootState["user"];
+  userHasReviewed: Review | null;
 };
 
 const WriteReviewContainer = ({
   isMobileContainerOpen,
   setIsMobileContainerOpen,
   game,
+  user,
+  userHasReviewed,
 }: WriteReviewContainerProps) => {
   const [headline, setHeadline] = useState("");
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(5);
   const [attempted, setAttempted] = useState<boolean>(false);
 
-  const user = useSelector((state: RootState) => state.user);
+  useEffect(() => {
+    if (userHasReviewed !== null) {
+      setHeadline(userHasReviewed.headline);
+      setReview(userHasReviewed.review);
+      setRating(userHasReviewed.rating);
+    }
+  }, [userHasReviewed]);
 
   async function submitReview() {
     if (!user) {
@@ -34,22 +43,39 @@ const WriteReviewContainer = ({
       return;
     }
 
-    try {
-      const response = await axios.post(
-        `http://localhost:3000/api/v1/games/${game?._id}/reviews`,
-        {
-          headline: headline,
-          rating: rating,
-          review: review,
-        },
-        { withCredentials: true }
-      );
-      setIsMobileContainerOpen(false);
-      setHeadline("");
-      setReview("");
-      setRating(5);
-    } catch (error: any) {
-      console.log(error);
+    if ((userHasReviewed = null)) {
+      try {
+        const response = await axios.post(
+          `http://localhost:3000/api/v1/games/${game?._id}/reviews`,
+          {
+            headline: headline,
+            rating: rating,
+            review: review,
+          },
+          { withCredentials: true }
+        );
+        setIsMobileContainerOpen(false);
+        // setHeadline("");
+        // setReview("");
+        // setRating(5);
+      } catch (error: any) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/api/v1/reviews/${userHasReviewed}}`,
+          {
+            headline: headline,
+            rating: rating,
+            review: review,
+          },
+          { withCredentials: true }
+        );
+        setIsMobileContainerOpen(false);
+      } catch (error: any) {
+        console.log(error);
+      }
     }
   }
 
@@ -89,6 +115,7 @@ const WriteReviewContainer = ({
             id="headline"
             className="border-2 border-gray-400 rounded p-2"
             onChange={(e) => setHeadline(e.target.value)}
+            value={headline}
           />
           {headline.length < 3 && attempted && (
             <p className="text-sm text-red-600 mb-2">
@@ -103,6 +130,7 @@ const WriteReviewContainer = ({
             id="review"
             className="border-2 border-gray-400 rounded p-2"
             onChange={(e) => setReview(e.target.value)}
+            value={review}
           />
           {review.length < 10 && attempted && (
             <p className="text-sm text-red-600 mb-2">
@@ -117,6 +145,7 @@ const WriteReviewContainer = ({
             id="rating"
             className="border-2 border-gray-400 rounded p-2"
             onChange={(e) => setRating(parseInt(e.target.value))}
+            value={rating}
           >
             <option value="5">5 Stars</option>
             <option value="4">4 Stars</option>
@@ -140,8 +169,10 @@ export default WriteReviewContainer;
 
 /*
 
-1) Check if all fields are filled out. If not give an error message to fill it out
-2) Check if the user is logged in. If not give an error message to log in
+Maybe you can search through reviews on product page to include the users id and if it matches the user id then they have already left a review
+or pull all reviews for user when they login and store in redux and then check if the game id is in the reviews array
+
+
 3) Check if the user has already left a review. If so give an error message that they can only leave one review
         - or jump into update review when they click on write a review if they have already left one and maybe even change the text to update review
                 - handle this after you get the create review working right
