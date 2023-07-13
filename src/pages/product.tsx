@@ -7,7 +7,7 @@ import ProductImages from "components/Product/ProductImages";
 import MainImage from "components/Product/MainImage";
 import ProductDetails from "components/Product/ProductDetails";
 import RatingsContainer from "components/Product/Ratings/RatingsContainer";
-import { MobileHeader } from "components/shared";
+import WriteReviewContainer from "components/Product/Ratings/WriteReviewContainer";
 
 type ProductProps = {
   games: GameProps[];
@@ -52,49 +52,11 @@ const product = ({ games }: ProductProps) => {
           openReview={() => setIsMobileContainerOpen(true)}
         />
       </div>
-      <MobileHeader
-        isOpen={isMobileContainerOpen}
-        closeHandler={() => setIsMobileContainerOpen(false)}
-        title="Write a Review"
-        full
-      >
-        <div className="flex flex-col space-y-5 p-5">
-          <div className="flex flex-col space-y-2">
-            <label htmlFor="headline">Review Headline</label>
-            <input
-              type="text"
-              name="headline"
-              id="headline"
-              className="border-2 border-gray-400 rounded p-2"
-            />
-          </div>
-          <div className="flex flex-col space-y-2">
-            <label htmlFor="review">Review Body</label>
-            <textarea
-              name="review"
-              id="review"
-              className="border-2 border-gray-400 rounded p-2"
-            />
-          </div>
-          <div className="flex flex-col space-y-2">
-            <label htmlFor="rating">Rating</label>
-            <select
-              name="rating"
-              id="rating"
-              className="border-2 border-gray-400 rounded p-2"
-            >
-              <option value="5">5 Stars</option>
-              <option value="4">4 Stars</option>
-              <option value="3">3 Stars</option>
-              <option value="2">2 Stars</option>
-              <option value="1">1 Star</option>
-            </select>
-          </div>
-          <button className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg">
-            Submit Review
-          </button>
-        </div>
-      </MobileHeader>
+      <WriteReviewContainer
+        isMobileContainerOpen={isMobileContainerOpen}
+        setIsMobileContainerOpen={setIsMobileContainerOpen}
+        game={game}
+      />
     </>
   );
 };
