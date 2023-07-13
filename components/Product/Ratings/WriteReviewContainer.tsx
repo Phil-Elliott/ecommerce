@@ -3,6 +3,8 @@ import { MobileHeader } from "components/shared";
 import axios from "axios";
 import { GameProps } from "components/shared/Types/Types";
 import { CldImage } from "next-cloudinary";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
 type WriteReviewContainerProps = {
   isMobileContainerOpen: boolean;
@@ -18,9 +20,19 @@ const WriteReviewContainer = ({
   const [headline, setHeadline] = useState("");
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(5);
+  const [attempted, setAttempted] = useState<boolean>(false);
+
+  const user = useSelector((state: RootState) => state.user);
 
   async function submitReview() {
-    console.log(`http://localhost:3000/api/v1/${game?._id}/reviews`);
+    if (!user) {
+      return;
+    }
+
+    if (headline.length < 3 || review.length < 10) {
+      setAttempted(true);
+      return;
+    }
 
     try {
       const response = await axios.post(
@@ -32,15 +44,13 @@ const WriteReviewContainer = ({
         },
         { withCredentials: true }
       );
-      console.log(response);
+      setIsMobileContainerOpen(false);
+      setHeadline("");
+      setReview("");
+      setRating(5);
     } catch (error: any) {
       console.log(error);
     }
-
-    setIsMobileContainerOpen(false);
-    setHeadline("");
-    setReview("");
-    setRating(5);
   }
 
   return (
@@ -51,6 +61,12 @@ const WriteReviewContainer = ({
       full
     >
       <div className="flex flex-col space-y-5 p-5">
+        {!user.id && (
+          <p className="text-center text-lg text-red-500">
+            You must be logged in to leave a review
+          </p>
+        )}
+
         <div className="flex items-center bg-gray-200 p-4">
           {game?.image[0] && (
             <CldImage
@@ -74,6 +90,11 @@ const WriteReviewContainer = ({
             className="border-2 border-gray-400 rounded p-2"
             onChange={(e) => setHeadline(e.target.value)}
           />
+          {headline.length < 3 && attempted && (
+            <p className="text-sm text-red-600 mb-2">
+              👋 Please enter a headline between 3 and 100 characters
+            </p>
+          )}
         </div>
         <div className="flex flex-col space-y-2">
           <label htmlFor="review">Review Body</label>
@@ -83,6 +104,11 @@ const WriteReviewContainer = ({
             className="border-2 border-gray-400 rounded p-2"
             onChange={(e) => setReview(e.target.value)}
           />
+          {review.length < 10 && attempted && (
+            <p className="text-sm text-red-600 mb-2">
+              👋 Please enter a review greater than or equal to 10 characters
+            </p>
+          )}
         </div>
         <div className="flex flex-col space-y-2">
           <label htmlFor="rating">Rating</label>
@@ -113,6 +139,13 @@ const WriteReviewContainer = ({
 export default WriteReviewContainer;
 
 /*
+
+1) Check if all fields are filled out. If not give an error message to fill it out
+2) Check if the user is logged in. If not give an error message to log in
+3) Check if the user has already left a review. If so give an error message that they can only leave one review
+        - or jump into update review when they click on write a review if they have already left one and maybe even change the text to update review
+                - handle this after you get the create review working right
+                - Could also have option to delete review if they have already left one and click on write a review
 
 1) Have it make a call to the api to post the review
 2) Have it update the reviews state in the parent component or call the getReviews function

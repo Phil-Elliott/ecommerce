@@ -8,6 +8,8 @@ import MainImage from "components/Product/MainImage";
 import ProductDetails from "components/Product/ProductDetails";
 import RatingsContainer from "components/Product/Ratings/RatingsContainer";
 import WriteReviewContainer from "components/Product/Ratings/WriteReviewContainer";
+import TopReviews from "components/Product/Reviews/TopReviews";
+import AllReviews from "components/Product/Reviews/AllReviews";
 
 type ProductProps = {
   games: GameProps[];
@@ -17,6 +19,7 @@ const product = ({ games }: ProductProps) => {
   const [game, setGame] = useState<GameProps | null>(null);
   const [mainImage, setMainImage] = useState<string | null>(null);
   const [isMobileContainerOpen, setIsMobileContainerOpen] = useState(false);
+  const [showAllReviews, setShowAllReviews] = useState(false);
 
   // Get the 'id' property from the router.query object and parse it as an integer
   const router = useRouter();
@@ -51,6 +54,7 @@ const product = ({ games }: ProductProps) => {
           game={game}
           openReview={() => setIsMobileContainerOpen(true)}
         />
+        <div>{!showAllReviews ? <TopReviews /> : <AllReviews />}</div>
       </div>
       <WriteReviewContainer
         isMobileContainerOpen={isMobileContainerOpen}

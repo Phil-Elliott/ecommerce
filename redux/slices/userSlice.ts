@@ -38,7 +38,7 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       const user = action.payload;
-      state.id = user.id;
+      state.id = user._id;
       state.name = user.name;
       state.email = user.email;
       state.role = user.role;
