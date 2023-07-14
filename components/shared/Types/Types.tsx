@@ -29,7 +29,7 @@ export type Review = {
   createdAt: string;
   game: string;
   headline: string;
-  id: string;
+  _id: string;
   rating: number;
   review: string;
   user: {

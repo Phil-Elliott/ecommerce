@@ -43,7 +43,7 @@ const WriteReviewContainer = ({
       return;
     }
 
-    if ((userHasReviewed = null)) {
+    if (userHasReviewed === null) {
       try {
         const response = await axios.post(
           `http://localhost:3000/api/v1/games/${game?._id}/reviews`,
@@ -64,7 +64,7 @@ const WriteReviewContainer = ({
     } else {
       try {
         const response = await axios.patch(
-          `http://localhost:3000/api/v1/reviews/${userHasReviewed}}`,
+          `http://localhost:3000/api/v1/reviews/${userHasReviewed?._id}`,
           {
             headline: headline,
             rating: rating,
@@ -83,7 +83,7 @@ const WriteReviewContainer = ({
     <MobileHeader
       isOpen={isMobileContainerOpen}
       closeHandler={() => setIsMobileContainerOpen(false)}
-      title="Write a Review"
+      title={userHasReviewed ? "Update Review" : "Write a Review"}
       full
     >
       <div className="flex flex-col space-y-5 p-5">
@@ -158,7 +158,7 @@ const WriteReviewContainer = ({
           className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
           onClick={() => submitReview()}
         >
-          Submit Review
+          {userHasReviewed ? "Update Review" : "Submit Review"}
         </button>
       </div>
     </MobileHeader>
@@ -168,6 +168,9 @@ const WriteReviewContainer = ({
 export default WriteReviewContainer;
 
 /*
+
+Change text to update review if they have already left one
+Fix the update functionality
 
 Maybe you can search through reviews on product page to include the users id and if it matches the user id then they have already left a review
 or pull all reviews for user when they login and store in redux and then check if the game id is in the reviews array
