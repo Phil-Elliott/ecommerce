@@ -25,6 +25,7 @@ const WriteReviewContainer = ({
   const [rating, setRating] = useState(5);
   const [attempted, setAttempted] = useState<boolean>(false);
 
+  // adds the users review to the state if they have already left one
   useEffect(() => {
     if (userHasReviewed !== null) {
       setHeadline(userHasReviewed.headline);
@@ -33,6 +34,7 @@ const WriteReviewContainer = ({
     }
   }, [userHasReviewed]);
 
+  // Submits the review to the database or updates it if they have already left one
   async function submitReview() {
     if (!user) {
       return;
@@ -76,6 +78,23 @@ const WriteReviewContainer = ({
       } catch (error: any) {
         console.log(error);
       }
+    }
+  }
+
+  // deletes the users review from the database
+  async function deleteReview() {
+    if (!user) {
+      return;
+    }
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/v1/reviews/${userHasReviewed?._id}`,
+        { withCredentials: true }
+      );
+      setIsMobileContainerOpen(false);
+    } catch (error: any) {
+      console.log(error);
     }
   }
 
@@ -160,6 +179,14 @@ const WriteReviewContainer = ({
         >
           {userHasReviewed ? "Update Review" : "Submit Review"}
         </button>
+        {userHasReviewed && (
+          <button
+            className="px-4 py-2 rounded border-black border-2 hover:shadow-lg"
+            onClick={() => deleteReview()}
+          >
+            Delete Review
+          </button>
+        )}
       </div>
     </MobileHeader>
   );
