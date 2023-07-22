@@ -11,6 +11,7 @@ type WriteReviewContainerProps = {
   game: GameProps | null;
   user: RootState["user"];
   userHasReviewed: Review | null;
+  fetchReviews: () => void;
 };
 
 const WriteReviewContainer = ({
@@ -19,6 +20,7 @@ const WriteReviewContainer = ({
   game,
   user,
   userHasReviewed,
+  fetchReviews,
 }: WriteReviewContainerProps) => {
   const [headline, setHeadline] = useState("");
   const [review, setReview] = useState("");
@@ -57,9 +59,7 @@ const WriteReviewContainer = ({
           { withCredentials: true }
         );
         setIsMobileContainerOpen(false);
-        // setHeadline("");
-        // setReview("");
-        // setRating(5);
+        fetchReviews();
       } catch (error: any) {
         console.log(error);
       }
@@ -75,6 +75,7 @@ const WriteReviewContainer = ({
           { withCredentials: true }
         );
         setIsMobileContainerOpen(false);
+        fetchReviews();
       } catch (error: any) {
         console.log(error);
       }
@@ -93,6 +94,10 @@ const WriteReviewContainer = ({
         { withCredentials: true }
       );
       setIsMobileContainerOpen(false);
+      setHeadline("");
+      setReview("");
+      setRating(5);
+      fetchReviews();
     } catch (error: any) {
       console.log(error);
     }
@@ -195,6 +200,8 @@ const WriteReviewContainer = ({
 export default WriteReviewContainer;
 
 /*
+
+- Update the reviews when they submit a new one or update one or delete one - do it with local state to avoid making a lot of calls to the backend
 
 Change text to update review if they have already left one
 Fix the update functionality

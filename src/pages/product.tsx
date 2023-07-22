@@ -42,21 +42,9 @@ const product = ({ games }: ProductProps) => {
     }
   }, [id, games]);
 
-  // Get reviews from database
+  // Gets all reviews when the game changes
   useEffect(() => {
     if (game) {
-      const fetchReviews = async () => {
-        try {
-          const response = await fetch(
-            `http://localhost:3000/api/v1/games/${game._id}/reviews`
-          );
-          const data = await response.json();
-          setReviews(data.data.data);
-          console.log(data.data.data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
       fetchReviews();
     }
   }, [game]);
@@ -72,11 +60,55 @@ const product = ({ games }: ProductProps) => {
     return null;
   }
 
+  // Get reviews from database
+  const fetchReviews = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/v1/games/${game?._id}/reviews`
+      );
+      const data = await response.json();
+      setReviews(data.data.data);
+      console.log(data.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Check if user has already reviewed this game
   useEffect(() => {
     if (user && reviews) {
       setUserHasReviewed(userHasReviewedCheck());
     }
   }, [user, reviews]);
+
+  // Changes the ratingsAverage, ratingsQuantity, and starRatings of the game when a review is added, updated, or deleted
+  // Might also just want to change the games object in the state and change that one game maybe in redux
+  // Right now the games are getting grabbed in _app.tsx and passed down as props but I think it would be better to just grab the game from the database when the page loads or put in redux
+
+  // const updateGameRatings = (review: Review) => {
+  //   if (game) {
+  //     const newStarRatings = { ...game.starRatings };
+  //     const newRatingsQuantity = game.ratingsQuantity + 1;
+  //     const newRatingsAverage =
+  //       (game.ratingsAverage * game.ratingsQuantity + review.rating) /
+  //       newRatingsQuantity;
+
+  //     // Update the starRatings object
+  //     if (newStarRatings[review.rating]) {
+  //       newStarRatings[review.rating] += 1;
+  //     } else {
+  //       newStarRatings[review.rating] = 1;
+  //     }
+
+  //     // Update the game object
+  //     setGame({
+  //       ...game,
+  //       ratingsAverage: newRatingsAverage,
+  //       ratingsQuantity: newRatingsQuantity,
+  //       starRatings: newStarRatings,
+  //     });
+  //   }
+  // };
 
   return (
     <>
@@ -105,6 +137,7 @@ const product = ({ games }: ProductProps) => {
         game={game}
         user={user}
         userHasReviewed={userHasReviewed}
+        fetchReviews={fetchReviews}
       />
     </>
   );
@@ -113,6 +146,10 @@ const product = ({ games }: ProductProps) => {
 export default product;
 
 /*
+
+-  For ratings and reviews - need to change game data when changes are made (update, create, and delete)
+   change star rating, quantity, and score of game
+
 
 Mobile container 
 - Game info

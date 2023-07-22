@@ -23,6 +23,8 @@ const RatingsContainer = ({
       }))
     : [];
 
+  transformedStarRatings.reverse();
+
   return (
     <div className="pt-10 mt-10 border-t-2 border-gray-200">
       <h2 className="text-2xl font-semibold mb-5">Ratings and Reviews</h2>
