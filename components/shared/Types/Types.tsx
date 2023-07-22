@@ -37,3 +37,10 @@ export type Review = {
     _id: string;
   };
 };
+
+export type UserReview = {
+  headline: string;
+  rating: number;
+  review: string;
+  _id: string;
+};

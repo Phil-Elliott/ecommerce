@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MobileHeader } from "components/shared";
 import axios from "axios";
-import { GameProps, Review } from "components/shared/Types/Types";
+import { GameProps, Review, UserReview } from "components/shared/Types/Types";
 import { CldImage } from "next-cloudinary";
 import { RootState } from "redux/store";
 
@@ -10,8 +10,8 @@ type WriteReviewContainerProps = {
   setIsMobileContainerOpen: (isOpen: boolean) => void;
   game: GameProps | null;
   user: RootState["user"];
-  userHasReviewed: Review | null;
-  fetchReviews: () => void;
+  userHasReviewed: UserReview | null;
+  updateUserReview: (review: UserReview | null) => void;
 };
 
 const WriteReviewContainer = ({
@@ -20,7 +20,7 @@ const WriteReviewContainer = ({
   game,
   user,
   userHasReviewed,
-  fetchReviews,
+  updateUserReview,
 }: WriteReviewContainerProps) => {
   const [headline, setHeadline] = useState("");
   const [review, setReview] = useState("");
@@ -59,7 +59,12 @@ const WriteReviewContainer = ({
           { withCredentials: true }
         );
         setIsMobileContainerOpen(false);
-        fetchReviews();
+        updateUserReview({
+          headline: headline,
+          rating: rating,
+          review: review,
+          _id: response.data.data.review._id,
+        });
       } catch (error: any) {
         console.log(error);
       }
@@ -75,7 +80,13 @@ const WriteReviewContainer = ({
           { withCredentials: true }
         );
         setIsMobileContainerOpen(false);
-        fetchReviews();
+        console.log(response, "review updated");
+        updateUserReview({
+          headline: headline,
+          rating: rating,
+          review: review,
+          _id: userHasReviewed._id,
+        });
       } catch (error: any) {
         console.log(error);
       }
@@ -97,7 +108,7 @@ const WriteReviewContainer = ({
       setHeadline("");
       setReview("");
       setRating(5);
-      fetchReviews();
+      updateUserReview(null);
     } catch (error: any) {
       console.log(error);
     }

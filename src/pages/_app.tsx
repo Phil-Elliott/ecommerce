@@ -65,6 +65,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
 /*
 
+Host it on Render
+
+
+
 1) Fix product page
   - make responsive
 2) Add Reviews and put at bottom of product page

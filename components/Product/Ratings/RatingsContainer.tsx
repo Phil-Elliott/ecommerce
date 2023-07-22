@@ -1,11 +1,11 @@
 import React from "react";
-import { GameProps, Review } from "components/shared/Types/Types";
+import { GameProps, Review, UserReview } from "components/shared/Types/Types";
 import { Ratings } from "components/shared";
 
 type RatingsProps = {
   game: GameProps | null;
   openReview: () => void;
-  userHasReviewed: Review | null;
+  userHasReviewed: UserReview | null;
 };
 
 const RatingsContainer = ({
@@ -78,6 +78,9 @@ export default RatingsContainer;
 
 /*
 
+have all data update when a review is made or changed
+have reviews show up on the page (top and then all)
+
 
 
 
@@ -90,6 +93,8 @@ How can i get the star data from the database
 6) Add the ability to sort reviews by date
 7) Show top reviews by default
 8) Add the ability to update an old review
+
+
 
 
 */
