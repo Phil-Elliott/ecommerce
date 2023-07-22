@@ -204,43 +204,10 @@ export default product;
 
 /*
 
-could make a user review state 
-  - have that impact the review container
-
-
--  For ratings and reviews - need to change game data when changes are made (update, create, and delete)
-   change star rating, quantity, and score of game
-
-
-Mobile container 
-- Game info
-    - Pic and title and platform
-- Overall Rating (stars) - they can select
-- Review headline input
-- Review body input
-- Submit button (Post Review)
-
-
-Today
-- Add ability for user to add a review and rating
-- Display the reviews
-- Add ability for user to update or delete reviews
-
-
-
 - Add more like this section
-- Add reviews section 
 - Add top reviews section or All reviews if that is clicked
-- Add scrolling or arrows to images on smaller screens
-
-Responsive design
-1) Under large - have extra pictures go below
-2) Under medium -  have cols but pics on top
+- Add all reviews section
 
 
-
-// Changes the ratingsAverage, ratingsQuantity, and starRatings of the game when a review is added, updated, or deleted
-  // Might also just want to change the games object in the state and change that one game maybe in redux
-  // Right now the games are getting grabbed in _app.tsx and passed down as props but I think it would be better to just grab the game from the database when the page loads or put in redux
 
 */

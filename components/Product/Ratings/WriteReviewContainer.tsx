@@ -212,24 +212,6 @@ export default WriteReviewContainer;
 
 /*
 
-- Update the reviews when they submit a new one or update one or delete one - do it with local state to avoid making a lot of calls to the backend
-
-Change text to update review if they have already left one
-Fix the update functionality
-
-Maybe you can search through reviews on product page to include the users id and if it matches the user id then they have already left a review
-or pull all reviews for user when they login and store in redux and then check if the game id is in the reviews array
-
-
-3) Check if the user has already left a review. If so give an error message that they can only leave one review
-        - or jump into update review when they click on write a review if they have already left one and maybe even change the text to update review
-                - handle this after you get the create review working right
-                - Could also have option to delete review if they have already left one and click on write a review
-
-1) Have it make a call to the api to post the review
-2) Have it update the reviews state in the parent component or call the getReviews function
-3) Have it close the modal
-4) Maybe show stars instead of a drop down - but could just do that later
 
 
 */
