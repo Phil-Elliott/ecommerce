@@ -27,10 +27,15 @@ const product = ({ games }: ProductProps) => {
   const [userHasReviewed, setUserHasReviewed] = useState<UserReview | null>(
     null
   );
+  const [ratingsAvg, setRatingsAvg] = useState(0);
+  const [ratingsQuantity, setRatingsQuantity] = useState(0);
+  const [starRatings, setStarRatings] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    console.log(userHasReviewed);
-  }, [userHasReviewed]);
+    console.log(ratingsAvg);
+    console.log(ratingsQuantity);
+    console.log(starRatings);
+  }, [starRatings]);
 
   const user = useSelector((state: RootState) => state.user);
 
@@ -49,10 +54,13 @@ const product = ({ games }: ProductProps) => {
     }
   }, [id, games]);
 
-  // Gets all reviews when the game changes
+  // Gets all reviews when the game changes and sets all of the ratings data
   useEffect(() => {
     if (game) {
       fetchReviews();
+      setRatingsAvg(game.ratingsAverage);
+      setRatingsQuantity(game.ratingsQuantity);
+      setStarRatings(game.starRatings);
     }
   }, [game]);
 
@@ -96,8 +104,62 @@ const product = ({ games }: ProductProps) => {
   // updates user's review in the userHasReviewed state when they submit, update, or delete their review
   function updateUserReview(review: UserReview | null) {
     if (review) {
-      setUserHasReviewed(review);
+      // handles updating a review and updating the ratingsAvg, ratingsQuantity, and starRatings
+      if (userHasReviewed) {
+        // update starRatings and ratingsAvg if star rating changed
+        if (userHasReviewed.rating !== review.rating) {
+          setStarRatings({
+            ...starRatings,
+            [userHasReviewed.rating]: starRatings[userHasReviewed.rating] - 1,
+            [review.rating]: starRatings[review.rating] + 1,
+          });
+          const totalRatingsValue = Object.entries(starRatings).reduce(
+            (acc, [star, count]) => acc + parseInt(star) * count,
+            0
+          );
+
+          setRatingsAvg(
+            (totalRatingsValue + review.rating - userHasReviewed.rating) /
+              ratingsQuantity
+          );
+        }
+
+        setUserHasReviewed(review);
+      } else {
+        // handles adding a review and updating the ratingsAvg, ratingsQuantity, and starRatings
+        setRatingsQuantity(ratingsQuantity + 1);
+        setStarRatings({
+          ...starRatings,
+          [review.rating]: starRatings[review.rating] + 1,
+        });
+
+        const totalRatingsValue = Object.entries(starRatings).reduce(
+          (acc, [star, count]) => acc + parseInt(star) * count,
+          0
+        );
+
+        setRatingsAvg(
+          (totalRatingsValue + review.rating) / (ratingsQuantity + 1)
+        );
+
+        setUserHasReviewed(review);
+      }
     } else {
+      // handles deleting a review and updating the ratingsAvg, ratingsQuantity, and starRatings
+      setRatingsQuantity(ratingsQuantity - 1);
+      setStarRatings({
+        ...starRatings,
+        [userHasReviewed!.rating]: starRatings[userHasReviewed!.rating] - 1,
+      });
+      const totalRatingsValue = Object.entries(starRatings).reduce(
+        (acc, [star, count]) => acc + parseInt(star) * count,
+        0
+      );
+      if (ratingsQuantity - 1 === 0) {
+        setRatingsAvg(5);
+      } else {
+        setRatingsAvg(totalRatingsValue / ratingsQuantity);
+      }
       setUserHasReviewed(null);
     }
   }
@@ -120,6 +182,9 @@ const product = ({ games }: ProductProps) => {
           game={game}
           openReview={() => setIsMobileContainerOpen(true)}
           userHasReviewed={userHasReviewed}
+          ratingsAvg={ratingsAvg}
+          ratingsQuantity={ratingsQuantity}
+          starRatings={starRatings}
         />
         <div>{!showAllReviews ? <TopReviews /> : <AllReviews />}</div>
       </div>

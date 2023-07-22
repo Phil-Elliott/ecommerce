@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GameProps, Review, UserReview } from "components/shared/Types/Types";
 import { Ratings } from "components/shared";
 
@@ -6,15 +6,21 @@ type RatingsProps = {
   game: GameProps | null;
   openReview: () => void;
   userHasReviewed: UserReview | null;
+  ratingsAvg: number;
+  ratingsQuantity: number;
+  starRatings: Record<string, number>;
 };
 
 const RatingsContainer = ({
   game,
   openReview,
   userHasReviewed,
+  ratingsAvg,
+  ratingsQuantity,
+  starRatings,
 }: RatingsProps) => {
   const transformedStarRatings = game
-    ? Object.entries(game.starRatings).map(([star, count]) => ({
+    ? Object.entries(starRatings).map(([star, count]) => ({
         rating: `${star} Stars`,
         NumberOfRatings: count,
         percentage: game.ratingsQuantity
@@ -30,9 +36,9 @@ const RatingsContainer = ({
       <h2 className="text-2xl font-semibold mb-5">Ratings and Reviews</h2>
       <div className="grid  lg:grid-cols-2 gap-10 pt-10 lg:space-x-5">
         <div className="flex flex-col space-y-2 items-center w-full border-b-2 lg:border-b-0 lg:border-r-2 border-gray-400 lg:pr-10 pb-10 lg:pb-0">
-          <p className="text-3xl">{game?.ratingsAverage}</p>
-          <Ratings rating={game?.ratingsAverage || 5} />
-          <p className="text-gray-500">({game?.ratingsQuantity}) Ratings</p>
+          <p className="text-3xl">{ratingsAvg}</p>
+          <Ratings rating={ratingsAvg || 5} />
+          <p className="text-gray-500">({ratingsQuantity}) Ratings</p>
           <div className="flex flex-col space-y-3 w-full pt-5">
             <button
               className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
