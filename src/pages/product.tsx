@@ -186,7 +186,9 @@ const product = ({ games }: ProductProps) => {
           ratingsQuantity={ratingsQuantity}
           starRatings={starRatings}
         />
-        <div>{!showAllReviews ? <TopReviews /> : <AllReviews />}</div>
+        <div className="pt-16">
+          {!showAllReviews ? <TopReviews reviews={reviews} /> : <AllReviews />}
+        </div>
       </div>
       <WriteReviewContainer
         isMobileContainerOpen={isMobileContainerOpen}
