@@ -7,12 +7,7 @@ type TopReviewsProps = {
 };
 
 const TopReviews = ({ reviews }: TopReviewsProps) => {
-  console.log(reviews, "reviews");
-
   // check the duration of time between the review date and todays date
-  // if the duration is less than 1 month, display the duration in days
-  // if the duration is less than 1 year, display the duration in months
-  // if the duration is more than 1 year, display the duration in years
   function checkDate(date: string) {
     const reviewDate = new Date(date);
     const today = new Date();
@@ -72,13 +67,7 @@ export default TopReviews;
 
 /*
 
-Border outside
-Contents
-- Ratings stars and score by user
-- Review headline
-- Review body
-- Reviewer name
-- Compare date written with todays date
+
 
 
 */

@@ -9,6 +9,8 @@ type RatingsProps = {
   ratingsAvg: number;
   ratingsQuantity: number;
   starRatings: Record<string, number>;
+  setShowAllReviews: React.Dispatch<React.SetStateAction<boolean>>;
+  showAllReviews: boolean;
 };
 
 const RatingsContainer = ({
@@ -18,6 +20,8 @@ const RatingsContainer = ({
   ratingsAvg,
   ratingsQuantity,
   starRatings,
+  setShowAllReviews,
+  showAllReviews,
 }: RatingsProps) => {
   const transformedStarRatings = game
     ? Object.entries(starRatings).map(([star, count]) => ({
@@ -48,9 +52,9 @@ const RatingsContainer = ({
             </button>
             <button
               className="px-4 py-2 rounded border-black border-2 hover:shadow-lg"
-              // onClick={() => game && addToWishList(game)}
+              onClick={() => setShowAllReviews(!showAllReviews)}
             >
-              Show All Reviews
+              {showAllReviews ? "Show Top Reviews" : "Show All Reviews"}
             </button>
           </div>
         </div>

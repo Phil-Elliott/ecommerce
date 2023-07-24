@@ -185,6 +185,8 @@ const product = ({ games }: ProductProps) => {
           ratingsAvg={ratingsAvg}
           ratingsQuantity={ratingsQuantity}
           starRatings={starRatings}
+          setShowAllReviews={setShowAllReviews}
+          showAllReviews={showAllReviews}
         />
         <div className="pt-16">
           {!showAllReviews ? <TopReviews reviews={reviews} /> : <AllReviews />}
