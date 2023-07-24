@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import * as Popover from "@radix-ui/react-popover";
 import Popup from "components/shared/Popup/Popup";
 import {
   FiChevronUp,

@@ -189,7 +189,11 @@ const product = ({ games }: ProductProps) => {
           showAllReviews={showAllReviews}
         />
         <div className="pt-16">
-          {!showAllReviews ? <TopReviews reviews={reviews} /> : <AllReviews />}
+          {!showAllReviews ? (
+            <TopReviews reviews={reviews} />
+          ) : (
+            <AllReviews reviews={reviews} />
+          )}
         </div>
       </div>
       <WriteReviewContainer
