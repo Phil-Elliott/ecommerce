@@ -2,6 +2,7 @@ import { Popup, Ratings } from "components/shared";
 import React from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { BsFilter } from "react-icons/bs";
+import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
 import { Review } from "components/shared/Types/Types";
 
 type AllReviewsProps = {
@@ -80,28 +81,37 @@ const AllReviews = ({ reviews }: AllReviewsProps) => {
         <p>Filter</p>
       </div>
       {reviews?.map((review, index) => {
-        if (index < 3) {
-          return (
-            <div
-              key={index}
-              className="flex flex-col space-y-3 border border-2 p-4 rounded shadow-sm mb-6"
-            >
-              <div className="flex space-x-5 items-center">
-                <Ratings rating={review.rating} />
-                <p className="text-sm">{review.rating}.0</p>
-              </div>
-              <p className="text-lg font-semibold">{review.headline}</p>
-              <p className="">{review.review}</p>
-              <div className="flex space-x-3 items-center">
-                <p className="text-sm font-semibold">{review.user.name}</p>
-                <p className="text-xs text-gray-500">
-                  {checkDate(review.createdAt)}
-                </p>
-              </div>
+        return (
+          <div
+            key={index}
+            className="flex flex-col space-y-3 border border-2 p-4 rounded shadow-sm mb-6"
+          >
+            <div className="flex space-x-5 items-center">
+              <Ratings rating={review.rating} />
+              <p className="text-sm">{review.rating}.0</p>
             </div>
-          );
-        }
+            <p className="text-lg font-semibold">{review.headline}</p>
+            <p className="">{review.review}</p>
+            <div className="flex space-x-3 items-center">
+              <p className="text-sm font-semibold">{review.user.name}</p>
+              <p className="text-xs text-gray-500">
+                {checkDate(review.createdAt)}
+              </p>
+            </div>
+          </div>
+        );
       })}
+
+      <div className="flex justify-center items-center space-x-3 pt-6">
+        <AiOutlineLeftCircle className="text-3xl" />
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+        <p>4</p>
+        <p>...</p>
+        <p>95</p>
+        <AiOutlineRightCircle className="text-3xl" />
+      </div>
     </div>
   );
 };
