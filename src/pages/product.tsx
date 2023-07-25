@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
 
+import axios from "axios";
+
 import { GameProps, Review, UserReview } from "components/shared/Types/Types";
 
 import ProductImages from "components/Product/ProductImages";
@@ -31,12 +33,6 @@ const product = ({ games }: ProductProps) => {
   const [ratingsQuantity, setRatingsQuantity] = useState(0);
   const [starRatings, setStarRatings] = useState<Record<string, number>>({});
 
-  useEffect(() => {
-    console.log(ratingsAvg);
-    console.log(ratingsQuantity);
-    console.log(starRatings);
-  }, [starRatings]);
-
   const user = useSelector((state: RootState) => state.user);
 
   // Get the 'id' property from the router.query object and parse it as an integer
@@ -46,13 +42,24 @@ const product = ({ games }: ProductProps) => {
 
   // Find the game with the given 'id' (if it exists)
   useEffect(() => {
-    const currentGame = id ? games.find((game) => game._id === id) : null;
-
-    if (currentGame) {
-      setGame(currentGame);
-      setMainImage(currentGame.image[0]);
+    if (id) {
+      getCurrentGame();
     }
-  }, [id, games]);
+  }, [id]);
+
+  async function getCurrentGame() {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/games/${id}`
+      );
+      const data = await response.data;
+      console.log(data);
+      setGame(data.data.data);
+      setMainImage(data.data.data.image[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // Gets all reviews when the game changes and sets all of the ratings data
   useEffect(() => {
@@ -212,10 +219,35 @@ export default product;
 
 /*
 
+- Pull game from server when page is loaded
+- Pull users review from server when game is loaded
+- Pull top reviews from server when game is loaded
+- Only pull all reviews when user clicks on all reviews but do it with pagination
+
+
+const currentGame = id ? games.find((game) => game._id === id) : null;
+
+    if (currentGame) {
+      setGame(currentGame);
+      setMainImage(currentGame.image[0]);
+    }
+
+Shouldnt be grabbing all of the games like that (what if there were 100s of games?)
+
+
+
+- try pulling the users review from the database instead of the reviews array that way you dont have to load them all at once
+
+
+
 - Add more like this section
 - Add top reviews section or All reviews if that is clicked
 - Add all reviews section
 
-
+// useEffect(() => {
+  //   console.log(ratingsAvg);
+  //   console.log(ratingsQuantity);
+  //   console.log(starRatings);
+  // }, [starRatings]);
 
 */

@@ -120,6 +120,11 @@ export default AllReviews;
 
 /*
 
+- Get all buttons working
+- Make responsive
+- Figure out pagination and how to load the reviews (should not be loading all at once)
+
+
 Header 
   - All Reviews
   - Number of reviews and page number
