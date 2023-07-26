@@ -25,7 +25,8 @@ const product = ({ games }: ProductProps) => {
   const [mainImage, setMainImage] = useState<string | null>(null);
   const [isMobileContainerOpen, setIsMobileContainerOpen] = useState(false);
   const [showAllReviews, setShowAllReviews] = useState(false);
-  const [reviews, setReviews] = useState<Review[] | null>([]);
+  // const [reviews, setReviews] = useState<Review[] | null>([]);
+  const [topReviews, setTopReviews] = useState<Review[] | null>([]);
   const [userHasReviewed, setUserHasReviewed] = useState<UserReview | null>(
     null
   );
@@ -64,51 +65,57 @@ const product = ({ games }: ProductProps) => {
   // Gets all reviews when the game changes and sets all of the ratings data
   useEffect(() => {
     if (game) {
-      fetchReviews();
       setRatingsAvg(game.ratingsAverage);
       setRatingsQuantity(game.ratingsQuantity);
       setStarRatings(game.starRatings);
+      fetchTopReviews();
     }
   }, [game]);
 
-  // Get reviews from database
-  const fetchReviews = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/games/${game?._id}/reviews`
-      );
-      const data = await response.json();
-      setReviews(data.data.data);
-      console.log(data.data.data);
-    } catch (error) {
-      console.log(error);
+  // Check if user has already reviewed this game when the game or user changes
+  useEffect(() => {
+    if (user && game) {
+      userHasReviewedCheck();
     }
-  };
+  }, [user, game]);
 
   // check if user has already reviewed this game
-  function userHasReviewedCheck() {
-    if (user && reviews) {
-      const userReview = reviews.find((review) => review.user._id === user.id);
-      if (userReview) {
-        return {
-          headline: userReview.headline,
-          rating: userReview.rating,
-          review: userReview.review,
-          _id: userReview._id,
-        };
+  async function userHasReviewedCheck() {
+    if (user && game) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/reviews/user?user=${user.id}&game=${game?._id}`,
+          { withCredentials: true }
+        );
+        const data = response.data.data.review;
+        if (data) {
+          setUserHasReviewed({
+            headline: data.headline,
+            rating: data.rating,
+            review: data.review,
+            _id: data._id,
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
     return null;
   }
 
-  // Check if user has already reviewed this game
-  useEffect(() => {
-    if (user && reviews) {
-      setUserHasReviewed(userHasReviewedCheck());
+  // Get top reviews from database
+  async function fetchTopReviews() {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/reviews/top-reviews/${id}`
+      );
+      const data = await response.data.data.reviews;
+      setTopReviews(data);
+    } catch (error) {
+      console.log(error);
     }
-  }, [user, reviews]);
+  }
 
-  // updates user's review in the userHasReviewed state when they submit, update, or delete their review
   function updateUserReview(review: UserReview | null) {
     if (review) {
       // handles updating a review and updating the ratingsAvg, ratingsQuantity, and starRatings
@@ -131,7 +138,17 @@ const product = ({ games }: ProductProps) => {
           );
         }
 
-        setUserHasReviewed(review);
+        userHasReviewedCheck();
+
+        // if users review was in top reviews then you need to pull them again
+        if (topReviews) {
+          const userReview = topReviews.find(
+            (review) => review.user._id === user.id
+          );
+          if (userReview) {
+            fetchTopReviews();
+          }
+        }
       } else {
         // handles adding a review and updating the ratingsAvg, ratingsQuantity, and starRatings
         setRatingsQuantity(ratingsQuantity + 1);
@@ -149,7 +166,17 @@ const product = ({ games }: ProductProps) => {
           (totalRatingsValue + review.rating) / (ratingsQuantity + 1)
         );
 
-        setUserHasReviewed(review);
+        userHasReviewedCheck();
+
+        // if users review was in top reviews then you need to pull them again
+        if (topReviews) {
+          const userReview = topReviews.find(
+            (review) => review.user._id === user.id
+          );
+          if (userReview) {
+            fetchTopReviews();
+          }
+        }
       }
     } else {
       // handles deleting a review and updating the ratingsAvg, ratingsQuantity, and starRatings
@@ -168,6 +195,16 @@ const product = ({ games }: ProductProps) => {
         setRatingsAvg(totalRatingsValue / ratingsQuantity);
       }
       setUserHasReviewed(null);
+
+      // if users review was in top reviews then you need to pull them again
+      if (topReviews) {
+        const userReview = topReviews.find(
+          (review) => review.user._id === user.id
+        );
+        if (userReview) {
+          fetchTopReviews();
+        }
+      }
     }
   }
 
@@ -197,9 +234,9 @@ const product = ({ games }: ProductProps) => {
         />
         <div className="pt-16">
           {!showAllReviews ? (
-            <TopReviews reviews={reviews} />
+            <TopReviews reviews={topReviews} />
           ) : (
-            <AllReviews reviews={reviews} />
+            <AllReviews reviews={topReviews} />
           )}
         </div>
       </div>
@@ -219,35 +256,27 @@ export default product;
 
 /*
 
-- Pull game from server when page is loaded
-- Pull users review from server when game is loaded
-- Pull top reviews from server when game is loaded
+
 - Only pull all reviews when user clicks on all reviews but do it with pagination
-
-
-const currentGame = id ? games.find((game) => game._id === id) : null;
-
-    if (currentGame) {
-      setGame(currentGame);
-      setMainImage(currentGame.image[0]);
-    }
-
-Shouldnt be grabbing all of the games like that (what if there were 100s of games?)
-
-
-
-- try pulling the users review from the database instead of the reviews array that way you dont have to load them all at once
-
-
-
+- Shouldnt be grabbing all of the games like that (what if there were 100s of games?)
 - Add more like this section
-- Add top reviews section or All reviews if that is clicked
-- Add all reviews section
+- Add a loading spinner
+- Add reccomend to form
+- Add upvotes and downvotes to reviews
 
-// useEffect(() => {
-  //   console.log(ratingsAvg);
-  //   console.log(ratingsQuantity);
-  //   console.log(starRatings);
-  // }, [starRatings]);
 
+
+  // Get reviews from database
+  const fetchReviews = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/v1/games/${game?._id}/reviews`
+      );
+      const data = await response.json();
+      setReviews(data.data.data);
+      console.log(data.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 */

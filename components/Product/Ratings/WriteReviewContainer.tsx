@@ -59,12 +59,8 @@ const WriteReviewContainer = ({
           { withCredentials: true }
         );
         setIsMobileContainerOpen(false);
-        updateUserReview({
-          headline: headline,
-          rating: rating,
-          review: review,
-          _id: response.data.data.review._id,
-        });
+        console.log(response.data.data.review, "review submitted");
+        updateUserReview(response.data.data.review);
       } catch (error: any) {
         console.log(error);
       }
@@ -81,12 +77,7 @@ const WriteReviewContainer = ({
         );
         setIsMobileContainerOpen(false);
         console.log(response, "review updated");
-        updateUserReview({
-          headline: headline,
-          rating: rating,
-          review: review,
-          _id: userHasReviewed._id,
-        });
+        updateUserReview(response.data.data.data);
       } catch (error: any) {
         console.log(error);
       }
