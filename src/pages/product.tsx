@@ -25,7 +25,6 @@ const product = ({ games }: ProductProps) => {
   const [mainImage, setMainImage] = useState<string | null>(null);
   const [isMobileContainerOpen, setIsMobileContainerOpen] = useState(false);
   const [showAllReviews, setShowAllReviews] = useState(false);
-  // const [reviews, setReviews] = useState<Review[] | null>([]);
   const [topReviews, setTopReviews] = useState<Review[] | null>([]);
   const [userHasReviewed, setUserHasReviewed] = useState<UserReview | null>(
     null
@@ -54,7 +53,7 @@ const product = ({ games }: ProductProps) => {
         `http://localhost:3000/api/v1/games/${id}`
       );
       const data = await response.data;
-      console.log(data);
+      console.log(data, "game check");
       setGame(data.data.data);
       setMainImage(data.data.data.image[0]);
     } catch (error) {
@@ -236,7 +235,7 @@ const product = ({ games }: ProductProps) => {
           {!showAllReviews ? (
             <TopReviews reviews={topReviews} />
           ) : (
-            <AllReviews reviews={topReviews} />
+            <AllReviews game={game} />
           )}
         </div>
       </div>
@@ -256,6 +255,8 @@ export default product;
 
 /*
 
+- Dont pull all reviews when pulling a game
+
 
 - Only pull all reviews when user clicks on all reviews but do it with pagination
 - Shouldnt be grabbing all of the games like that (what if there were 100s of games?)
@@ -263,6 +264,7 @@ export default product;
 - Add a loading spinner
 - Add reccomend to form
 - Add upvotes and downvotes to reviews
+- Probably could just make one component for a review container
 
 
 
