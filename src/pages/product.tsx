@@ -53,7 +53,6 @@ const product = ({ games }: ProductProps) => {
         `http://localhost:3000/api/v1/games/${id}`
       );
       const data = await response.data;
-      console.log(data, "game check");
       setGame(data.data.data);
       setMainImage(data.data.data.image[0]);
     } catch (error) {
@@ -231,11 +230,11 @@ const product = ({ games }: ProductProps) => {
           setShowAllReviews={setShowAllReviews}
           showAllReviews={showAllReviews}
         />
-        <div className="pt-16">
+        <div>
           {!showAllReviews ? (
             <TopReviews reviews={topReviews} />
           ) : (
-            <AllReviews game={game} />
+            <AllReviews ratingsQuantity={ratingsQuantity} id={game?._id} />
           )}
         </div>
       </div>
@@ -255,8 +254,10 @@ export default product;
 
 /*
 
-- Dont pull all reviews when pulling a game
-
+- Fix css of the review container
+- add votes and reccomended 
+- Add reccommend option to form
+- get pagination working
 
 - Only pull all reviews when user clicks on all reviews but do it with pagination
 - Shouldnt be grabbing all of the games like that (what if there were 100s of games?)

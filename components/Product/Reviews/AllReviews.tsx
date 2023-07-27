@@ -1,5 +1,5 @@
 import { Popup, Ratings } from "components/shared";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { BsFilter } from "react-icons/bs";
 import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
@@ -7,13 +7,16 @@ import { GameProps, Review } from "components/shared/Types/Types";
 import axios from "axios";
 
 type AllReviewsProps = {
-  game: GameProps | null;
+  id: string | undefined;
+  ratingsQuantity: number;
 };
 
-const AllReviews = ({ game }: AllReviewsProps) => {
+const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
   const [reviews, setReviews] = useState<Review[] | null>([]);
   const [page, setPage] = useState<number>(1);
-  const [totalReviews, setTotalReviews] = useState<number>(0);
+  const [totalReviews, setTotalReviews] = useState<number>(ratingsQuantity);
+
+  const ref = useRef<HTMLDivElement>(null);
 
   // Fetch the reviews based off of the page number, sort by, and filters
   useEffect(() => {
@@ -25,12 +28,13 @@ const AllReviews = ({ game }: AllReviewsProps) => {
   async function getReviews() {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games/${game?._id}/reviews?page=${page}&limit=10`
+        `http://localhost:3000/api/v1/games/${id}/reviews?page=${page}&limit=10`
       );
       const data = await response.data;
-      console.log(data.results, "reviews check");
       setReviews(data.data.data);
-      setTotalReviews(data.results);
+      if (ref.current) {
+        ref.current.scrollIntoView({ behavior: "smooth" });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -61,11 +65,15 @@ const AllReviews = ({ game }: AllReviewsProps) => {
   }
 
   return (
-    <div>
+    <div ref={ref} className="pt-20">
       <div className="flex justify-between items-center pb-6">
         <div className="flex items-center  gap-5">
           <h1 className=" text-xl font-bold">All Reviews</h1>
-          <p className="text-sm">1 - 10 of 941 Reviews</p>
+          <p className="text-sm">
+            {`${(page - 1) * 10 + 1} - ${
+              page * 10 > totalReviews ? totalReviews : page * 10
+            } of ${totalReviews} Reviews`}
+          </p>
         </div>
         <Popup
           header={
@@ -129,28 +137,42 @@ const AllReviews = ({ game }: AllReviewsProps) => {
       })}
 
       <div className="flex justify-center items-center space-x-3 pt-6">
-        <AiOutlineLeftCircle
-          className="text-3xl"
-          onClick={() => {
-            if (page > 1) {
-              setPage(page - 1);
-            }
-          }}
-        />
-        <p>1</p>
-        <p>2</p>
-        <p>3</p>
-        <p>4</p>
-        <p>...</p>
-        <p>95</p>
-        <AiOutlineRightCircle
-          className="text-3xl"
-          onClick={() => {
-            if (page < Math.ceil(totalReviews / 10)) {
-              setPage(page + 1);
-            }
-          }}
-        />
+        <div className="pr-2">
+          <AiOutlineLeftCircle
+            className="text-2xl cursor-pointer"
+            onClick={() => {
+              if (page > 1) {
+                setPage(page - 1);
+              }
+            }}
+          />
+        </div>
+        {Array.from(
+          { length: Math.ceil(totalReviews / 10) },
+          (_, i) => i + 1
+        ).map((num) => (
+          <p
+            key={num}
+            className={`${
+              num === page
+                ? "text-white rounded-full bg-gray-700 px-2 py-0 cursor-pointer"
+                : "text-black cursor-pointer px-2 py-0"
+            }`}
+            onClick={() => setPage(num)}
+          >
+            {num}
+          </p>
+        ))}
+        <div className="pl-2">
+          <AiOutlineRightCircle
+            className="text-2xl cursor-pointer"
+            onClick={() => {
+              if (page < Math.ceil(totalReviews / 10)) {
+                setPage(page + 1);
+              }
+            }}
+          />
+        </div>
       </div>
     </div>
   );
