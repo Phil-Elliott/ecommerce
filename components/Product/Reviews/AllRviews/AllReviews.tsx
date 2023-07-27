@@ -6,6 +6,8 @@ import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
 import { GameProps, Review } from "components/shared/Types/Types";
 import axios from "axios";
 import SortBy from "./SortBy";
+import ReviewContainer from "../ReviewContainer";
+import PaginationBar from "./PaginationBar ";
 
 type AllReviewsProps = {
   id: string | undefined;
@@ -40,30 +42,6 @@ const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
     }
   }
 
-  // check the duration of time between the review date and todays date
-  function checkDate(date: string) {
-    const reviewDate = new Date(date);
-    const today = new Date();
-
-    const duration = today.getTime() - reviewDate.getTime();
-
-    const days = Math.floor(duration / (1000 * 60 * 60 * 24));
-    const months = Math.floor(days / 30);
-    const years = Math.floor(months / 12);
-
-    if (days < 1) {
-      return "Today";
-    } else if (days === 1) {
-      return "Yesterday";
-    } else if (days < 30) {
-      return `${days} days ago`;
-    } else if (months < 12) {
-      return `${months} months ago`;
-    } else {
-      return `${years} years ago`;
-    }
-  }
-
   return (
     <div ref={ref} className="pt-20">
       <div className="flex justify-between items-center pb-6">
@@ -81,66 +59,17 @@ const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
         <BsFilter />
         <p>Filter</p>
       </div>
-      {reviews?.map((review, index) => {
-        return (
-          <div
-            key={index}
-            className="flex flex-col space-y-3 border border-2 p-4 rounded shadow-sm mb-6"
-          >
-            <div className="flex space-x-5 items-center">
-              <Ratings rating={review.rating} />
-              <p className="text-sm">{review.rating}.0</p>
-            </div>
-            <p className="text-lg font-semibold">{review.headline}</p>
-            <p className="">{review.review}</p>
-            <div className="flex space-x-3 items-center">
-              <p className="text-sm font-semibold">{review.user.name}</p>
-              <p className="text-xs text-gray-500">
-                {checkDate(review.createdAt)}
-              </p>
-            </div>
-          </div>
-        );
-      })}
-
-      <div className="flex justify-center items-center space-x-3 pt-6">
-        <div className="pr-2">
-          <AiOutlineLeftCircle
-            className="text-2xl cursor-pointer"
-            onClick={() => {
-              if (page > 1) {
-                setPage(page - 1);
-              }
-            }}
-          />
-        </div>
-        {Array.from(
-          { length: Math.ceil(ratingsQuantity / 10) },
-          (_, i) => i + 1
-        ).map((num) => (
-          <p
-            key={num}
-            className={`${
-              num === page
-                ? "text-white rounded-full bg-gray-700 px-2 py-0 cursor-pointer"
-                : "text-black cursor-pointer px-2 py-0"
-            }`}
-            onClick={() => setPage(num)}
-          >
-            {num}
-          </p>
-        ))}
-        <div className="pl-2">
-          <AiOutlineRightCircle
-            className="text-2xl cursor-pointer"
-            onClick={() => {
-              if (page < Math.ceil(ratingsQuantity / 10)) {
-                setPage(page + 1);
-              }
-            }}
-          />
-        </div>
+      <div className="space-y-6">
+        {reviews?.map((review, index) => {
+          return <ReviewContainer key={index} review={review} />;
+        })}
       </div>
+
+      <PaginationBar
+        page={page}
+        setPage={setPage}
+        ratingsQuantity={ratingsQuantity}
+      />
     </div>
   );
 };
