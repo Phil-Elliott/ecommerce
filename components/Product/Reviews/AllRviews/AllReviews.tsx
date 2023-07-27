@@ -1,13 +1,10 @@
-import { Popup, Ratings } from "components/shared";
 import React, { useEffect, useRef, useState } from "react";
-import { FiChevronDown } from "react-icons/fi";
-import { BsFilter } from "react-icons/bs";
-import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
-import { GameProps, Review } from "components/shared/Types/Types";
 import axios from "axios";
 import SortBy from "./SortBy";
 import ReviewContainer from "../ReviewContainer";
 import PaginationBar from "./PaginationBar ";
+import { Review } from "components/shared/Types/Types";
+import Filter from "./Filter";
 
 type AllReviewsProps = {
   id: string | undefined;
@@ -55,16 +52,12 @@ const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
         </div>
         <SortBy sort={sort} setSort={setSort} setPage={setPage} />
       </div>
-      <div className="flex items-center gap-3 font-semibold cursor-pointer pb-6">
-        <BsFilter />
-        <p>Filter</p>
-      </div>
+      <Filter page={page} ratingsQuantity={ratingsQuantity} />
       <div className="space-y-6">
         {reviews?.map((review, index) => {
           return <ReviewContainer key={index} review={review} />;
         })}
       </div>
-
       <PaginationBar
         page={page}
         setPage={setPage}
