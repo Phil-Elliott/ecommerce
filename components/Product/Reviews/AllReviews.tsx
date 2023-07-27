@@ -14,21 +14,20 @@ type AllReviewsProps = {
 const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
   const [reviews, setReviews] = useState<Review[] | null>([]);
   const [page, setPage] = useState<number>(1);
-  const [totalReviews, setTotalReviews] = useState<number>(ratingsQuantity);
+  const [sort, setSort] = useState<string>("-rating");
 
   const ref = useRef<HTMLDivElement>(null);
 
   // Fetch the reviews based off of the page number, sort by, and filters
   useEffect(() => {
     getReviews();
-    console.log("page changed", page);
-  }, [page]);
+  }, [page, sort]);
 
   // Get the reviews from the database
   async function getReviews() {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games/${id}/reviews?page=${page}&limit=10`
+        `http://localhost:3000/api/v1/games/${id}/reviews?page=${page}&limit=10&sort=${sort}`
       );
       const data = await response.data;
       setReviews(data.data.data);
@@ -71,8 +70,8 @@ const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
           <h1 className=" text-xl font-bold">All Reviews</h1>
           <p className="text-sm">
             {`${(page - 1) * 10 + 1} - ${
-              page * 10 > totalReviews ? totalReviews : page * 10
-            } of ${totalReviews} Reviews`}
+              page * 10 > ratingsQuantity ? ratingsQuantity : page * 10
+            } of ${ratingsQuantity} Reviews`}
           </p>
         </div>
         <Popup
@@ -85,27 +84,39 @@ const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
           <div className="p-2 flex flex-col items-end">
             <p
               className="cursor-pointer hover:text-gray-500"
-              // onClick={() => {
-              //   changeSortBy("rating");
-              // }}
+              onClick={() => {
+                setSort("-rating");
+                setPage(1);
+              }}
             >
               Highest to Lowest Rating
             </p>
             <p
               className="cursor-pointer hover:text-gray-500"
-              // onClick={() => {
-              //   changeSortBy("priceAsc");
-              // }}
+              onClick={() => {
+                setSort("rating");
+                setPage(1);
+              }}
             >
               Lowest to Highest Rating
             </p>
             <p
               className="cursor-pointer hover:text-gray-500"
-              // onClick={() => {
-              //   changeSortBy("priceDesc");
-              // }}
+              onClick={() => {
+                setSort("-createdAt");
+                setPage(1);
+              }}
             >
               Most Recent
+            </p>
+            <p
+              className="cursor-pointer hover:text-gray-500"
+              onClick={() => {
+                setSort("createdAt");
+                setPage(1);
+              }}
+            >
+              Oldest
             </p>
           </div>
         </Popup>
@@ -148,7 +159,7 @@ const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
           />
         </div>
         {Array.from(
-          { length: Math.ceil(totalReviews / 10) },
+          { length: Math.ceil(ratingsQuantity / 10) },
           (_, i) => i + 1
         ).map((num) => (
           <p
@@ -167,7 +178,7 @@ const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
           <AiOutlineRightCircle
             className="text-2xl cursor-pointer"
             onClick={() => {
-              if (page < Math.ceil(totalReviews / 10)) {
+              if (page < Math.ceil(ratingsQuantity / 10)) {
                 setPage(page + 1);
               }
             }}
