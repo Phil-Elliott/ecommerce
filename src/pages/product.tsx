@@ -14,7 +14,7 @@ import ProductDetails from "components/Product/ProductDetails";
 import RatingsContainer from "components/Product/Ratings/RatingsContainer";
 import WriteReviewContainer from "components/Product/Ratings/WriteReviewContainer";
 import TopReviews from "components/Product/Reviews/TopReviews";
-import AllReviews from "components/Product/Reviews/AllReviews";
+import AllReviews from "components/Product/Reviews/AllRviews/AllReviews";
 
 type ProductProps = {
   games: GameProps[];

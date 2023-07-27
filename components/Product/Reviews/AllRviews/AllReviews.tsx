@@ -5,6 +5,7 @@ import { BsFilter } from "react-icons/bs";
 import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
 import { GameProps, Review } from "components/shared/Types/Types";
 import axios from "axios";
+import SortBy from "./SortBy";
 
 type AllReviewsProps = {
   id: string | undefined;
@@ -74,52 +75,7 @@ const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
             } of ${ratingsQuantity} Reviews`}
           </p>
         </div>
-        <Popup
-          header={
-            <div className="flex items-center space-x-1 cursor-pointer font-semibold">
-              <p>Sort By</p> <FiChevronDown />
-            </div>
-          }
-        >
-          <div className="p-2 flex flex-col items-end">
-            <p
-              className="cursor-pointer hover:text-gray-500"
-              onClick={() => {
-                setSort("-rating");
-                setPage(1);
-              }}
-            >
-              Highest to Lowest Rating
-            </p>
-            <p
-              className="cursor-pointer hover:text-gray-500"
-              onClick={() => {
-                setSort("rating");
-                setPage(1);
-              }}
-            >
-              Lowest to Highest Rating
-            </p>
-            <p
-              className="cursor-pointer hover:text-gray-500"
-              onClick={() => {
-                setSort("-createdAt");
-                setPage(1);
-              }}
-            >
-              Most Recent
-            </p>
-            <p
-              className="cursor-pointer hover:text-gray-500"
-              onClick={() => {
-                setSort("createdAt");
-                setPage(1);
-              }}
-            >
-              Oldest
-            </p>
-          </div>
-        </Popup>
+        <SortBy sort={sort} setSort={setSort} setPage={setPage} />
       </div>
       <div className="flex items-center gap-3 font-semibold cursor-pointer pb-6">
         <BsFilter />

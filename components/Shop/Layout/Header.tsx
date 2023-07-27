@@ -69,7 +69,7 @@ const Header = ({
                 </div>
               }
             >
-              <div className="p-2 flex flex-col items-end">
+              <div className="p-3 space-y-2 flex flex-col items-end">
                 <p
                   className="cursor-pointer hover:text-gray-500"
                   onClick={() => {

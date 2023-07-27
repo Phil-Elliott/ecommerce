@@ -13,7 +13,7 @@ const Popup = ({ header, children }: PopupProps) => {
       <Popover.Portal>
         <Popover.Content
           align="end"
-          className="space-y-2 p-0 font-normal bg-white shadow rounded-md z-40 bg-white cursor-default"
+          className="space-y-2 p-0 font-normal bg-white shadow-lg rounded-md z-40 bg-white cursor-default"
         >
           {children}
         </Popover.Content>
