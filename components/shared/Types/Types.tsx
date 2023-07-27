@@ -36,6 +36,9 @@ export type Review = {
     name: string;
     _id: string;
   };
+  upVotes: number;
+  downVotes: number;
+  recommended: boolean;
 };
 
 export type UserReview = {
