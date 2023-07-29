@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { RootState } from "redux/store";
 import axios from "axios";
 import SortBy from "./SortBy";
 import ReviewContainer from "../ReviewContainer";
@@ -9,9 +10,10 @@ import Filter from "./Filter";
 type AllReviewsProps = {
   id: string | undefined;
   ratingsQuantity: number;
+  user: RootState["user"];
 };
 
-const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
+const AllReviews = ({ id, ratingsQuantity, user }: AllReviewsProps) => {
   const [reviews, setReviews] = useState<Review[] | null>([]);
   const [page, setPage] = useState<number>(1);
   const [sort, setSort] = useState<string>("-rating");
@@ -55,7 +57,7 @@ const AllReviews = ({ id, ratingsQuantity }: AllReviewsProps) => {
       <Filter page={page} ratingsQuantity={ratingsQuantity} />
       <div className="space-y-6">
         {reviews?.map((review, index) => {
-          return <ReviewContainer key={index} review={review} />;
+          return <ReviewContainer key={index} review={review} user={user} />;
         })}
       </div>
       <PaginationBar

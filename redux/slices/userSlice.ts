@@ -19,14 +19,14 @@ export const logoutUser = createAsyncThunk(
 );
 
 type UserProps = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: string;
 };
 
 const initialState: UserProps = {
-  id: "",
+  _id: "",
   name: "",
   email: "",
   role: "",
@@ -38,7 +38,7 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       const user = action.payload;
-      state.id = user._id;
+      state._id = user._id;
       state.name = user.name;
       state.email = user.email;
       state.role = user.role;

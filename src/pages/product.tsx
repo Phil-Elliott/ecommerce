@@ -82,7 +82,7 @@ const product = ({ games }: ProductProps) => {
     if (user && game) {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/reviews/user?user=${user.id}&game=${game?._id}`,
+          `http://localhost:3000/api/v1/reviews/user?user=${user._id}&game=${game?._id}`,
           { withCredentials: true }
         );
         const data = response.data.data.review;
@@ -141,7 +141,7 @@ const product = ({ games }: ProductProps) => {
         // if users review was in top reviews then you need to pull them again
         if (topReviews) {
           const userReview = topReviews.find(
-            (review) => review.user._id === user.id
+            (review) => review.user._id === user._id
           );
           if (userReview) {
             fetchTopReviews();
@@ -169,7 +169,7 @@ const product = ({ games }: ProductProps) => {
         // if users review was in top reviews then you need to pull them again
         if (topReviews) {
           const userReview = topReviews.find(
-            (review) => review.user._id === user.id
+            (review) => review.user._id === user._id
           );
           if (userReview) {
             fetchTopReviews();
@@ -197,7 +197,7 @@ const product = ({ games }: ProductProps) => {
       // if users review was in top reviews then you need to pull them again
       if (topReviews) {
         const userReview = topReviews.find(
-          (review) => review.user._id === user.id
+          (review) => review.user._id === user._id
         );
         if (userReview) {
           fetchTopReviews();
@@ -232,9 +232,13 @@ const product = ({ games }: ProductProps) => {
         />
         <div>
           {!showAllReviews ? (
-            <TopReviews reviews={topReviews} />
+            <TopReviews reviews={topReviews} user={user} />
           ) : (
-            <AllReviews ratingsQuantity={ratingsQuantity} id={game?._id} />
+            <AllReviews
+              ratingsQuantity={ratingsQuantity}
+              id={game?._id}
+              user={user}
+            />
           )}
         </div>
       </div>

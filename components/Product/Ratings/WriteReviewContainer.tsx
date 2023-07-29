@@ -113,7 +113,7 @@ const WriteReviewContainer = ({
       full
     >
       <div className="flex flex-col space-y-5 p-5">
-        {!user.id && (
+        {!user._id && (
           <p className="text-center text-lg text-red-500">
             You must be logged in to leave a review
           </p>

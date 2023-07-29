@@ -1,5 +1,5 @@
 import React from "react";
-
+import { RootState } from "redux/store";
 import { Ratings } from "components/shared";
 import { Review } from "components/shared/Types/Types";
 
@@ -7,13 +7,20 @@ import {
   BsFillHandThumbsUpFill,
   BsFillHandThumbsDownFill,
 } from "react-icons/bs";
+import axios from "axios";
 
 type ReviewContainerProps = {
   review: Review;
+  user: RootState["user"];
 };
 
-const ReviewContainer = ({ review }: ReviewContainerProps) => {
-  console.log(review, "its the review baby");
+const ReviewContainer = ({ review, user }: ReviewContainerProps) => {
+  const [upvotesCount, setUpvotesCount] = React.useState(review.upVotes.length);
+  const [downvotesCount, setDownvotesCount] = React.useState(
+    review.downVotes.length
+  );
+
+  // console.log(review, user, "review container");
 
   // check the duration of time between the review date and todays date
   function checkDate(date: string) {
@@ -36,6 +43,45 @@ const ReviewContainer = ({ review }: ReviewContainerProps) => {
       return `${months} months ago`;
     } else {
       return `${years} years ago`;
+    }
+  }
+
+  // handles users upvotes and downvotes on reviews
+  async function handleVotes(voteType: string) {
+    // is the user logged in?
+    if (!user._id) {
+      return;
+    }
+
+    // could fix later - need to have a state that saves whether the user has already voted on the review and how they voted between renders
+    // if (voteType === "upVote") {
+    //   if (review.upVotes.includes(user._id.toString())) {
+    //     console.log("You have already voted on this review");
+    //     return;
+    //   }
+    // } else if (voteType === "downVote") {
+    //   if (review.downVotes.includes(user._id.toString())) {
+    //     console.log("You have already voted on this review");
+    //     return;
+    //   }
+    // }
+
+    try {
+      const voteData =
+        voteType === "upVote" ? { upVote: true } : { downVote: true };
+
+      const response = await axios.patch(
+        `http://localhost:3000/api/v1/reviews/${review._id}/vote`,
+        voteData,
+        { withCredentials: true }
+      );
+      const updatedReview = await response.data;
+
+      // Update the state
+      setUpvotesCount(updatedReview.data.review.upVotes.length);
+      setDownvotesCount(updatedReview.data.review.downVotes.length);
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -72,15 +118,21 @@ const ReviewContainer = ({ review }: ReviewContainerProps) => {
       <div className="text-sm flex space-x-5 items-center">
         <p className="text-gray-500">Was this review helpful?</p>
         <div className="flex space-x-3">
-          <button className="flex items-center space-x-2 text-gray-500 hover:text-black">
+          <button
+            className="flex items-center space-x-2 text-gray-500 hover:text-black"
+            onClick={() => handleVotes("upVote")}
+          >
             <BsFillHandThumbsUpFill />
             <p>Yes</p>
-            <p>({review.upVotes})</p>
+            <p>({upvotesCount})</p>
           </button>
-          <button className="flex items-center space-x-2 text-gray-500 hover:text-black">
+          <button
+            className="flex items-center space-x-2 text-gray-500 hover:text-black"
+            onClick={() => handleVotes("downVote")}
+          >
             <BsFillHandThumbsDownFill />
             <p>No</p>
-            <p>({review.downVotes})</p>
+            <p>({downvotesCount})</p>
           </button>
         </div>
       </div>
@@ -89,11 +141,3 @@ const ReviewContainer = ({ review }: ReviewContainerProps) => {
 };
 
 export default ReviewContainer;
-
-/*
-
-- add functionality to upvoting and downvoting
-- fix top reviews to show the ones with the most overall votes score
-
-
-*/
