@@ -44,9 +44,9 @@ const AllReviews = ({ id, ratingsQuantity, user }: AllReviewsProps) => {
   return (
     <div ref={ref} className="pt-20">
       <div className="flex justify-between items-center pb-6">
-        <div className="flex items-center  gap-5">
+        <div className="flex items-center gap-5">
           <h1 className=" text-xl font-bold">All Reviews</h1>
-          <p className="text-sm">
+          <p className="text-sm hidden sm:block">
             {`${(page - 1) * 10 + 1} - ${
               page * 10 > ratingsQuantity ? ratingsQuantity : page * 10
             } of ${ratingsQuantity} Reviews`}
@@ -54,7 +54,12 @@ const AllReviews = ({ id, ratingsQuantity, user }: AllReviewsProps) => {
         </div>
         <SortBy sort={sort} setSort={setSort} setPage={setPage} />
       </div>
-      <Filter page={page} ratingsQuantity={ratingsQuantity} />
+      <p className="text-sm pb-6 sm:hidden">
+        {`${(page - 1) * 10 + 1} - ${
+          page * 10 > ratingsQuantity ? ratingsQuantity : page * 10
+        } of ${ratingsQuantity} Reviews`}
+      </p>
+      {/* <Filter page={page} ratingsQuantity={ratingsQuantity} /> */}
       <div className="space-y-6">
         {reviews?.map((review, index) => {
           return <ReviewContainer key={index} review={review} user={user} />;

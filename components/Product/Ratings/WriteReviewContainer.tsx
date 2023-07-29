@@ -25,6 +25,7 @@ const WriteReviewContainer = ({
   const [headline, setHeadline] = useState("");
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(5);
+  const [isRecommend, setIsRecommend] = useState(false);
   const [attempted, setAttempted] = useState<boolean>(false);
 
   // adds the users review to the state if they have already left one
@@ -55,6 +56,7 @@ const WriteReviewContainer = ({
             headline: headline,
             rating: rating,
             review: review,
+            recommended: isRecommend,
           },
           { withCredentials: true }
         );
@@ -72,6 +74,7 @@ const WriteReviewContainer = ({
             headline: headline,
             rating: rating,
             review: review,
+            recommended: isRecommend,
           },
           { withCredentials: true }
         );
@@ -180,6 +183,21 @@ const WriteReviewContainer = ({
             <option value="1">1 Star</option>
           </select>
         </div>
+        <div className="flex items-center space-x-2 relative">
+          <div className="flex relative">
+            <input
+              className="cursor-pointer custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
+              type="checkbox"
+              name="recommend"
+              id="recommend"
+              onChange={() => setIsRecommend(!isRecommend)}
+              checked={isRecommend}
+            />
+          </div>
+          <label className="cursor-pointer" htmlFor="recommend">
+            Yes, I recommend this product
+          </label>
+        </div>
         <button
           className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
           onClick={() => submitReview()}
@@ -200,9 +218,3 @@ const WriteReviewContainer = ({
 };
 
 export default WriteReviewContainer;
-
-/*
-
-
-
-*/
