@@ -4,14 +4,10 @@ import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
 type PaginationBarProps = {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  ratingsQuantity: number;
+  quantity: number;
 };
 
-const PaginationBar = ({
-  page,
-  setPage,
-  ratingsQuantity,
-}: PaginationBarProps) => {
+const PaginationBar = ({ page, setPage, quantity }: PaginationBarProps) => {
   return (
     <div className="flex justify-center items-center space-x-3 pt-6">
       <div className="pr-2">
@@ -24,27 +20,26 @@ const PaginationBar = ({
           }}
         />
       </div>
-      {Array.from(
-        { length: Math.ceil(ratingsQuantity / 10) },
-        (_, i) => i + 1
-      ).map((num) => (
-        <p
-          key={num}
-          className={`${
-            num === page
-              ? "text-white rounded-full bg-gray-700 px-2 py-0 cursor-pointer"
-              : "text-black cursor-pointer px-2 py-0"
-          }`}
-          onClick={() => setPage(num)}
-        >
-          {num}
-        </p>
-      ))}
+      {Array.from({ length: Math.ceil(quantity / 10) }, (_, i) => i + 1).map(
+        (num) => (
+          <p
+            key={num}
+            className={`${
+              num === page
+                ? "text-white rounded-full bg-gray-700 px-2 py-0 cursor-pointer"
+                : "text-black cursor-pointer px-2 py-0"
+            }`}
+            onClick={() => setPage(num)}
+          >
+            {num}
+          </p>
+        )
+      )}
       <div className="pl-2">
         <AiOutlineRightCircle
           className="text-2xl cursor-pointer"
           onClick={() => {
-            if (page < Math.ceil(ratingsQuantity / 10)) {
+            if (page < Math.ceil(quantity / 10)) {
               setPage(page + 1);
             }
           }}

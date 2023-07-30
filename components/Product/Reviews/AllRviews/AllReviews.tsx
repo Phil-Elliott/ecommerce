@@ -3,8 +3,9 @@ import { RootState } from "redux/store";
 import axios from "axios";
 import SortBy from "./SortBy";
 import ReviewContainer from "../ReviewContainer";
-import PaginationBar from "./PaginationBar ";
 import { Review } from "components/shared/Types/Types";
+import { PaginationBar } from "components/shared";
+
 import Filter from "./Filter";
 
 type AllReviewsProps = {
@@ -65,11 +66,7 @@ const AllReviews = ({ id, ratingsQuantity, user }: AllReviewsProps) => {
           return <ReviewContainer key={index} review={review} user={user} />;
         })}
       </div>
-      <PaginationBar
-        page={page}
-        setPage={setPage}
-        ratingsQuantity={ratingsQuantity}
-      />
+      <PaginationBar page={page} setPage={setPage} quantity={ratingsQuantity} />
     </div>
   );
 };
