@@ -7,6 +7,7 @@ import Layout from "components/Shop/Layout/Layout";
 
 import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 import { useRouter } from "next/router";
+import { PaginationBar } from "components/shared";
 
 type ShopProps = {
   games: GameProps[];
@@ -230,7 +231,10 @@ const shop = ({ games }: ShopProps) => {
           sortBy={sortBy}
           searchQuery={searchQuery}
         >
-          <Items games={filteredGames} />
+          <div>
+            <Items games={filteredGames} />
+            <PaginationBar page={page} setPage={setPage} quantity={15} />
+          </div>
         </Layout>
       )}
     </>
