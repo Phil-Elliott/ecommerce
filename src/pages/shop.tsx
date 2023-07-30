@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
+
+import axios from "axios";
 
 import Items from "components/Shop/Items";
 import Layout from "components/Shop/Layout/Layout";
@@ -20,22 +22,36 @@ const shop = ({ games }: ShopProps) => {
     prices: [],
   });
   const [sortBy, setSortBy] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   // Gives the items time to get filtered
   const [loading, setLoading] = useState<boolean>(true);
 
-  // useEffect(() => {
-  //   setLoading(false);
-  //   setTimeout(() => {
-  //     setLoading(true);
-  //   }, 1000);
-  // }, []);
-
   useEffect(() => {
+    setLoading(false);
     setTimeout(() => {
-      console.log(filteredGames, "state changed");
+      setLoading(true);
     }, 1000);
-  }, [filteredGames]);
+  }, []);
+
+  // Fetches the games from the database
+  useEffect(() => {
+    getGames();
+  }, [page, sortBy, filterOptions]);
+
+  //&sort=${sortBy}
+  async function getGames() {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/games?page=${page}&limit=10`
+      );
+      const data = await response.data;
+      console.log(data.data.data, "game data");
+      setFilteredGames(data.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // Reading and setting query parameters
   const router = useRouter();
@@ -78,7 +94,7 @@ const shop = ({ games }: ShopProps) => {
       } else if (sortBy === "priceDesc") {
         return b.price - a.price;
       } else if (sortBy === "rating") {
-        return b.rating - a.rating;
+        return b.ratingsAverage - a.ratingsAverage;
       } else {
         return 0;
       }
@@ -222,3 +238,31 @@ const shop = ({ games }: ShopProps) => {
 };
 
 export default shop;
+
+/*
+
+- Start pulling games from server with pagination and sort and filter options
+- Add pagination to bottom of page
+       - use review number line and maybe put into a shared component
+- might need to fix the search as well
+
+  // // Get the reviews from the database
+  // async function getReviews() {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:3000/api/v1/games/${id}/reviews?page=${page}&limit=10&sort=${sort}`
+  //     );
+  //     const data = await response.data;
+  //     setReviews(data.data.data);
+  //     if (ref.current) {
+  //       ref.current.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+    // useEffect(() => {
+  //   getReviews();
+  // }, [page, sort]);
+*/

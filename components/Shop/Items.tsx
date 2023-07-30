@@ -20,7 +20,7 @@ const Items = ({ games }: ItemsProps) => {
           }
         >
           <CldImage
-            src={game.image[0] || "2"}
+            src={game.image[0] || game.image[1]}
             width="600"
             height="600"
             alt={game.name}

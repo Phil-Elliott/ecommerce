@@ -230,17 +230,25 @@ const product = ({ games }: ProductProps) => {
           setShowAllReviews={setShowAllReviews}
           showAllReviews={showAllReviews}
         />
-        <div>
-          {!showAllReviews ? (
-            <TopReviews reviews={topReviews} user={user} />
-          ) : (
-            <AllReviews
-              ratingsQuantity={ratingsQuantity}
-              id={game?._id}
-              user={user}
-            />
-          )}
-        </div>
+        {topReviews?.length ? (
+          <div>
+            {!showAllReviews ? (
+              <TopReviews reviews={topReviews} user={user} />
+            ) : (
+              <AllReviews
+                ratingsQuantity={ratingsQuantity}
+                id={game?._id}
+                user={user}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="pt-20">
+            <h1 className="pb-6 text-xl font-semibold text-center">
+              Be the first to review this game!
+            </h1>
+          </div>
+        )}
       </div>
       <WriteReviewContainer
         isMobileContainerOpen={isMobileContainerOpen}
@@ -258,32 +266,7 @@ export default product;
 
 /*
 
-- Fix css of the review container
-- add votes and reccomended 
-- Add reccommend option to form
-- get pagination working
-
-- Only pull all reviews when user clicks on all reviews but do it with pagination
-- Shouldnt be grabbing all of the games like that (what if there were 100s of games?)
 - Add more like this section
 - Add a loading spinner
-- Add reccomend to form
-- Add upvotes and downvotes to reviews
-- Probably could just make one component for a review container
 
-
-
-  // Get reviews from database
-  const fetchReviews = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/games/${game?._id}/reviews`
-      );
-      const data = await response.json();
-      setReviews(data.data.data);
-      console.log(data.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 */
