@@ -236,7 +236,7 @@ const Filter = ({
         <div className="p-4 border-b-2">
           <h1 className="text-xl text-base font-medium mb-2">Sort By</h1>
           <div className="flex flex-col space-y-2 font-normal pt-4">
-            {["date", "rating", "priceAsc", "priceDesc"].map((option) => (
+            {["-ratingsAverage", "price", "-price"].map((option) => (
               <div
                 key={option}
                 className="flex items-center space-x-2 pb-2 relative text-base"
@@ -256,10 +256,9 @@ const Filter = ({
                   />
                 </div>
                 <label className="cursor-pointer" htmlFor={option}>
-                  {option === "date" && "Start date"}
-                  {option === "rating" && "Rating"}
-                  {option === "priceAsc" && "Price: Low-High"}
-                  {option === "priceDesc" && "Price: High-Low"}
+                  {option === "-ratingsAverage" && "Rating"}
+                  {option === "price" && "Price: Low-High"}
+                  {option === "-price" && "Price: High-Low"}
                 </label>
               </div>
             ))}

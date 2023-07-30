@@ -22,8 +22,10 @@ const shop = ({ games }: ShopProps) => {
     platform: [],
     prices: [],
   });
-  const [sortBy, setSortBy] = useState<string>("");
+
+  const [sortBy, setSortBy] = useState<string>("-ratingsAverage");
   const [page, setPage] = useState<number>(1);
+  const [quantity, setQuantity] = useState<number>(0);
 
   // Gives the items time to get filtered
   const [loading, setLoading] = useState<boolean>(true);
@@ -44,10 +46,11 @@ const shop = ({ games }: ShopProps) => {
   async function getGames() {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games?page=${page}&limit=10`
+        `http://localhost:3000/api/v1/games?page=${page}&limit=9&sort=${sortBy}`
       );
       const data = await response.data;
-      console.log(data.data.data, "game data");
+      console.log(data, "game data");
+      setQuantity(data.totalProducts);
       setFilteredGames(data.data.data);
     } catch (error) {
       console.log(error);
@@ -85,23 +88,6 @@ const shop = ({ games }: ShopProps) => {
       }
     }
   }, [router.isReady, router.query, searchQuery, filterQuery, publisherQuery]);
-
-  // On change of sortBy, sort games accordingly
-  useEffect(() => {
-    if (sortBy === "") return;
-    const sortedGames = [...filteredGames].sort((a, b) => {
-      if (sortBy === "priceAsc") {
-        return a.price - b.price;
-      } else if (sortBy === "priceDesc") {
-        return b.price - a.price;
-      } else if (sortBy === "rating") {
-        return b.ratingsAverage - a.ratingsAverage;
-      } else {
-        return 0;
-      }
-    });
-    setFilteredGames(sortedGames);
-  }, [sortBy]);
 
   // Function to add a filter option
   const addFilterOption = (
@@ -227,7 +213,7 @@ const shop = ({ games }: ShopProps) => {
           addFilterOption={addFilterOption}
           removeFilterOption={removeFilterOption}
           changeSortBy={(value: string) => setSortBy(value)}
-          count={filteredGames?.length}
+          count={quantity}
           sortBy={sortBy}
           searchQuery={searchQuery}
         >
@@ -244,6 +230,15 @@ const shop = ({ games }: ShopProps) => {
 export default shop;
 
 /*
+
+
+2) Get the sort working 
+3) Get filters working
+
+- start working on other items list on home page
+- add the same list to the product page
+
+
 
 - Start pulling games from server with pagination and sort and filter options
 - Add pagination to bottom of page
@@ -269,4 +264,23 @@ export default shop;
     // useEffect(() => {
   //   getReviews();
   // }, [page, sort]);
+
+
+
+  // On change of sortBy, sort games accordingly
+  // useEffect(() => {
+  //   if (sortBy === "") return;
+  //   const sortedGames = [...filteredGames].sort((a, b) => {
+  //     if (sortBy === "priceAsc") {
+  //       return a.price - b.price;
+  //     } else if (sortBy === "priceDesc") {
+  //       return b.price - a.price;
+  //     } else if (sortBy === "rating") {
+  //       return b.ratingsAverage - a.ratingsAverage;
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
+  //   setFilteredGames(sortedGames);
+  // }, [sortBy]);
 */

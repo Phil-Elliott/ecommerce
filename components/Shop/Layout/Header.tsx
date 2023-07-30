@@ -73,7 +73,7 @@ const Header = ({
                 <p
                   className="cursor-pointer hover:text-gray-500"
                   onClick={() => {
-                    changeSortBy("rating");
+                    changeSortBy("-ratingsAverage");
                   }}
                 >
                   Rating
@@ -81,7 +81,7 @@ const Header = ({
                 <p
                   className="cursor-pointer hover:text-gray-500"
                   onClick={() => {
-                    changeSortBy("priceAsc");
+                    changeSortBy("price");
                   }}
                 >
                   Price: Low-High
@@ -89,7 +89,7 @@ const Header = ({
                 <p
                   className="cursor-pointer hover:text-gray-500"
                   onClick={() => {
-                    changeSortBy("priceDesc");
+                    changeSortBy("-price");
                   }}
                 >
                   Price: High-Low
