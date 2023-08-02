@@ -1,10 +1,7 @@
-import React, { use, useEffect, useState } from "react";
-
+import React, { use, useEffect, useRef, useState } from "react";
 import axios from "axios";
-
 import Items from "components/Shop/Items";
 import Layout from "components/Shop/Layout/Layout";
-
 import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 import { useRouter } from "next/router";
 import { PaginationBar } from "components/shared";
@@ -25,6 +22,8 @@ const shop = () => {
   const [sortBy, setSortBy] = useState<string>("-ratingsAverage");
   const [page, setPage] = useState<number>(1);
   const [quantity, setQuantity] = useState<number>(0);
+
+  const ref = useRef<HTMLDivElement>(null);
 
   // Gives the items time to get filtered
   const [loading, setLoading] = useState<boolean>(true);
@@ -60,12 +59,15 @@ const shop = () => {
       });
       console.log(queryParams, "query params");
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games?page=${page}&limit=10&sort=${sortBy}&search=${searchQuery}&${queryParams}`
+        `http://localhost:3000/api/v1/games?page=${page}&limit=9&sort=${sortBy}&search=${searchQuery}&${queryParams}`
       );
       const data = await response.data;
       console.log(data, "game data");
       setQuantity(data.totalProducts);
       setFilteredGames(data.data.data);
+      if (ref.current) {
+        ref.current.scrollIntoView({ behavior: "smooth" });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -95,7 +97,7 @@ const shop = () => {
   };
 
   return (
-    <>
+    <div ref={ref}>
       {loading && (
         <Layout
           addFilterOption={addFilterOption}
@@ -114,18 +116,27 @@ const shop = () => {
           ) : (
             <div>
               <Items games={filteredGames} />
-              <PaginationBar page={page} setPage={setPage} quantity={15} />
+              {quantity < 9 ? null : (
+                <PaginationBar
+                  page={page}
+                  setPage={setPage}
+                  quantity={quantity}
+                  displayQuantity={9}
+                />
+              )}
             </div>
           )}
         </Layout>
       )}
-    </>
+    </div>
   );
 };
 
 export default shop;
 
 /*
+3) Add loading spinners
+4) Fix sign in and sign up modals
 
 1) Get filters working
 2) Get search working correctly
