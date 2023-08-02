@@ -8,6 +8,7 @@ import Layout from "components/Shop/Layout/Layout";
 import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 import { useRouter } from "next/router";
 import { PaginationBar } from "components/shared";
+import queryString from "query-string";
 
 type ShopProps = {};
 
@@ -35,6 +36,10 @@ const shop = () => {
     }, 1000);
   }, []);
 
+  useEffect(() => {
+    console.log(filterOptions);
+  }, [filterOptions]);
+
   // Fetches the games from the database
   useEffect(() => {
     getGames();
@@ -42,8 +47,12 @@ const shop = () => {
 
   async function getGames() {
     try {
+      const queryParams = queryString.stringify(filterOptions, {
+        arrayFormat: "comma",
+      });
+      console.log(queryParams, "query params");
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games?page=${page}&limit=10&sort=${sortBy}`
+        `http://localhost:3000/api/v1/games?page=${page}&limit=10&sort=${sortBy}&${queryParams}`
       );
       const data = await response.data;
       console.log(data, "game data");
@@ -108,6 +117,84 @@ const shop = () => {
       [name]: prev[name].filter((item) => item !== option),
     }));
   };
+
+  return (
+    <>
+      {loading && (
+        <Layout
+          addFilterOption={addFilterOption}
+          removeFilterOption={removeFilterOption}
+          changeSortBy={(value: string) => setSortBy(value)}
+          count={quantity}
+          sortBy={sortBy}
+          searchQuery={searchQuery}
+        >
+          <div>
+            <Items games={filteredGames} />
+            <PaginationBar page={page} setPage={setPage} quantity={15} />
+          </div>
+        </Layout>
+      )}
+    </>
+  );
+};
+
+export default shop;
+
+/*
+
+1) Get filters working
+2) Get search working correctly
+
+- start working on other items list on home page
+- add the same list to the product page
+
+
+
+- Start pulling games from server with pagination and sort and filter options
+- Add pagination to bottom of page
+       - use review number line and maybe put into a shared component
+- might need to fix the search as well
+
+  // // Get the reviews from the database
+  // async function getReviews() {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:3000/api/v1/games/${id}/reviews?page=${page}&limit=10&sort=${sort}`
+  //     );
+  //     const data = await response.data;
+  //     setReviews(data.data.data);
+  //     if (ref.current) {
+  //       ref.current.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+    // useEffect(() => {
+  //   getReviews();
+  // }, [page, sort]);
+
+
+
+  // On change of sortBy, sort games accordingly
+  // useEffect(() => {
+  //   if (sortBy === "") return;
+  //   const sortedGames = [...filteredGames].sort((a, b) => {
+  //     if (sortBy === "priceAsc") {
+  //       return a.price - b.price;
+  //     } else if (sortBy === "priceDesc") {
+  //       return b.price - a.price;
+  //     } else if (sortBy === "rating") {
+  //       return b.ratingsAverage - a.ratingsAverage;
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
+  //   setFilteredGames(sortedGames);
+  // }, [sortBy]);
+
 
   // Filter games based on the current filterOptions state
   // useEffect(() => {
@@ -202,81 +289,4 @@ const shop = () => {
   //     setFilteredGames(filteredGames);
   //   }
   // }, [filterOptions]);
-
-  return (
-    <>
-      {loading && (
-        <Layout
-          addFilterOption={addFilterOption}
-          removeFilterOption={removeFilterOption}
-          changeSortBy={(value: string) => setSortBy(value)}
-          count={quantity}
-          sortBy={sortBy}
-          searchQuery={searchQuery}
-        >
-          <div>
-            <Items games={filteredGames} />
-            <PaginationBar page={page} setPage={setPage} quantity={15} />
-          </div>
-        </Layout>
-      )}
-    </>
-  );
-};
-
-export default shop;
-
-/*
-
-1) Get filters working
-2) Get search working correctly
-
-- start working on other items list on home page
-- add the same list to the product page
-
-
-
-- Start pulling games from server with pagination and sort and filter options
-- Add pagination to bottom of page
-       - use review number line and maybe put into a shared component
-- might need to fix the search as well
-
-  // // Get the reviews from the database
-  // async function getReviews() {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:3000/api/v1/games/${id}/reviews?page=${page}&limit=10&sort=${sort}`
-  //     );
-  //     const data = await response.data;
-  //     setReviews(data.data.data);
-  //     if (ref.current) {
-  //       ref.current.scrollIntoView({ behavior: "smooth" });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-    // useEffect(() => {
-  //   getReviews();
-  // }, [page, sort]);
-
-
-
-  // On change of sortBy, sort games accordingly
-  // useEffect(() => {
-  //   if (sortBy === "") return;
-  //   const sortedGames = [...filteredGames].sort((a, b) => {
-  //     if (sortBy === "priceAsc") {
-  //       return a.price - b.price;
-  //     } else if (sortBy === "priceDesc") {
-  //       return b.price - a.price;
-  //     } else if (sortBy === "rating") {
-  //       return b.ratingsAverage - a.ratingsAverage;
-  //     } else {
-  //       return 0;
-  //     }
-  //   });
-  //   setFilteredGames(sortedGames);
-  // }, [sortBy]);
 */
