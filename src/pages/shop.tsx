@@ -36,14 +36,22 @@ const shop = () => {
     }, 1000);
   }, []);
 
-  useEffect(() => {
-    console.log(filterOptions);
-  }, [filterOptions]);
+  // Reading search query
+  const router = useRouter();
 
-  // Fetches the games from the database
+  // const searchQuery = router.query.search as string;
+
+  const searchQuery = router.query.search ? router.query.search.toString() : "";
+
+  // Fetches the games from the database the page, sort, and filter options change
   useEffect(() => {
     getGames();
-  }, [page, sortBy, filterOptions]);
+  }, [page]);
+
+  useEffect(() => {
+    setPage(1);
+    getGames();
+  }, [sortBy, filterOptions, searchQuery]);
 
   async function getGames() {
     try {
@@ -52,7 +60,7 @@ const shop = () => {
       });
       console.log(queryParams, "query params");
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games?page=${page}&limit=10&sort=${sortBy}&${queryParams}`
+        `http://localhost:3000/api/v1/games?page=${page}&limit=10&sort=${sortBy}&search=${searchQuery}&${queryParams}`
       );
       const data = await response.data;
       console.log(data, "game data");
@@ -62,38 +70,6 @@ const shop = () => {
       console.log(error);
     }
   }
-
-  // Reading and setting query parameters
-  const router = useRouter();
-
-  const searchQuery = router.query.search as string;
-  const filterQuery = router.query.category as string;
-  const publisherQuery = router.query.publisher as string;
-
-  // Once router is ready, set initial queries to actual query parameters
-  // useEffect(() => {
-  //   if (router.isReady) {
-  //     if (searchQuery && searchQuery.trim() !== "") {
-  //       const searchedGames = games.filter((game) =>
-  //         game.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
-  //       );
-  //       setFilteredGames(searchedGames);
-  //       console.log(searchedGames);
-  //     } else if (filterQuery && filterQuery.trim() !== "") {
-  //       const newFilteredGames = games.filter((game) =>
-  //         game.category.includes(filterQuery)
-  //       );
-  //       setFilteredGames(newFilteredGames);
-  //       console.log(newFilteredGames, filteredGames);
-  //     } else if (publisherQuery && publisherQuery.trim() !== "") {
-  //       const newFilteredGames = games.filter((game) =>
-  //         game.publisher ? game.publisher.includes(publisherQuery) : false
-  //       );
-  //       setFilteredGames(newFilteredGames);
-  //       console.log(newFilteredGames);
-  //     }
-  //   }
-  // }, [router.isReady, router.query, searchQuery, filterQuery, publisherQuery]);
 
   // Function to add a filter option
 
@@ -129,10 +105,18 @@ const shop = () => {
           sortBy={sortBy}
           searchQuery={searchQuery}
         >
-          <div>
-            <Items games={filteredGames} />
-            <PaginationBar page={page} setPage={setPage} quantity={15} />
-          </div>
+          {filteredGames.length === 0 ? (
+            <div className="w-full flex justify-center items-center">
+              <h1 className="text-2xl font-semibold">
+                No games match your search criteria
+              </h1>
+            </div>
+          ) : (
+            <div>
+              <Items games={filteredGames} />
+              <PaginationBar page={page} setPage={setPage} quantity={15} />
+            </div>
+          )}
         </Layout>
       )}
     </>
@@ -289,4 +273,29 @@ export default shop;
   //     setFilteredGames(filteredGames);
   //   }
   // }, [filterOptions]);
+
+  // Once router is ready, set initial queries to actual query parameters
+  // useEffect(() => {
+  //   if (router.isReady) {
+  //     if (searchQuery && searchQuery.trim() !== "") {
+  //       const searchedGames = games.filter((game) =>
+  //         game.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+  //       );
+  //       setFilteredGames(searchedGames);
+  //       console.log(searchedGames);
+  //     } else if (filterQuery && filterQuery.trim() !== "") {
+  //       const newFilteredGames = games.filter((game) =>
+  //         game.category.includes(filterQuery)
+  //       );
+  //       setFilteredGames(newFilteredGames);
+  //       console.log(newFilteredGames, filteredGames);
+  //     } else if (publisherQuery && publisherQuery.trim() !== "") {
+  //       const newFilteredGames = games.filter((game) =>
+  //         game.publisher ? game.publisher.includes(publisherQuery) : false
+  //       );
+  //       setFilteredGames(newFilteredGames);
+  //       console.log(newFilteredGames);
+  //     }
+  //   }
+  // }, [router.isReady, router.query, searchQuery, filterQuery, publisherQuery]);
 */
