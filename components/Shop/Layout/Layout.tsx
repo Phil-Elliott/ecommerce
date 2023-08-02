@@ -5,7 +5,6 @@ import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 
 type LayoutProps = {
   children: React.ReactNode;
-  games: GameProps[];
   addFilterOption: (name: keyof FilteredOptionsProps, option: string) => void;
   removeFilterOption: (
     name: keyof FilteredOptionsProps,
@@ -19,7 +18,6 @@ type LayoutProps = {
 
 const Layout = ({
   children,
-  games,
   addFilterOption,
   removeFilterOption,
   changeSortBy,
@@ -47,7 +45,6 @@ const Layout = ({
       <div className="container mx-auto flex gap-12 pt-4 lg:pt-40 pb-32">
         {showFilter ? (
           <Filter
-            games={games}
             addFilterOption={addFilterOption}
             removeFilterOption={removeFilterOption}
             isMobileFilterOpen={isMobileFilterOpen}

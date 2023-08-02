@@ -9,12 +9,10 @@ import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 import { useRouter } from "next/router";
 import { PaginationBar } from "components/shared";
 
-type ShopProps = {
-  games: GameProps[];
-};
+type ShopProps = {};
 
-const shop = ({ games }: ShopProps) => {
-  const [filteredGames, setFilteredGames] = useState<GameProps[]>(games);
+const shop = () => {
+  const [filteredGames, setFilteredGames] = useState<GameProps[]>([]);
   const [filterOptions, setFilterOptions] = useState<FilteredOptionsProps>({
     category: [],
     publisher: [],
@@ -42,11 +40,10 @@ const shop = ({ games }: ShopProps) => {
     getGames();
   }, [page, sortBy, filterOptions]);
 
-  //&sort=${sortBy}
   async function getGames() {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games?page=${page}&limit=9&sort=${sortBy}`
+        `http://localhost:3000/api/v1/games?page=${page}&limit=10&sort=${sortBy}`
       );
       const data = await response.data;
       console.log(data, "game data");
@@ -65,31 +62,32 @@ const shop = ({ games }: ShopProps) => {
   const publisherQuery = router.query.publisher as string;
 
   // Once router is ready, set initial queries to actual query parameters
-  useEffect(() => {
-    if (router.isReady) {
-      if (searchQuery && searchQuery.trim() !== "") {
-        const searchedGames = games.filter((game) =>
-          game.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
-        );
-        setFilteredGames(searchedGames);
-        console.log(searchedGames);
-      } else if (filterQuery && filterQuery.trim() !== "") {
-        const newFilteredGames = games.filter((game) =>
-          game.category.includes(filterQuery)
-        );
-        setFilteredGames(newFilteredGames);
-        console.log(newFilteredGames, filteredGames);
-      } else if (publisherQuery && publisherQuery.trim() !== "") {
-        const newFilteredGames = games.filter((game) =>
-          game.publisher ? game.publisher.includes(publisherQuery) : false
-        );
-        setFilteredGames(newFilteredGames);
-        console.log(newFilteredGames);
-      }
-    }
-  }, [router.isReady, router.query, searchQuery, filterQuery, publisherQuery]);
+  // useEffect(() => {
+  //   if (router.isReady) {
+  //     if (searchQuery && searchQuery.trim() !== "") {
+  //       const searchedGames = games.filter((game) =>
+  //         game.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+  //       );
+  //       setFilteredGames(searchedGames);
+  //       console.log(searchedGames);
+  //     } else if (filterQuery && filterQuery.trim() !== "") {
+  //       const newFilteredGames = games.filter((game) =>
+  //         game.category.includes(filterQuery)
+  //       );
+  //       setFilteredGames(newFilteredGames);
+  //       console.log(newFilteredGames, filteredGames);
+  //     } else if (publisherQuery && publisherQuery.trim() !== "") {
+  //       const newFilteredGames = games.filter((game) =>
+  //         game.publisher ? game.publisher.includes(publisherQuery) : false
+  //       );
+  //       setFilteredGames(newFilteredGames);
+  //       console.log(newFilteredGames);
+  //     }
+  //   }
+  // }, [router.isReady, router.query, searchQuery, filterQuery, publisherQuery]);
 
   // Function to add a filter option
+
   const addFilterOption = (
     name: keyof FilteredOptionsProps,
     option: string
@@ -112,104 +110,103 @@ const shop = ({ games }: ShopProps) => {
   };
 
   // Filter games based on the current filterOptions state
-  useEffect(() => {
-    if (
-      filterOptions.category.length !== 0 ||
-      filterOptions.publisher.length !== 0 ||
-      filterOptions.gameModes.length !== 0 ||
-      filterOptions.platform.length !== 0 ||
-      filterOptions.prices.length !== 0
-    ) {
-      const filteredGames = games.filter((game) => {
-        let isCategory = false;
-        let isPublisher = false;
-        let isGameModes = false;
-        let isPlatform = false;
-        let isPrices = false;
+  // useEffect(() => {
+  //   if (
+  //     filterOptions.category.length !== 0 ||
+  //     filterOptions.publisher.length !== 0 ||
+  //     filterOptions.gameModes.length !== 0 ||
+  //     filterOptions.platform.length !== 0 ||
+  //     filterOptions.prices.length !== 0
+  //   ) {
+  //     const filteredGames = games.filter((game) => {
+  //       let isCategory = false;
+  //       let isPublisher = false;
+  //       let isGameModes = false;
+  //       let isPlatform = false;
+  //       let isPrices = false;
 
-        if (
-          filterOptions.category.length === 0 ||
-          game.category.some((cat) => filterOptions.category.includes(cat))
-        ) {
-          isCategory = true;
-        }
+  //       if (
+  //         filterOptions.category.length === 0 ||
+  //         game.category.some((cat) => filterOptions.category.includes(cat))
+  //       ) {
+  //         isCategory = true;
+  //       }
 
-        if (
-          filterOptions.publisher.length === 0 ||
-          filterOptions.publisher.includes(game.publisher)
-        ) {
-          isPublisher = true;
-        }
+  //       if (
+  //         filterOptions.publisher.length === 0 ||
+  //         filterOptions.publisher.includes(game.publisher)
+  //       ) {
+  //         isPublisher = true;
+  //       }
 
-        if (filterOptions.gameModes.length === 0) {
-          isGameModes = true;
-        } else {
-          game.gameModes.forEach((gameMode) => {
-            if (filterOptions.gameModes.includes(gameMode)) {
-              isGameModes = true;
-            }
-          });
-        }
+  //       if (filterOptions.gameModes.length === 0) {
+  //         isGameModes = true;
+  //       } else {
+  //         game.gameModes.forEach((gameMode) => {
+  //           if (filterOptions.gameModes.includes(gameMode)) {
+  //             isGameModes = true;
+  //           }
+  //         });
+  //       }
 
-        if (
-          filterOptions.platform.length === 0 ||
-          filterOptions.platform.includes(game.platform)
-        ) {
-          isPlatform = true;
-        }
+  //       if (
+  //         filterOptions.platform.length === 0 ||
+  //         filterOptions.platform.includes(game.platform)
+  //       ) {
+  //         isPlatform = true;
+  //       }
 
-        if (filterOptions.prices.length === 0) {
-          isPrices = true;
-        } else {
-          let priceMatched = false;
+  //       if (filterOptions.prices.length === 0) {
+  //         isPrices = true;
+  //       } else {
+  //         let priceMatched = false;
 
-          filterOptions.prices.forEach((price) => {
-            const priceParts = price.split("-");
+  //         filterOptions.prices.forEach((price) => {
+  //           const priceParts = price.split("-");
 
-            if (priceParts.length === 1) {
-              const cleanedPricePart = priceParts[0]
-                .replace(/[$,]/g, "")
-                .replace("Over", "")
-                .trim();
-              const lowerLimit = parseInt(cleanedPricePart, 10);
+  //           if (priceParts.length === 1) {
+  //             const cleanedPricePart = priceParts[0]
+  //               .replace(/[$,]/g, "")
+  //               .replace("Over", "")
+  //               .trim();
+  //             const lowerLimit = parseInt(cleanedPricePart, 10);
 
-              if (game.price > lowerLimit) {
-                console.log(game.price, lowerLimit);
-                priceMatched = true;
-              }
-            } else {
-              const lowerLimit = parseInt(
-                priceParts[0].replace(/[$,]/g, "").trim(),
-                10
-              );
-              const upperLimit = parseInt(
-                priceParts[1].replace(/[$,]/g, "").trim(),
-                10
-              );
+  //             if (game.price > lowerLimit) {
+  //               console.log(game.price, lowerLimit);
+  //               priceMatched = true;
+  //             }
+  //           } else {
+  //             const lowerLimit = parseInt(
+  //               priceParts[0].replace(/[$,]/g, "").trim(),
+  //               10
+  //             );
+  //             const upperLimit = parseInt(
+  //               priceParts[1].replace(/[$,]/g, "").trim(),
+  //               10
+  //             );
 
-              if (game.price >= lowerLimit && game.price <= upperLimit) {
-                priceMatched = true;
-              }
-            }
-          });
+  //             if (game.price >= lowerLimit && game.price <= upperLimit) {
+  //               priceMatched = true;
+  //             }
+  //           }
+  //         });
 
-          isPrices = priceMatched;
-        }
+  //         isPrices = priceMatched;
+  //       }
 
-        return (
-          isCategory && isPublisher && isGameModes && isPlatform && isPrices
-        );
-      });
+  //       return (
+  //         isCategory && isPublisher && isGameModes && isPlatform && isPrices
+  //       );
+  //     });
 
-      setFilteredGames(filteredGames);
-    }
-  }, [filterOptions]);
+  //     setFilteredGames(filteredGames);
+  //   }
+  // }, [filterOptions]);
 
   return (
     <>
       {loading && (
         <Layout
-          games={games}
           addFilterOption={addFilterOption}
           removeFilterOption={removeFilterOption}
           changeSortBy={(value: string) => setSortBy(value)}
@@ -231,9 +228,8 @@ export default shop;
 
 /*
 
-
-2) Get the sort working 
-3) Get filters working
+1) Get filters working
+2) Get search working correctly
 
 - start working on other items list on home page
 - add the same list to the product page

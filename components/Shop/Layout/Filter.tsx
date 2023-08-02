@@ -3,9 +3,9 @@ import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 import { BsChevronDown, BsX } from "react-icons/bs";
 import { useWindowResize } from "../../shared/Hooks/useWindowResize";
 import { MobileHeader } from "components/shared";
+import axios from "axios";
 
 type FilterProps = {
-  games: GameProps[];
   addFilterOption: (name: keyof FilteredOptionsProps, option: string) => void;
   removeFilterOption: (
     name: keyof FilteredOptionsProps,
@@ -24,7 +24,6 @@ type FilterOption = {
 };
 
 const Filter = ({
-  games,
   addFilterOption,
   removeFilterOption,
   isMobileFilterOpen,
@@ -60,6 +59,58 @@ const Filter = ({
     },
   ]);
 
+  useEffect(() => {
+    const gameModes = ["Single Player", "Multiplayer"];
+    const prices = [
+      "$0 - $50",
+      "$50 - $100",
+      "$100 - $150",
+      "$150 - $200",
+      "Over $200",
+    ];
+
+    async function getFilterOptions() {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/games/filterOptions`
+        );
+        const data = await response.data.data;
+
+        setFilterOptions((prev) => [
+          {
+            name: "Category",
+            options: data.categories,
+            show: true,
+          },
+          {
+            name: "Publisher",
+            options: data.publishers,
+            show: true,
+          },
+          {
+            name: "Game Modes",
+            options: gameModes,
+            show: true,
+          },
+          {
+            name: "Platform",
+            options: data.platforms,
+            show: true,
+          },
+          {
+            name: "Prices",
+            options: prices,
+            show: true,
+          },
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getFilterOptions();
+  }, []);
+
   const mapFilterOptionNameToKey = (
     name: string
   ): keyof FilteredOptionsProps => {
@@ -88,34 +139,6 @@ const Filter = ({
     );
   };
 
-  const categories = Array.from(
-    new Set(games.flatMap((game) => game.category))
-  );
-
-  const publishers = games
-    .map((game) => game.publisher)
-    .filter((publisher) => publisher && publisher.trim() !== "")
-    .filter((publisher, index, self) => self.indexOf(publisher) === index);
-
-  const gameModes = games
-    .map((game) => game.gameModes)
-    .flat()
-    .filter((gameMode) => gameMode && gameMode.trim() !== "")
-    .filter((gameMode, index, self) => self.indexOf(gameMode) === index);
-
-  const platforms = games
-    .map((game) => game.platform)
-    .filter((platform) => platform && platform.trim() !== "")
-    .filter((platform, index, self) => self.indexOf(platform) === index);
-
-  const prices = [
-    "$0 - $50",
-    "$50 - $100",
-    "$100 - $150",
-    "$150 - $200",
-    "Over $200",
-  ];
-
   // Use the useWindowResize hook
   const windowSize = useWindowResize();
 
@@ -132,36 +155,6 @@ const Filter = ({
       document.body.style.overflow = "auto";
     };
   }, [windowSize.width, isMobileFilterOpen]);
-
-  useEffect(() => {
-    setFilterOptions((prev) => [
-      {
-        name: "Category",
-        options: categories,
-        show: true,
-      },
-      {
-        name: "Publisher",
-        options: publishers,
-        show: true,
-      },
-      {
-        name: "Game Modes",
-        options: gameModes,
-        show: true,
-      },
-      {
-        name: "Platform",
-        options: platforms,
-        show: true,
-      },
-      {
-        name: "Prices",
-        options: prices,
-        show: true,
-      },
-    ]);
-  }, []);
 
   const handleFilterOption = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -321,3 +314,40 @@ const Filter = ({
 };
 
 export default Filter;
+
+/*
+
+1) Could get filterOptions from the backend and pull them here
+
+
+  const categories = Array.from(
+    new Set(games.flatMap((game) => game.category))
+  );
+
+  const publishers = games
+    .map((game) => game.publisher)
+    .filter((publisher) => publisher && publisher.trim() !== "")
+    .filter((publisher, index, self) => self.indexOf(publisher) === index);
+
+  const gameModes = games
+    .map((game) => game.gameModes)
+    .flat()
+    .filter((gameMode) => gameMode && gameMode.trim() !== "")
+    .filter((gameMode, index, self) => self.indexOf(gameMode) === index);
+
+  const platforms = games
+    .map((game) => game.platform)
+    .filter((platform) => platform && platform.trim() !== "")
+    .filter((platform, index, self) => self.indexOf(platform) === index);
+
+  const prices = [
+    "$0 - $50",
+    "$50 - $100",
+    "$100 - $150",
+    "$150 - $200",
+    "Over $200",
+  ];
+
+
+
+*/
