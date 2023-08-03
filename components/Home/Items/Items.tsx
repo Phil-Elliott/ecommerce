@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
-import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
 import router from "next/router";
-import HeroImg from "/assets/hero.jpg";
+import axios from "axios";
 
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { GameProps } from "components/shared/Types/Types";
@@ -11,13 +10,30 @@ import Link from "next/link";
 
 type ItemProps = {
   name: string;
-  games: GameProps[];
 };
 // Scroll distance constant
 const SCROLL_DISTANCE = 270;
 
-const Items = ({ name, games }: ItemProps) => {
+const Items = ({ name }: ItemProps) => {
+  const [games, setGames] = useState<GameProps[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // fetches 10 random products from the database
+  useEffect(() => {
+    async function fetchGames() {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/games/randomProducts`
+        );
+        const data = await response.data.data.products;
+        console.log(data);
+        setGames(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchGames();
+  }, []);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -96,3 +112,9 @@ const Items = ({ name, games }: ItemProps) => {
 };
 
 export default Items;
+
+/*
+
+check how you pull the data on the product page
+
+*/

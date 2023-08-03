@@ -6,6 +6,7 @@ import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
 import { useRouter } from "next/router";
 import { PaginationBar } from "components/shared";
 import queryString from "query-string";
+import { Spinner } from "components/shared";
 
 type ShopProps = {};
 
@@ -26,14 +27,7 @@ const shop = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   // Gives the items time to get filtered
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setLoading(false);
-    setTimeout(() => {
-      setLoading(true);
-    }, 1000);
-  }, []);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Reading search query
   const router = useRouter();
@@ -54,6 +48,7 @@ const shop = () => {
 
   async function getGames() {
     try {
+      setLoading(true);
       const queryParams = queryString.stringify(filterOptions, {
         arrayFormat: "comma",
       });
@@ -68,8 +63,12 @@ const shop = () => {
       if (ref.current) {
         ref.current.scrollIntoView({ behavior: "smooth" });
       }
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   }
 
@@ -98,36 +97,35 @@ const shop = () => {
 
   return (
     <div ref={ref}>
-      {loading && (
-        <Layout
-          addFilterOption={addFilterOption}
-          removeFilterOption={removeFilterOption}
-          changeSortBy={(value: string) => setSortBy(value)}
-          count={quantity}
-          sortBy={sortBy}
-          searchQuery={searchQuery}
-        >
-          {filteredGames.length === 0 ? (
-            <div className="w-full flex justify-center items-center">
-              <h1 className="text-2xl font-semibold">
-                No games match your search criteria
-              </h1>
-            </div>
-          ) : (
-            <div>
-              <Items games={filteredGames} />
-              {quantity < 9 ? null : (
-                <PaginationBar
-                  page={page}
-                  setPage={setPage}
-                  quantity={quantity}
-                  displayQuantity={9}
-                />
-              )}
-            </div>
-          )}
-        </Layout>
-      )}
+      <Layout
+        addFilterOption={addFilterOption}
+        removeFilterOption={removeFilterOption}
+        changeSortBy={(value: string) => setSortBy(value)}
+        count={quantity}
+        sortBy={sortBy}
+        searchQuery={searchQuery}
+      >
+        {filteredGames.length === 0 ? (
+          <div className="w-full flex justify-center items-center">
+            <h1 className="text-2xl font-semibold">
+              No games match your search criteria
+            </h1>
+          </div>
+        ) : (
+          <div>
+            <Items games={filteredGames} />
+            {quantity < 9 ? null : (
+              <PaginationBar
+                page={page}
+                setPage={setPage}
+                quantity={quantity}
+                displayQuantity={9}
+              />
+            )}
+          </div>
+        )}
+      </Layout>
+      )
     </div>
   );
 };
@@ -135,6 +133,9 @@ const shop = () => {
 export default shop;
 
 /*
+{!loading ? (
+
+
 3) Add loading spinners
 4) Fix sign in and sign up modals
 
