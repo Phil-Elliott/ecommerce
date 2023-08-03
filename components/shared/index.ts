@@ -6,6 +6,7 @@ import Spinner from "./Spinner/Spinner";
 import { Ratings } from "./Ratings/Ratings";
 import MobileHeader from "./MobileHeader/MobileHeader";
 import PaginationBar from "./PaginationBar/PaginationBar ";
+import Items from "./Items/Items";
 
 export {
   Button,
@@ -16,4 +17,5 @@ export {
   Ratings,
   MobileHeader,
   PaginationBar,
+  Items,
 };

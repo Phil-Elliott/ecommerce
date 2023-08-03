@@ -15,12 +15,9 @@ import RatingsContainer from "components/Product/Ratings/RatingsContainer";
 import WriteReviewContainer from "components/Product/Ratings/WriteReviewContainer";
 import TopReviews from "components/Product/Reviews/TopReviews";
 import AllReviews from "components/Product/Reviews/AllRviews/AllReviews";
+import Items from "components/shared/Items/Items";
 
-type ProductProps = {
-  games: GameProps[];
-};
-
-const product = ({ games }: ProductProps) => {
+const product = () => {
   const [game, setGame] = useState<GameProps | null>(null);
   const [mainImage, setMainImage] = useState<string | null>(null);
   const [isMobileContainerOpen, setIsMobileContainerOpen] = useState(false);
@@ -208,7 +205,7 @@ const product = ({ games }: ProductProps) => {
 
   return (
     <>
-      <div className="container mx-auto py-20 lg:py-32">
+      <div className="container mx-auto pt-20 lg:pt-32">
         <div className="grid grid-cols-1 lg:grid-cols-7 gap-10 ">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-full col-span-4">
             <ProductImages
@@ -258,6 +255,7 @@ const product = ({ games }: ProductProps) => {
         userHasReviewed={userHasReviewed}
         updateUserReview={updateUserReview}
       />
+      <Items name="Discover Something New" />
     </>
   );
 };
