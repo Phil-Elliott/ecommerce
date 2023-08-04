@@ -23,6 +23,9 @@ export default function Home() {
 
 /*
 
+Add heads to everything
+Get category links working and also on header
+
 - Need to do
     - stop pulling all games when app loads
     - finish product page

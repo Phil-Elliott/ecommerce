@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { use, useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Items from "components/Shop/Items";
 import Layout from "components/Shop/Layout/Layout";
@@ -23,6 +23,8 @@ const shop = () => {
   const [sortBy, setSortBy] = useState<string>("-ratingsAverage");
   const [page, setPage] = useState<number>(1);
   const [quantity, setQuantity] = useState<number>(0);
+  const [hasInitialFiltersSet, setHasInitialFiltersSet] =
+    useState<boolean>(false);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -35,29 +37,37 @@ const shop = () => {
   // const searchQuery = router.query.search as string;
 
   const searchQuery = router.query.search ? router.query.search.toString() : "";
+  const filterQuery = router.query.category
+    ? router.query.category.toString()
+    : "";
+  const publisherQuery = router.query.publisher
+    ? router.query.publisher.toString()
+    : "";
 
-  // Fetches the games from the database the page, sort, and filter options change
   useEffect(() => {
-    getGames();
-  }, [page]);
+    if (router.isReady && !hasInitialFiltersSet) {
+      if (filterQuery && filterQuery.trim() !== "") {
+        addFilterOption("category", filterQuery);
+      } else if (publisherQuery && publisherQuery.trim() !== "") {
+        addFilterOption("publisher", publisherQuery);
+      } else {
+        getGames();
+      }
+    }
+    setHasInitialFiltersSet(true);
+  }, [router.isReady, hasInitialFiltersSet, filterQuery, publisherQuery]);
 
-  useEffect(() => {
-    setPage(1);
-    getGames();
-  }, [sortBy, filterOptions, searchQuery]);
-
-  async function getGames() {
+  const getGames = useCallback(async () => {
     try {
       setLoading(true);
       const queryParams = queryString.stringify(filterOptions, {
         arrayFormat: "comma",
       });
-      console.log(queryParams, "query params");
       const response = await axios.get(
         `http://localhost:3000/api/v1/games?page=${page}&limit=9&sort=${sortBy}&search=${searchQuery}&${queryParams}`
       );
       const data = await response.data;
-      console.log(data, "game data");
+      console.log("getting game data");
       setQuantity(data.totalProducts);
       setFilteredGames(data.data.data);
       if (ref.current) {
@@ -70,7 +80,24 @@ const shop = () => {
       console.log(error);
       setLoading(false);
     }
-  }
+  }, [sortBy, filterOptions, searchQuery, page]);
+
+  // Fetches the games from the database the page, sort, and filter options change
+  useEffect(() => {
+    console.log("running get games");
+    if (hasInitialFiltersSet) {
+      console.log("running inside get games");
+      getGames();
+    }
+  }, [page, getGames]);
+
+  useEffect(() => {
+    console.log("running");
+    if (hasInitialFiltersSet) {
+      console.log("running inside");
+      setPage(1);
+    }
+  }, [hasInitialFiltersSet, getGames, sortBy, filterOptions, searchQuery]);
 
   // Function to add a filter option
 
@@ -114,7 +141,7 @@ const shop = () => {
         ) : (
           <div>
             <Items games={filteredGames} />
-            {quantity < 9 ? null : (
+            {quantity <= 9 ? null : (
               <PaginationBar
                 page={page}
                 setPage={setPage}
@@ -133,6 +160,11 @@ const shop = () => {
 export default shop;
 
 /*
+
+- its loading the router query and the games (need to load once) - running getGames twice
+- Need to check the filter box when passing over router
+
+
 {!loading ? (
 
 
@@ -310,4 +342,31 @@ export default shop;
   //     }
   //   }
   // }, [router.isReady, router.query, searchQuery, filterQuery, publisherQuery]);
+
+
+   // async function getGames() {
+  //   try {
+  //     setLoading(true);
+  //     const queryParams = queryString.stringify(filterOptions, {
+  //       arrayFormat: "comma",
+  //     });
+  //     console.log(queryParams, "query params");
+  //     const response = await axios.get(
+  //       `http://localhost:3000/api/v1/games?page=${page}&limit=9&sort=${sortBy}&search=${searchQuery}&${queryParams}`
+  //     );
+  //     const data = await response.data;
+  //     console.log("getting game data");
+  //     setQuantity(data.totalProducts);
+  //     setFilteredGames(data.data.data);
+  //     if (ref.current) {
+  //       ref.current.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //     }, 1000);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setLoading(false);
+  //   }
+  // }
 */
