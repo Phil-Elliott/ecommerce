@@ -84,17 +84,13 @@ const shop = () => {
 
   // Fetches the games from the database the page, sort, and filter options change
   useEffect(() => {
-    console.log("running get games");
     if (hasInitialFiltersSet) {
-      console.log("running inside get games");
       getGames();
     }
   }, [page, getGames]);
 
   useEffect(() => {
-    console.log("running");
     if (hasInitialFiltersSet) {
-      console.log("running inside");
       setPage(1);
     }
   }, [hasInitialFiltersSet, getGames, sortBy, filterOptions, searchQuery]);
@@ -131,6 +127,7 @@ const shop = () => {
         count={quantity}
         sortBy={sortBy}
         searchQuery={searchQuery}
+        filterOptions={filterOptions}
       >
         {filteredGames.length === 0 ? (
           <div className="w-full flex justify-center items-center">

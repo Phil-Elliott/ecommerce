@@ -14,6 +14,7 @@ type LayoutProps = {
   count: number;
   sortBy: string;
   searchQuery: string;
+  filterOptions: FilteredOptionsProps;
 };
 
 const Layout = ({
@@ -24,6 +25,7 @@ const Layout = ({
   count,
   sortBy,
   searchQuery,
+  filterOptions,
 }: LayoutProps) => {
   const [showFilter, setShowFilter] = useState(true);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
@@ -55,6 +57,7 @@ const Layout = ({
             closeMobileFilter={() => setIsMobileFilterOpen(false)}
             changeSortBy={changeSortBy}
             sortBy={sortBy}
+            filterOptionsSelected={filterOptions}
           />
         ) : null}
         {children}

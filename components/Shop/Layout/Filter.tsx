@@ -15,6 +15,7 @@ type FilterProps = {
   closeMobileFilter: () => void;
   changeSortBy: (value: string) => void;
   sortBy: string;
+  filterOptionsSelected: FilteredOptionsProps;
 };
 
 type FilterOption = {
@@ -30,6 +31,7 @@ const Filter = ({
   closeMobileFilter,
   changeSortBy,
   sortBy,
+  filterOptionsSelected,
 }: FilterProps) => {
   const [filterOptions, setFilterOptions] = useState<FilterOption[]>([
     {
@@ -200,6 +202,9 @@ const Filter = ({
                           name={filterOption.name}
                           id={option}
                           value={option}
+                          checked={filterOptionsSelected[
+                            mapFilterOptionNameToKey(filterOption.name)
+                          ].includes(option)}
                           className="cursor-pointer custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
                           onChange={(e) => {
                             handleFilterOption(
@@ -287,6 +292,9 @@ const Filter = ({
                         name={filterOption.name}
                         id={`mobile-${option}`}
                         value={option}
+                        checked={filterOptionsSelected[
+                          mapFilterOptionNameToKey(filterOption.name)
+                        ].includes(option)}
                         className="cursor-pointer custom-checkbox w-4 h-4 bg-transparent border border-gray-500 rounded appearance-none focus:outline-none"
                         onChange={(e) => {
                           handleFilterOption(
