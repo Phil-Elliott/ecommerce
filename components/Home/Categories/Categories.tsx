@@ -1,6 +1,4 @@
 import React from "react";
-import Image from "next/image";
-import HeroImg from "/assets/hero.jpg";
 import { BsChevronRight } from "react-icons/bs";
 import Button from "components/shared/Button/Button";
 import AccessoriesImage from "assets/accessories.jpg";

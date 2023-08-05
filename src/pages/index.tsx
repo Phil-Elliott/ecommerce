@@ -23,6 +23,13 @@ export default function Home() {
 
 /*
 
+1) Add spinners
+2) Make sure main image loads fast
+3) Clean and fix signin and signup
+4) Plan out stripe
+5) Remove deals button on header
+
+
 Add heads to everything
 Get category links working and also on header
 

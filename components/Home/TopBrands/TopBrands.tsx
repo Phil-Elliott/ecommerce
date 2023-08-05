@@ -7,6 +7,7 @@ import Konami from "assets/logos/Konami.png";
 import Capcom from "assets/logos/capcon.png";
 import Square from "assets/logos/square.jpg";
 import Sega from "assets/logos/sega.png";
+import { CldImage } from "next-cloudinary";
 
 const LogoLinks = [
   {
