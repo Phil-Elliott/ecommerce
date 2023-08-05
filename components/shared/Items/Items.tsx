@@ -56,20 +56,20 @@ const Items = ({ name }: ItemProps) => {
         <h1 className="text-3xl font-semibold">{name}</h1>
         <div className="text-base flex items-center space-x-4">
           <Link href="/shop">
-            <Button ariaLabel="Show All" className="text-base">
+            <Button ariaLabel="Show All" className="text-base hover:underline">
               Show All
             </Button>
           </Link>
           <Button
             ariaLabel="Scroll Left"
-            className="hidden sm:block bg-gray-500 text-white p-1 rounded-full cursor-pointer"
+            className="hidden sm:block bg-gray-500 text-white p-1 rounded-full cursor-pointer hover:bg-gray-600 transition duration-200 ease-in-out"
             onClick={scrollLeft}
           >
             <BsChevronLeft />
           </Button>
           <Button
             ariaLabel="Scroll Right"
-            className="hidden sm:block bg-gray-500 text-white p-1 rounded-full cursor-pointer"
+            className="hidden sm:block bg-gray-500 text-white p-1 rounded-full cursor-pointer hover:bg-gray-600 transition duration-200 ease-in-out"
             onClick={scrollRight}
           >
             <BsChevronRight />
