@@ -48,11 +48,11 @@ const Mobile = ({
       link: "/shop?category=Clothes",
       image: ClothesImage,
     },
-    {
-      name: "Deals",
-      link: "/shop?category=Clothes",
-      image: DealsImage,
-    },
+    // {
+    //   name: "Deals",
+    //   link: "/shop?category=Clothes",
+    //   image: DealsImage,
+    // },
   ];
 
   return (

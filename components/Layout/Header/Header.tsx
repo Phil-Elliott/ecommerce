@@ -108,13 +108,13 @@ const Header = ({ signInButton }: HeaderProps) => {
                 <p className="pr-10">Clothing</p>
                 <ChevronRightIcon />
               </Link>
-              <Link
+              {/* <Link
                 className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
                 href={`/shop?category=${encodeURIComponent("Clothes")}`}
               >
                 <p className="pr-10">Deals</p>
                 <ChevronRightIcon />
-              </Link>
+              </Link> */}
             </div>
           </Popup>
 

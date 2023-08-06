@@ -4,12 +4,22 @@ import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 
 import WishListItem from "components/WishList/WishListItem";
+import Head from "next/head";
 
 const WishList = () => {
   const list = useSelector((state: RootState) => state.wishList);
 
   return (
     <div className="bg-gray-100">
+      <Head>
+        <title>Wish List</title>
+        <meta
+          name="description"
+          content="Take a look at what you want to buy later"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="container mx-auto min-h-screen pb-10 pt-28 ">
         <div className="bg-white w-full rounded">
           <h1 className="text-3xl mb-0 py-4 px-6">Your Wishlist</h1>

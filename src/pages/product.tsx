@@ -16,6 +16,7 @@ import WriteReviewContainer from "components/Product/Ratings/WriteReviewContaine
 import TopReviews from "components/Product/Reviews/TopReviews";
 import AllReviews from "components/Product/Reviews/AllRviews/AllReviews";
 import Items from "components/shared/Items/Items";
+import Head from "next/head";
 
 const product = () => {
   const [game, setGame] = useState<GameProps | null>(null);
@@ -205,6 +206,14 @@ const product = () => {
 
   return (
     <>
+      <Head>
+        <title>
+          {game?.name} {game?.platform ? "-" : null} {game?.platform}
+        </title>
+        <meta name="description" content={game?.description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="container mx-auto pt-20 lg:pt-32">
         <div className="grid grid-cols-1 lg:grid-cols-7 gap-10 ">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-full col-span-4">

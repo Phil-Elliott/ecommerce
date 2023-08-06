@@ -57,25 +57,25 @@ const Login = ({
       </h2>
       <form className="flex flex-col" onSubmit={(e) => handleSubmit(e)}>
         <label
-          className="text-sm font-semibold pb-1 text-gray-700"
+          className="text-sm font-semibold pb-2 text-gray-700"
           htmlFor="Email"
         >
           Email
         </label>
         <input
-          className="border border-gray-300 rounded-md px-2 py-1 mb-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="border border-gray-300 rounded-md px-2 py-1 mb-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
           type="email"
           onChange={handleEmail}
           value={email}
         />
         <label
-          className="text-sm font-semibold pb-1 text-gray-700"
+          className="text-sm font-semibold pb-2 text-gray-700"
           htmlFor="Password"
         >
           Password
         </label>
         <input
-          className="border border-gray-300 rounded-md px-2 py-1 mb-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="border border-gray-300 rounded-md px-2 py-1 mb-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
           type="password"
           onChange={handlePassword}
           value={password}
@@ -86,12 +86,12 @@ const Login = ({
           </p>
         )}
 
-        <p
+        {/* <p
           className="text-sm text-gray-700 cursor-pointer hover:underline mb-2"
           onClick={() => handleForgotPassword()}
         >
           Forgot Password
-        </p>
+        </p> */}
 
         <div className="">
           <button

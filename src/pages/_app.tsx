@@ -44,7 +44,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Layout signInButton={() => setOpen(true)}>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 z-50 flex items-center justify-center" />
-            <Dialog.Content className="fixed left-0 right-0 top-32 mx-auto w-96 bg-white rounded-md p-4 z-50 ">
+            <Dialog.Content className="fixed left-0 right-0 top-32 mx-auto w-80 sm:w-96 bg-white rounded-md p-2 sm:p-4 z-50 ">
               <Signin closeModal={() => setOpen(false)} />
               <Dialog.Close asChild>
                 <button
@@ -64,6 +64,14 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 /*
+
+
+- make checkout page
+- get stripe setup and working 
+
+
+
+
 
 Host it on Render
 

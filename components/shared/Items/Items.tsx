@@ -26,7 +26,6 @@ const Items = ({ name }: ItemProps) => {
           `http://localhost:3000/api/v1/games/randomProducts`
         );
         const data = await response.data.data.products;
-        console.log(data);
         setGames(data);
       } catch (error) {
         console.log(error);

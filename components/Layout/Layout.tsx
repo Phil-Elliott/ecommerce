@@ -63,10 +63,7 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
     };
 
     if (!user.email) {
-      console.log("User not logged in");
       fetchUser();
-    } else {
-      console.log("User already logged in");
     }
   }, []);
 

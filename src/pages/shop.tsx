@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { PaginationBar } from "components/shared";
 import queryString from "query-string";
 import { Spinner } from "components/shared";
+import Head from "next/head";
 
 type ShopProps = {};
 
@@ -120,6 +121,12 @@ const shop = () => {
 
   return (
     <div ref={ref}>
+      <Head>
+        <title>Shop</title>
+        <meta name="description" content="Take a look at what we sell" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Layout
         addFilterOption={addFilterOption}
         removeFilterOption={removeFilterOption}
