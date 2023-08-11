@@ -1,42 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Layout from "components/Layout/Layout";
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
-import { GameProps } from "components/shared/Types/Types";
 import Signin from "components/Signin/Signin";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Provider } from "react-redux";
 import store from "../../redux/store";
-import axios from "axios";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [games, setGames] = useState<GameProps[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Fetches game data when the app loads
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true); // add this line
-        const response = await axios.get("http://localhost:3000/api/v1/games");
-        const data = response.data;
-
-        if (data.status === "success") {
-          setGames(data.data.data);
-        } else {
-          console.error("Error fetching games:", data);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <Provider store={store}>
@@ -56,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
               </Dialog.Close>
             </Dialog.Content>
           </Dialog.Portal>
-          {isLoading ? null : <Component {...pageProps} games={games} />}
+          <Component {...pageProps} />
         </Layout>
       </Dialog.Root>
     </Provider>

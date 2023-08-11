@@ -75,8 +75,8 @@ const CartItem = ({ product }: CartItemProps) => {
               <p>Total: ${(product.price * cartQuantity).toFixed(2)}</p>
             </div>
             <div className="flex space-x-2 items-center text-sm">
-              <Ratings rating={product.rating} />
-              <p>{product.rating}</p>
+              <Ratings rating={product.ratingsAverage} />
+              <p>{product.ratingsAverage}</p>
               <p className="text-gray-500">(12)</p>
             </div>
           </div>

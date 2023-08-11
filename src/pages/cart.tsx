@@ -1,8 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useRemoveFromCart } from "utils/useRemoveFromCart/useRemoveFromCart";
-import { useAddToWishList } from "utils/useAddToWishList/useAddToWishList";
-import { useChangeCartQuantity } from "utils/useeChangeCartQuantity/useeChangeCartQuantity";
 import CartSummary from "components/Cart/CartSummary";
 import CartItem from "components/Cart/CartItem";
 import Head from "next/head";

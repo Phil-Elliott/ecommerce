@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CldImage } from "next-cloudinary";
 import { Ratings } from "components/shared";
 import { BsTrash } from "react-icons/bs";
@@ -46,8 +46,8 @@ const WishListItem = ({ product }: WishListItemProps) => {
               ${product.price}
             </p>
             <div className="flex space-x-2 items-center text-sm">
-              <Ratings rating={product.rating} />
-              <p>{product.rating}</p>
+              <Ratings rating={product.ratingsAverage} />
+              <p>{product.ratingsAverage}</p>
               <p className="text-gray-500">(12)</p>
             </div>
           </div>
