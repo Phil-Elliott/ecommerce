@@ -17,6 +17,7 @@ import TopReviews from "components/Product/Reviews/TopReviews";
 import AllReviews from "components/Product/Reviews/AllRviews/AllReviews";
 import Items from "components/shared/Items/Items";
 import Head from "next/head";
+import { Spinner } from "components/shared";
 
 const product = () => {
   const [game, setGame] = useState<GameProps | null>(null);
@@ -30,6 +31,15 @@ const product = () => {
   const [ratingsAvg, setRatingsAvg] = useState(0);
   const [ratingsQuantity, setRatingsQuantity] = useState(0);
   const [starRatings, setStarRatings] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // Set loading to false after a short wait
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
 
   const user = useSelector((state: RootState) => state.user);
 
@@ -214,57 +224,63 @@ const product = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="container mx-auto pt-20 lg:pt-32">
-        <div className="grid grid-cols-1 lg:grid-cols-7 gap-10 ">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-full col-span-4">
-            <ProductImages
+      {loading ? (
+        <Spinner size={150} />
+      ) : (
+        <>
+          <div className="container mx-auto pt-20 lg:pt-32">
+            <div className="grid grid-cols-1 lg:grid-cols-7 gap-10 ">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 h-full col-span-4">
+                <ProductImages
+                  game={game}
+                  mainImage={mainImage}
+                  setMainImage={setMainImage}
+                />
+                <MainImage game={game} mainImage={mainImage} />
+              </div>
+              <ProductDetails game={game} />
+            </div>
+            <RatingsContainer
               game={game}
-              mainImage={mainImage}
-              setMainImage={setMainImage}
+              openReview={() => setIsMobileContainerOpen(true)}
+              userHasReviewed={userHasReviewed}
+              ratingsAvg={ratingsAvg}
+              ratingsQuantity={ratingsQuantity}
+              starRatings={starRatings}
+              setShowAllReviews={setShowAllReviews}
+              showAllReviews={showAllReviews}
             />
-            <MainImage game={game} mainImage={mainImage} />
-          </div>
-          <ProductDetails game={game} />
-        </div>
-        <RatingsContainer
-          game={game}
-          openReview={() => setIsMobileContainerOpen(true)}
-          userHasReviewed={userHasReviewed}
-          ratingsAvg={ratingsAvg}
-          ratingsQuantity={ratingsQuantity}
-          starRatings={starRatings}
-          setShowAllReviews={setShowAllReviews}
-          showAllReviews={showAllReviews}
-        />
-        {topReviews?.length ? (
-          <div>
-            {!showAllReviews ? (
-              <TopReviews reviews={topReviews} user={user} />
+            {topReviews?.length ? (
+              <div>
+                {!showAllReviews ? (
+                  <TopReviews reviews={topReviews} user={user} />
+                ) : (
+                  <AllReviews
+                    ratingsQuantity={ratingsQuantity}
+                    id={game?._id}
+                    user={user}
+                  />
+                )}
+              </div>
             ) : (
-              <AllReviews
-                ratingsQuantity={ratingsQuantity}
-                id={game?._id}
-                user={user}
-              />
+              <div className="pt-20">
+                <h1 className="pb-6 text-xl font-semibold text-center">
+                  Be the first to review this game!
+                </h1>
+              </div>
             )}
           </div>
-        ) : (
-          <div className="pt-20">
-            <h1 className="pb-6 text-xl font-semibold text-center">
-              Be the first to review this game!
-            </h1>
-          </div>
-        )}
-      </div>
-      <WriteReviewContainer
-        isMobileContainerOpen={isMobileContainerOpen}
-        setIsMobileContainerOpen={setIsMobileContainerOpen}
-        game={game}
-        user={user}
-        userHasReviewed={userHasReviewed}
-        updateUserReview={updateUserReview}
-      />
-      <Items name="Discover Something New" />
+          <WriteReviewContainer
+            isMobileContainerOpen={isMobileContainerOpen}
+            setIsMobileContainerOpen={setIsMobileContainerOpen}
+            game={game}
+            user={user}
+            userHasReviewed={userHasReviewed}
+            updateUserReview={updateUserReview}
+          />
+          <Items name="Discover Something New" />
+        </>
+      )}
     </>
   );
 };

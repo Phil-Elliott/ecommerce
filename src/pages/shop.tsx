@@ -209,7 +209,7 @@ const shop = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {loading ? (
-        <Spinner size={60} />
+        <Spinner size={150} />
       ) : (
         <Layout
           addFilterOption={addFilterOption}
