@@ -47,3 +47,9 @@ export type UserReview = {
   review: string;
   _id: string;
 };
+
+export type FilterOption = {
+  name: string;
+  options: string[];
+  show: boolean;
+};

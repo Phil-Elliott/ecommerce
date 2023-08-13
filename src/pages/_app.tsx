@@ -39,6 +39,29 @@ export default function App({ Component, pageProps }: AppProps) {
 /*
 
 
+- Make dropdown for the users account
+  - add sign out button
+  - add link to account page
+  - add link to orders page
+  - add link to reviews page (could do this later)
+
+- Add Spinners
+
+- Make dropdowns work on shop page from header categories
+
+- Fix up cart page a little bit to show the correct prices (shipping and tax)
+
+- Launch the app
+
+- Figure out what to do with the cart and wishlist page that is saving things with local storage
+
+
+
+
+
+
+
+
 - make checkout page
 - get stripe setup and working 
 

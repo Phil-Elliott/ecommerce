@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Filter from "./Filter";
-import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
+import {
+  FilterOption,
+  FilteredOptionsProps,
+} from "components/shared/Types/Types";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -15,6 +18,8 @@ type LayoutProps = {
   sortBy: string;
   searchQuery: string;
   filterOptions: FilteredOptionsProps;
+  filterOptionsData: FilterOption[];
+  setFilterOptionsData: React.Dispatch<React.SetStateAction<FilterOption[]>>;
 };
 
 const Layout = ({
@@ -26,6 +31,8 @@ const Layout = ({
   sortBy,
   searchQuery,
   filterOptions,
+  filterOptionsData,
+  setFilterOptionsData,
 }: LayoutProps) => {
   const [showFilter, setShowFilter] = useState(true);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
@@ -58,6 +65,8 @@ const Layout = ({
             changeSortBy={changeSortBy}
             sortBy={sortBy}
             filterOptionsSelected={filterOptions}
+            filterOptionsData={filterOptionsData}
+            setFilterOptionsData={setFilterOptionsData}
           />
         ) : null}
         {children}

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
+import {
+  FilterOption,
+  FilteredOptionsProps,
+} from "components/shared/Types/Types";
 import { BsChevronDown, BsX } from "react-icons/bs";
 import { useWindowResize } from "../../shared/Hooks/useWindowResize";
 import { MobileHeader } from "components/shared";
-import axios from "axios";
 
 type FilterProps = {
   addFilterOption: (name: keyof FilteredOptionsProps, option: string) => void;
@@ -16,12 +18,8 @@ type FilterProps = {
   changeSortBy: (value: string) => void;
   sortBy: string;
   filterOptionsSelected: FilteredOptionsProps;
-};
-
-type FilterOption = {
-  name: string;
-  options: string[];
-  show: boolean;
+  filterOptionsData: FilterOption[];
+  setFilterOptionsData: React.Dispatch<React.SetStateAction<FilterOption[]>>;
 };
 
 const Filter = ({
@@ -32,87 +30,9 @@ const Filter = ({
   changeSortBy,
   sortBy,
   filterOptionsSelected,
+  filterOptionsData,
+  setFilterOptionsData,
 }: FilterProps) => {
-  const [filterOptions, setFilterOptions] = useState<FilterOption[]>([
-    {
-      name: "Category",
-      options: [],
-      show: true,
-    },
-    {
-      name: "Publisher",
-      options: [],
-      show: true,
-    },
-    {
-      name: "Game Modes",
-      options: [],
-      show: true,
-    },
-    {
-      name: "Platform",
-      options: [],
-      show: true,
-    },
-    {
-      name: "Prices",
-      options: [],
-      show: true,
-    },
-  ]);
-
-  useEffect(() => {
-    const gameModes = ["Single Player", "Multiplayer"];
-    const prices = [
-      "$0 - $50",
-      "$50 - $100",
-      "$100 - $150",
-      "$150 - $200",
-      "Over $200",
-    ];
-
-    async function getFilterOptions() {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/v1/games/filterOptions`
-        );
-        const data = await response.data.data;
-
-        setFilterOptions((prev) => [
-          {
-            name: "Category",
-            options: data.categories,
-            show: true,
-          },
-          {
-            name: "Publisher",
-            options: data.publishers,
-            show: true,
-          },
-          {
-            name: "Game Modes",
-            options: gameModes,
-            show: true,
-          },
-          {
-            name: "Platform",
-            options: data.platforms,
-            show: true,
-          },
-          {
-            name: "Prices",
-            options: prices,
-            show: true,
-          },
-        ]);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    getFilterOptions();
-  }, []);
-
   const mapFilterOptionNameToKey = (
     name: string
   ): keyof FilteredOptionsProps => {
@@ -132,7 +52,7 @@ const Filter = ({
   };
 
   const toggleFilterOption = (name: string) => {
-    setFilterOptions((prev) =>
+    setFilterOptionsData((prev) =>
       prev.map((filterOption) =>
         filterOption.name === name
           ? { ...filterOption, show: !filterOption.show }
@@ -173,11 +93,11 @@ const Filter = ({
     <>
       <div className="w-1/4 lg:block hidden select-none">
         <div className="flex flex-col overflow-y-scroll max-h-filter-height w-full sticky top-16 scrollbar">
-          {filterOptions.map((filterOption, i) => (
+          {filterOptionsData.map((filterOption, i) => (
             <div
               key={filterOption.name}
               className={`border-gray pb-4 mr-6 ${
-                i !== filterOptions.length - 1 ? "border-b-2" : "border-b-0"
+                i !== filterOptionsData.length - 1 ? "border-b-2" : "border-b-0"
               } ${i === 0 ? "pt-0" : "pt-4"}`}
             >
               <div
@@ -263,11 +183,11 @@ const Filter = ({
           </div>
         </div>
         {/* Filter section */}
-        {filterOptions.map((filterOption, i) => (
+        {filterOptionsData.map((filterOption, i) => (
           <div
             key={filterOption.name}
             className={`border-gray p-4 ${
-              i !== filterOptions.length - 1 ? "border-b-2" : "border-b-0"
+              i !== filterOptionsData.length - 1 ? "border-b-2" : "border-b-0"
             }`}
           >
             <div

@@ -2,14 +2,16 @@ import React, { use, useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Items from "components/Shop/Items";
 import Layout from "components/Shop/Layout/Layout";
-import { FilteredOptionsProps, GameProps } from "components/shared/Types/Types";
+import {
+  FilterOption,
+  FilteredOptionsProps,
+  GameProps,
+} from "components/shared/Types/Types";
 import { useRouter } from "next/router";
 import { PaginationBar } from "components/shared";
 import queryString from "query-string";
 import { Spinner } from "components/shared";
 import Head from "next/head";
-
-type ShopProps = {};
 
 const shop = () => {
   const [filteredGames, setFilteredGames] = useState<GameProps[]>([]);
@@ -26,11 +28,90 @@ const shop = () => {
   const [quantity, setQuantity] = useState<number>(0);
   const [hasInitialFiltersSet, setHasInitialFiltersSet] =
     useState<boolean>(false);
+  const [filterOptionsData, setFilterOptionsData] = useState<FilterOption[]>([
+    {
+      name: "Category",
+      options: [],
+      show: true,
+    },
+    {
+      name: "Publisher",
+      options: [],
+      show: true,
+    },
+    {
+      name: "Game Modes",
+      options: [],
+      show: true,
+    },
+    {
+      name: "Platform",
+      options: [],
+      show: true,
+    },
+    {
+      name: "Prices",
+      options: [],
+      show: true,
+    },
+  ]);
 
   const ref = useRef<HTMLDivElement>(null);
 
   // Gives the items time to get filtered
   const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const gameModes = ["Single Player", "Multiplayer"];
+    const prices = [
+      "$0 - $50",
+      "$50 - $100",
+      "$100 - $150",
+      "$150 - $200",
+      "Over $200",
+    ];
+
+    async function getFilterOptionsData() {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/games/filterOptions`
+        );
+        const data = await response.data.data;
+
+        setFilterOptionsData((prev) => [
+          {
+            name: "Category",
+            options: data.categories,
+            show: true,
+          },
+          {
+            name: "Publisher",
+            options: data.publishers,
+            show: true,
+          },
+          {
+            name: "Game Modes",
+            options: gameModes,
+            show: true,
+          },
+          {
+            name: "Platform",
+            options: data.platforms,
+            show: true,
+          },
+          {
+            name: "Prices",
+            options: prices,
+            show: true,
+          },
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getFilterOptionsData();
+  }, []);
 
   // Reading search query
   const router = useRouter();
@@ -127,35 +208,41 @@ const shop = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout
-        addFilterOption={addFilterOption}
-        removeFilterOption={removeFilterOption}
-        changeSortBy={(value: string) => setSortBy(value)}
-        count={quantity}
-        sortBy={sortBy}
-        searchQuery={searchQuery}
-        filterOptions={filterOptions}
-      >
-        {filteredGames.length === 0 ? (
-          <div className="w-full flex justify-center items-center">
-            <h1 className="text-2xl font-semibold">
-              No games match your search criteria
-            </h1>
-          </div>
-        ) : (
-          <div>
-            <Items games={filteredGames} />
-            {quantity <= 9 ? null : (
-              <PaginationBar
-                page={page}
-                setPage={setPage}
-                quantity={quantity}
-                displayQuantity={9}
-              />
-            )}
-          </div>
-        )}
-      </Layout>
+      {loading ? (
+        <Spinner size={60} />
+      ) : (
+        <Layout
+          addFilterOption={addFilterOption}
+          removeFilterOption={removeFilterOption}
+          changeSortBy={(value: string) => setSortBy(value)}
+          count={quantity}
+          sortBy={sortBy}
+          searchQuery={searchQuery}
+          filterOptions={filterOptions}
+          filterOptionsData={filterOptionsData}
+          setFilterOptionsData={setFilterOptionsData}
+        >
+          {filteredGames.length === 0 ? (
+            <div className="w-full flex justify-center items-center">
+              <h1 className="text-2xl font-semibold">
+                No games match your search criteria
+              </h1>
+            </div>
+          ) : (
+            <div>
+              <Items games={filteredGames} />
+              {quantity <= 9 ? null : (
+                <PaginationBar
+                  page={page}
+                  setPage={setPage}
+                  quantity={quantity}
+                  displayQuantity={9}
+                />
+              )}
+            </div>
+          )}
+        </Layout>
+      )}
       )
     </div>
   );
