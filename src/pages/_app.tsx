@@ -53,6 +53,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
 - Figure out what to do with the cart and wishlist page that is saving things with local storage
 
+- Fix up the signin and signout
+
 
 
 

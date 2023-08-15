@@ -147,7 +147,7 @@ const Header = ({ signInButton }: HeaderProps) => {
               <div className="flex flex-col h-full w-full mt-3 text-sm">
                 <Link
                   className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
-                  href={`/shop?category=${encodeURIComponent("Console")}`}
+                  href={`/account`}
                 >
                   <p className="pr-10">Account</p>
                   <ChevronRightIcon />
