@@ -83,7 +83,12 @@ const CartSummary = ({ cart }: CartSummaryProps) => {
           <p>Tax</p>
           <p>
             $
-            {(cart.reduce((acc, curr) => acc + curr.price, 0) * 0.1).toFixed(2)}
+            {(
+              cart.reduce(
+                (acc, curr) => acc + curr.price * (curr.quantity ?? 0),
+                0
+              ) * 0.06
+            ).toFixed(2)}
           </p>
         </div>
         <div className="flex justify-between items-center mb-4">
@@ -95,7 +100,7 @@ const CartSummary = ({ cart }: CartSummaryProps) => {
               cart.reduce(
                 (acc, curr) => acc + curr.price * (curr.quantity ?? 0),
                 0
-              ) * 1.1
+              ) * 1.06
             ).toFixed(2)}
           </p>
         </div>
