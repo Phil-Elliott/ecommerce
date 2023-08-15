@@ -45,8 +45,6 @@ export default function App({ Component, pageProps }: AppProps) {
   - add link to orders page
   - add link to reviews page (could do this later)
 
-- Add Spinners
-
 - Make dropdowns work on shop page from header categories
 
 - Fix up cart page a little bit to show the correct prices (shipping and tax)

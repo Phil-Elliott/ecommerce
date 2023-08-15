@@ -79,6 +79,7 @@ const Header = ({ signInButton }: HeaderProps) => {
               </div>
             }
           >
+            {/* categories */}
             <div className="flex flex-col h-full w-full mt-3 text-sm">
               <Link
                 className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
@@ -117,7 +118,7 @@ const Header = ({ signInButton }: HeaderProps) => {
               </Link> */}
             </div>
           </Popup>
-
+          {/* Search bar */}
           <div className="relative justify-center items-center lg:w-2/5 w-3/5 lg:flex hidden">
             <AiOutlineSearch className="absolute left-0 ml-3 text-gray-400 text-xl cursor-pointer" />
             <input
@@ -131,17 +132,62 @@ const Header = ({ signInButton }: HeaderProps) => {
               }
             />
           </div>
-
-          <div
-            onClick={handleUserButton}
-            className="lg:flex hidden cursor-pointer items-center space-x-3 rounded hover:bg-gradient-bg py-1 px-3"
-          >
-            <BsPersonCircle className="text-xl" />
-            <p className="lg:block hidden">
-              {user.email ? "Sign Out" : "Sign In"}
-            </p>
-          </div>
-
+          {/* users account */}
+          {user.email ? (
+            <Popup
+              header={
+                <div className="cursor-pointer lg:flex items-center gap-3 hidden rounded hover:bg-gradient-bg py-1 px-3">
+                  <BsPersonCircle className="text-xl" />
+                  <p>Account</p>
+                  <BsChevronDown className="" />
+                </div>
+              }
+            >
+              {/* categories */}
+              <div className="flex flex-col h-full w-full mt-3 text-sm">
+                <Link
+                  className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                  href={`/shop?category=${encodeURIComponent("Console")}`}
+                >
+                  <p className="pr-10">Account</p>
+                  <ChevronRightIcon />
+                </Link>
+                <Link
+                  className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                  href={`/shop?category=${encodeURIComponent("Accessories")}`}
+                >
+                  <p className="pr-10">Orders</p>
+                  <ChevronRightIcon />
+                </Link>
+                {/* <Link
+                className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                href={`/shop?category=${encodeURIComponent("Clothes")}`}
+              >
+                <p className="pr-10">Reviews</p>
+                <ChevronRightIcon />
+              </Link> */}
+                <div
+                  onClick={handleUserButton}
+                  className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                >
+                  <p className="lg:block hidden">
+                    {user.email ? "Sign Out" : "Sign In"}
+                  </p>
+                  <ChevronRightIcon />
+                </div>
+              </div>
+            </Popup>
+          ) : (
+            <div
+              onClick={handleUserButton}
+              className="lg:flex hidden cursor-pointer items-center space-x-3 rounded hover:bg-gradient-bg py-1 px-3"
+            >
+              <BsPersonCircle className="text-xl" />
+              <p className="lg:block hidden">
+                {user.email ? "Sign Out" : "Sign In"}
+              </p>
+            </div>
+          )}
           <Link
             href="/wishList"
             className="lg:flex hidden items-center space-x-3 cursor-pointer rounded hover:bg-gradient-bg py-1 px-3"
