@@ -61,7 +61,8 @@ const Signup = ({ handleFormChange, closeModal }: SignupProps) => {
           email: email,
           password: password,
           passwordConfirm: confirmPassword,
-        }
+        },
+        { withCredentials: true }
       );
       dispatch(setUser(response.data.data.user));
       closeModal();

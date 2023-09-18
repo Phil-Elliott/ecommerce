@@ -43,8 +43,10 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
           { withCredentials: true }
         );
 
+        console.log(response.data.data.data);
+
         if (response.data.status === "success") {
-          dispatch(setUser(response.data.data.user));
+          dispatch(setUser(response.data.data.data));
           // get server stuff
           dispatch(fetchCart());
           dispatch(fetchWishList());
@@ -61,7 +63,6 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
         setWishListFromLocalStorage(wishListFromLocalStorage);
       }
     };
-
     if (!user.email) {
       fetchUser();
     }

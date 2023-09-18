@@ -23,7 +23,7 @@ const Footer = () => {
           <p className="cursor-pointer">Privacy</p>
           <p className="cursor-pointer">Security</p>
           <p className="cursor-pointer">Help</p>
-          <p className="cursor-pointer">@2023 StoreName</p>
+          <p className="cursor-pointer">@2023 RetroGames</p>
         </div>
       </div>
     </div>

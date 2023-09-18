@@ -1,0 +1,14 @@
+- save cookies so that the user stays logged in when the page reloads
+- Get user account details working
+       - Focus more on functionality than design
+- Host backend
+- Host frontend
+- Add badge numbers to wishlist and cart header
+
+
+
+Replace alerts in cartSummary with something better
+
+
+
+

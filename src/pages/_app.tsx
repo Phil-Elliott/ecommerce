@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 /*
-
+- Keep user signed in after refresh
 
 - Make dropdown for the users account
   - add sign out button

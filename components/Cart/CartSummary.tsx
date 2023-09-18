@@ -2,6 +2,7 @@ import React from "react";
 import axios, { AxiosError } from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { GameProps } from "components/shared/Types/Types";
+import { useSelector } from "react-redux";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -12,7 +13,15 @@ type CartSummaryProps = {
 };
 
 const CartSummary = ({ cart }: CartSummaryProps) => {
+  const user = useSelector((state: any) => state.user);
+
   const handleCheckout = async () => {
+    // Check that the cart isn't empty
+    if (cart.length === 0) return alert("Yours cart is empty");
+
+    // Check that the user is logged in
+    if (!user._id) return alert("You must be logged in to checkout");
+
     // Get Stripe.js instance
     const stripe = await stripePromise;
 
