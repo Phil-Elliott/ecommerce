@@ -1,4 +1,3 @@
-- save cookies so that the user stays logged in when the page reloads
 - Get user account details working
        - Focus more on functionality than design
 - Host backend

@@ -1,8 +1,17 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Account = () => {
+  const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
+
+  const toggleEdit = (field: string) => {
+    setIsEditing((prevState) => ({
+      ...prevState,
+      [field]: !prevState[field],
+    }));
+  };
+
   const user = useSelector((state: any) => state.user);
 
   const fields = [
@@ -34,44 +43,55 @@ const Account = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container mx-auto min-h-screen pb-10 pt-28">
-        <div className="bg-white  w-full rounded">
+        <div className="bg-white w-1/2 rounded mx-auto shadow-lg">
           <h1 className="text-3xl p-6 border-b-2 border-gray-200">
             My Account
           </h1>
           <form onSubmit={handleSubmit} className="space-y-4 p-6">
             {fields.map((field, index) => (
-              <div key={index} className="flex flex-col">
-                <label className="pb-2" htmlFor={field.name}>
+              <div key={index} className="flex items-center space-x-2">
+                <label className="" htmlFor={field.name}>
                   {field.label}:
                 </label>
-                <input
-                  className="border p-2 rounded"
-                  type={field.type}
-                  id={field.name}
-                  name={field.name}
-                  value={field.name}
-                  onChange={handleInputChange}
-                  placeholder={field.label}
-                />
+                {isEditing[field.name] ? (
+                  <input
+                    className="border p-1 rounded"
+                    type={field.type}
+                    id={field.name}
+                    name={field.name}
+                    value={field.name}
+                    onChange={handleInputChange}
+                    placeholder={field.label}
+                  />
+                ) : (
+                  <p className="p-1">{field.name}</p>
+                )}
+
+                <button
+                  className="cursor-pointer text-sm hover:text-blue-900 transition duration-300"
+                  onClick={() => toggleEdit(field.name)}
+                >
+                  Edit
+                </button>
               </div>
             ))}
-            <button
-              type="submit"
-              className="bg-blue-500 text-white p-2 rounded mt-4"
-            >
-              Update Profile
-            </button>
+            <div className="space-x-4">
+              <button
+                type="submit"
+                className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
+              >
+                Update Profile
+              </button>
+              <button
+                onClick={() => {
+                  /* Add password update logic here */
+                }}
+                className="px-4 py-2 rounded border-black border-2 hover:shadow-lg"
+              >
+                Change Password
+              </button>
+            </div>
           </form>
-          <div className="p-6 pt-0">
-            <button
-              onClick={() => {
-                /* Add password update logic here */
-              }}
-              className="bg-red-500 text-white p-2 rounded mt-4"
-            >
-              Change Password
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -82,13 +102,13 @@ export default Account;
 
 /*
 
-Include
-- Name
-- Email
-- Address
-- Phone Number
-- Password
-- Avatar
+- Connect to backend updating user details
+- Add all of the other user details to the model that you will need
+- Figure out changing the password
+- Add a delete account button and figure out on the backend
+
+- Fix how it looks
+- Make it responsive
 
 
 */
