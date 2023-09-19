@@ -75,7 +75,7 @@ const Account = () => {
                 </button>
               </div>
             ))}
-            <div className="space-x-4">
+            <div className="space-x-4 pt-2">
               <button
                 type="submit"
                 className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
