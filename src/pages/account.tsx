@@ -1,5 +1,5 @@
+import React, { useEffect, useState, useRef } from "react";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
@@ -7,7 +7,17 @@ const Account = () => {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
   const [fields, setFields] = useState([] as any);
 
-  const toggleEdit = (field: string) => {
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  useEffect(() => {
+    fields.forEach((field: any, index: any) => {
+      if (isEditing[field.label]) {
+        inputRefs.current[index]?.focus();
+      }
+    });
+  }, [isEditing]);
+
+  const toggleEdit = (field: string, index: number) => {
     setIsEditing((prevState) => ({
       ...prevState,
       [field]: !prevState[field],
@@ -63,6 +73,21 @@ const Account = () => {
     }
   }
 
+  const handleKeyDown = (field: any, e: any) => {
+    if (field.type === "tel") {
+      const allowedKeys = [
+        "Backspace",
+        "ArrowLeft",
+        "ArrowRight",
+        "Delete",
+        "Tab",
+      ];
+      if (!/[0-9\-+\s()]/.test(e.key) && !allowedKeys.includes(e.key)) {
+        e.preventDefault();
+      }
+    }
+  };
+
   return (
     <div className="bg-gray-100">
       <Head>
@@ -90,6 +115,7 @@ const Account = () => {
                 </label>
                 <div className="items-center space-x-2 pt-2 sm:pt-0">
                   <input
+                    ref={(el) => (inputRefs.current[index] = el)}
                     className="border py-1 px-2 rounded"
                     type={field.type}
                     id={field.label}
@@ -98,11 +124,12 @@ const Account = () => {
                     onChange={handleInputChange}
                     placeholder={field.label}
                     disabled={!isEditing[field.label]}
+                    onKeyDown={(e) => handleKeyDown(field, e)}
                   />
                   <button
                     type="button"
                     className="cursor-pointer text-sm hover:text-blue-900 transition duration-300"
-                    onClick={() => toggleEdit(field.label)}
+                    onClick={() => toggleEdit(field.label, index)}
                   >
                     Edit
                   </button>
