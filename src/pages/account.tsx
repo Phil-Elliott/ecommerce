@@ -1,11 +1,11 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Account = () => {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
-  const [newUserData, setNewUserData] = useState({} as any);
+  const [fields, setFields] = useState([] as any);
 
   const toggleEdit = (field: string) => {
     setIsEditing((prevState) => ({
@@ -16,26 +16,38 @@ const Account = () => {
 
   const user = useSelector((state: any) => state.user);
 
-  const fields = [
-    { label: "Name", type: "text", name: user.name },
-    { label: "Email", type: "email", name: user.email },
-    { label: "Address", type: "text", name: user.address },
-    { label: "Phone Number", type: "tel", name: user.phoneNumber },
-  ];
+  useEffect(() => {
+    setFields([
+      { label: "Name", type: "text", name: user.name },
+      { label: "Email", type: "email", name: user.email },
+      { label: "Address", type: "text", name: user.address },
+      { label: "Phone Number", type: "tel", name: user.phoneNumber },
+    ]);
+  }, [user]);
 
   const handleInputChange = (e: any) => {
+    e.preventDefault();
     const { name, value } = e.target;
 
-    setNewUserData((prevState: any) => ({
-      ...prevState,
-      [name]: value,
-    }));
-
-    console.log(newUserData);
+    setFields((prevState: any) =>
+      prevState.map((field: any) => {
+        if (field.label === name) {
+          return { ...field, name: value };
+        }
+        return field;
+      })
+    );
   };
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+
+    const newUserData = {
+      name: fields[0].name,
+      email: fields[1].name,
+      address: fields[2].name,
+      phoneNumber: fields[3].name,
+    };
 
     try {
       const res = await axios.patch(
@@ -68,7 +80,7 @@ const Account = () => {
             My Account
           </h1>
           <form onSubmit={handleSubmit} className="space-y-4 p-6">
-            {fields.map((field, index) => (
+            {fields.map((field: any, index: any) => (
               <div
                 key={index}
                 className="flex sm:items-center sm:space-x-2 flex-col sm:flex-row"
@@ -78,16 +90,17 @@ const Account = () => {
                 </label>
                 <div className="items-center space-x-2 pt-2 sm:pt-0">
                   <input
-                    className="border p-1 rounded"
+                    className="border py-1 px-2 rounded"
                     type={field.type}
-                    id={field.name}
-                    name={field.name}
+                    id={field.label}
+                    name={field.label}
                     value={field.name}
                     onChange={handleInputChange}
                     placeholder={field.label}
-                    disabled={field.name === "" || field.name === undefined}
+                    disabled={!isEditing[field.label]}
                   />
                   <button
+                    type="button"
                     className="cursor-pointer text-sm hover:text-blue-900 transition duration-300"
                     onClick={() => toggleEdit(field.label)}
                   >
