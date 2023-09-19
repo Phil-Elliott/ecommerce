@@ -1,9 +1,11 @@
 import Head from "next/head";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Account = () => {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
+  const [newUserData, setNewUserData] = useState({} as any);
 
   const toggleEdit = (field: string) => {
     setIsEditing((prevState) => ({
@@ -23,13 +25,31 @@ const Account = () => {
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    // setUser({ ...user, [name]: value });
+
+    setNewUserData((prevState: any) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    console.log(newUserData);
   };
 
-  const handleSubmit = (e: any) => {
+  async function handleSubmit(e: any) {
     e.preventDefault();
-    // Update user information in your database here
-  };
+
+    try {
+      const res = await axios.patch(
+        "http://localhost:3000/api/v1/users/updateMe",
+        newUserData,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="bg-gray-100">
@@ -42,18 +62,21 @@ const Account = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="container mx-auto min-h-screen pb-10 pt-28">
-        <div className="bg-white w-1/2 rounded mx-auto shadow-lg">
+      <div className="container mx-auto min-h-screen pb-10 pt-20 sm:pt-28">
+        <div className="bg-white lg:w-1/2 rounded mx-auto shadow-lg">
           <h1 className="text-3xl p-6 border-b-2 border-gray-200">
             My Account
           </h1>
           <form onSubmit={handleSubmit} className="space-y-4 p-6">
             {fields.map((field, index) => (
-              <div key={index} className="flex items-center space-x-2">
+              <div
+                key={index}
+                className="flex sm:items-center sm:space-x-2 flex-col sm:flex-row"
+              >
                 <label className="" htmlFor={field.name}>
                   {field.label}:
                 </label>
-                {isEditing[field.name] ? (
+                <div className="items-center space-x-2 pt-2 sm:pt-0">
                   <input
                     className="border p-1 rounded"
                     type={field.type}
@@ -62,26 +85,18 @@ const Account = () => {
                     value={field.name}
                     onChange={handleInputChange}
                     placeholder={field.label}
+                    disabled={field.name === "" || field.name === undefined}
                   />
-                ) : (
-                  <p className="p-1">{field.name}</p>
-                )}
-
-                <button
-                  className="cursor-pointer text-sm hover:text-blue-900 transition duration-300"
-                  onClick={() => toggleEdit(field.name)}
-                >
-                  Edit
-                </button>
+                  <button
+                    className="cursor-pointer text-sm hover:text-blue-900 transition duration-300"
+                    onClick={() => toggleEdit(field.label)}
+                  >
+                    Edit
+                  </button>
+                </div>
               </div>
             ))}
-            <div className="space-x-4 pt-2">
-              <button
-                type="submit"
-                className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
-              >
-                Update Profile
-              </button>
+            <div className="flex sm:flex-row flex-col gap-2 pt-2">
               <button
                 onClick={() => {
                   /* Add password update logic here */
@@ -89,6 +104,12 @@ const Account = () => {
                 className="px-4 py-2 rounded border-black border-2 hover:shadow-lg"
               >
                 Change Password
+              </button>
+              <button
+                type="submit"
+                className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
+              >
+                Update Profile
               </button>
             </div>
           </form>
