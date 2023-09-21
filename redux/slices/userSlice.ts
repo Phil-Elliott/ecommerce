@@ -23,6 +23,9 @@ type UserProps = {
   name: string;
   email: string;
   role: string;
+  avatar?: string;
+  address?: string;
+  phoneNumber?: string;
 };
 
 const initialState: UserProps = {
@@ -42,6 +45,9 @@ const userSlice = createSlice({
       state.name = user.name;
       state.email = user.email;
       state.role = user.role;
+      state.avatar = user.avatar;
+      state.address = user.address;
+      state.phoneNumber = user.phoneNumber;
     },
     clearUser: (state) => {
       return initialState;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Head from "next/head";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "redux/slices/userSlice";
 import axios from "axios";
 
 const Account = () => {
@@ -8,6 +9,9 @@ const Account = () => {
   const [fields, setFields] = useState([] as any);
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
     fields.forEach((field: any, index: any) => {
@@ -23,8 +27,6 @@ const Account = () => {
       [field]: !prevState[field],
     }));
   };
-
-  const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
     setFields([
@@ -67,7 +69,7 @@ const Account = () => {
           withCredentials: true,
         }
       );
-      console.log(res);
+      dispatch(setUser(res.data.data.user));
     } catch (err) {
       console.log(err);
     }
@@ -120,7 +122,7 @@ const Account = () => {
                     type={field.type}
                     id={field.label}
                     name={field.label}
-                    value={field.name}
+                    value={field.name ? field.name : ""}
                     onChange={handleInputChange}
                     placeholder={field.label}
                     disabled={!isEditing[field.label]}
@@ -137,14 +139,13 @@ const Account = () => {
               </div>
             ))}
             <div className="flex sm:flex-row flex-col gap-2 pt-2">
-              <button
+              {/* <button
                 onClick={() => {
-                  /* Add password update logic here */
                 }}
                 className="px-4 py-2 rounded border-black border-2 hover:shadow-lg"
               >
                 Change Password
-              </button>
+              </button> */}
               <button
                 type="submit"
                 className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
