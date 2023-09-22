@@ -51,7 +51,7 @@ const WriteReviewContainer = ({
     if (userHasReviewed === null) {
       try {
         const response = await axios.post(
-          `http://localhost:3000/api/v1/games/${game?._id}/reviews`,
+          `http://localhost:4242/api/v1/games/${game?._id}/reviews`,
           {
             headline: headline,
             rating: rating,
@@ -69,7 +69,7 @@ const WriteReviewContainer = ({
     } else {
       try {
         const response = await axios.patch(
-          `http://localhost:3000/api/v1/reviews/${userHasReviewed?._id}`,
+          `http://localhost:4242/api/v1/reviews/${userHasReviewed?._id}`,
           {
             headline: headline,
             rating: rating,
@@ -95,7 +95,7 @@ const WriteReviewContainer = ({
 
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/reviews/${userHasReviewed?._id}`,
+        `http://localhost:4242/api/v1/reviews/${userHasReviewed?._id}`,
         { withCredentials: true }
       );
       setIsMobileContainerOpen(false);

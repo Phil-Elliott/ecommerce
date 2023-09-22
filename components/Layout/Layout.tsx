@@ -39,7 +39,7 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/v1/users/me",
+          "http://localhost:4242/api/v1/users/me",
           { withCredentials: true }
         );
 

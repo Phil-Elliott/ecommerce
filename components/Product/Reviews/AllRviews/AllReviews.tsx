@@ -30,7 +30,7 @@ const AllReviews = ({ id, ratingsQuantity, user }: AllReviewsProps) => {
   async function getReviews() {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games/${id}/reviews?page=${page}&limit=10&sort=${sort}`
+        `http://localhost:4242/api/v1/games/${id}/reviews?page=${page}&limit=10&sort=${sort}`
       );
       const data = await response.data;
       setReviews(data.data.data);

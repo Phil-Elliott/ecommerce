@@ -63,7 +63,7 @@ const Account = () => {
 
     try {
       const res = await axios.patch(
-        "http://localhost:3000/api/v1/users/updateMe",
+        "http://localhost:4242/api/v1/users/updateMe",
         newUserData,
         {
           withCredentials: true,

@@ -28,7 +28,7 @@ const CartSummary = ({ cart }: CartSummaryProps) => {
     try {
       // Make a call to the backend to get the checkout session
       const response = await axios.post(
-        "http://localhost:3000/api/v1/orders/checkout-session",
+        "http://localhost:4242/api/v1/orders/checkout-session",
         {
           cart: cart.map((item) => ({
             gameId: item._id,
@@ -39,7 +39,6 @@ const CartSummary = ({ cart }: CartSummaryProps) => {
           withCredentials: true,
         }
       );
-
       const session = response.data.session;
       console.log(session);
 

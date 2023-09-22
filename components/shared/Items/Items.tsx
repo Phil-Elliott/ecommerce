@@ -23,7 +23,7 @@ const Items = ({ name }: ItemProps) => {
     async function fetchGames() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/games/randomProducts`
+          `http://localhost:4242/api/v1/games/randomProducts`
         );
         const data = await response.data.data.products;
         setGames(data);

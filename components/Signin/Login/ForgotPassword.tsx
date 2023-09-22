@@ -20,7 +20,7 @@ const ForgotPassword = ({ handleForgotPassword }: ForgotPasswordProps) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/auth/forgotpassword",
+        "http://localhost:4242/api/v1/auth/forgotpassword",
         {
           email: email,
         },

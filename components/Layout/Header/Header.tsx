@@ -154,7 +154,7 @@ const Header = ({ signInButton }: HeaderProps) => {
                 </Link>
                 <Link
                   className="p-2 flex items-center justify-between hover:bg-gray-100 cursor-pointer"
-                  href={`/shop?category=${encodeURIComponent("Accessories")}`}
+                  href={`/orders`}
                 >
                   <p className="pr-10">Orders</p>
                   <ChevronRightIcon />

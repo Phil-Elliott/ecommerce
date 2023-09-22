@@ -55,7 +55,7 @@ const Signup = ({ handleFormChange, closeModal }: SignupProps) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/auth/register",
+        "http://localhost:4242/api/v1/auth/register",
         {
           name: username,
           email: email,

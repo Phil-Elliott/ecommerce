@@ -58,7 +58,7 @@ const product = () => {
   async function getCurrentGame() {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games/${id}`
+        `http://localhost:4242/api/v1/games/${id}`
       );
       const data = await response.data;
       setGame(data.data.data);
@@ -90,7 +90,7 @@ const product = () => {
     if (user && game) {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/reviews/user?user=${user._id}&game=${game?._id}`,
+          `http://localhost:4242/api/v1/reviews/user?user=${user._id}&game=${game?._id}`,
           { withCredentials: true }
         );
         const data = response.data.data.review;
@@ -113,7 +113,7 @@ const product = () => {
   async function fetchTopReviews() {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/reviews/top-reviews/${id}`
+        `http://localhost:4242/api/v1/reviews/top-reviews/${id}`
       );
       const data = await response.data.data.reviews;
       setTopReviews(data);

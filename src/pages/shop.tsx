@@ -74,7 +74,7 @@ const shop = () => {
     async function getFilterOptionsData() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/games/filterOptions`
+          `http://localhost:4242/api/v1/games/filterOptions`
         );
         const data = await response.data.data;
 
@@ -146,7 +146,7 @@ const shop = () => {
         arrayFormat: "comma",
       });
       const response = await axios.get(
-        `http://localhost:3000/api/v1/games?page=${page}&limit=9&sort=${sortBy}&search=${searchQuery}&${queryParams}`
+        `http://localhost:4242/api/v1/games?page=${page}&limit=9&sort=${sortBy}&search=${searchQuery}&${queryParams}`
       );
       const data = await response.data;
       setQuantity(data.totalProducts);

@@ -3,7 +3,7 @@ import { GameProps } from "components/shared/Types/Types";
 import axios from "axios";
 
 const fetchWishList = createAsyncThunk("wishList/fetchWishList", async () => {
-  const { data } = await axios.get("http://localhost:3000/api/v1/wishList", {
+  const { data } = await axios.get("http://localhost:4242/api/v1/wishList", {
     withCredentials: true,
   });
   return data.data.wishListItems[0].items;
@@ -13,7 +13,7 @@ const addToList = createAsyncThunk(
   "wishList/addToList",
   async (product: GameProps) => {
     const { data } = await axios.post(
-      `http://localhost:3000/api/v1/wishlist/add`,
+      `http://localhost:4242/api/v1/wishlist/add`,
       { gameId: product._id },
       {
         withCredentials: true,
@@ -27,7 +27,7 @@ const removeFromList = createAsyncThunk(
   "wishList/removeFromList",
   async (id: string) => {
     const { data } = await axios.delete(
-      `http://localhost:3000/api/v1/wishlist/remove/${id}`,
+      `http://localhost:4242/api/v1/wishlist/remove/${id}`,
       {
         withCredentials: true,
       }

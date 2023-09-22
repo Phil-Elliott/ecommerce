@@ -71,7 +71,7 @@ const ReviewContainer = ({ review, user }: ReviewContainerProps) => {
         voteType === "upVote" ? { upVote: true } : { downVote: true };
 
       const response = await axios.patch(
-        `http://localhost:3000/api/v1/reviews/${review._id}/vote`,
+        `http://localhost:4242/api/v1/reviews/${review._id}/vote`,
         voteData,
         { withCredentials: true }
       );
