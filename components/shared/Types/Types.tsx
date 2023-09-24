@@ -53,3 +53,20 @@ export type FilterOption = {
   options: string[];
   show: boolean;
 };
+
+export type Order = {
+  _id: string;
+  orderedAt: string;
+  total: number;
+  user: string;
+  orderStatus: string;
+  items: {
+    description: string;
+    image: string[];
+    name: string;
+    price: number;
+    quantity: number;
+    _id: string;
+  }[];
+  status: string;
+};
