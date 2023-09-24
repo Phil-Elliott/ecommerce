@@ -20,7 +20,6 @@ const orders = () => {
             withCredentials: true,
           }
         );
-        console.log(response.data.data.orders, "orders");
         setOrders(response.data.data.orders);
       } catch (error) {
         console.log(error);
@@ -41,12 +40,12 @@ const orders = () => {
       <div className="container mx-auto min-h-screen pb-10 pt-28 ">
         <div className="bg-white w-full rounded">
           <h1 className="text-3xl mb-0 py-4 px-6">Your Orders</h1>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
             <p className="col-span-2">Item</p>
             <p className="hidden lg:block">Price</p>
-            <p className="hidden md:block">Quantity</p>
-            <p className="hidden sm:block">Total</p>
-            <p className="hidden lg:block">Status</p>
+            <p className="hidden sm:block">Quantity</p>
+            {/* <p className="hidden sm:block">Total</p> */}
+            <p className="hidden sm:block">Status</p>
           </div>
           <div className="">
             {orders.length > 0 ? (
@@ -59,6 +58,7 @@ const orders = () => {
                     orderStatus={order.orderStatus}
                     total={order.total}
                     orderedAt={order.orderedAt}
+                    orderNumber={order._id}
                   />
                 ))
               )

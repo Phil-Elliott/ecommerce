@@ -61,6 +61,13 @@ export type Order = {
   user: string;
   orderStatus: string;
   items: {
+    product: {
+      description: string;
+      image: string[];
+      name: string;
+      price: number;
+      _id: string;
+    };
     description: string;
     image: string[];
     name: string;

@@ -1,12 +1,11 @@
-- Get user account details working
-       - Focus more on functionality than design
+
 - Host backend
 - Host frontend
 - Add badge numbers to wishlist and cart header
-
-
-
-Replace alerts in cartSummary with something better
+- Replace alerts in cartSummary with something better
+- Add to orders page (page numbers, filter, sort, etc)
+- Add change and forgot password
+- Add testing
 
 
 
