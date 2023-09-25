@@ -3,6 +3,8 @@ import Head from "next/head";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "redux/slices/userSlice";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Account = () => {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
@@ -85,8 +87,12 @@ const Account = () => {
         }
       );
       dispatch(setUser(res.data.data.user));
+      // Set all fields to not editing when the update is successful.
+      setIsEditing({});
+      toast.success("Profile Updated Successfully");
     } catch (err) {
       console.log(err);
+      toast.error("Error updating profile");
     }
   }
 
@@ -116,6 +122,7 @@ const Account = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ToastContainer />
       <div className="container mx-auto min-h-screen pb-10 pt-20 sm:pt-28">
         <div className="bg-white lg:w-1/2 rounded mx-auto shadow-lg">
           <h1 className="text-3xl p-6 border-b-2 border-gray-200">
