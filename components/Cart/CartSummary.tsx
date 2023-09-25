@@ -3,6 +3,8 @@ import axios, { AxiosError } from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { GameProps } from "components/shared/Types/Types";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -17,10 +19,10 @@ const CartSummary = ({ cart }: CartSummaryProps) => {
 
   const handleCheckout = async () => {
     // Check that the cart isn't empty
-    if (cart.length === 0) return alert("Yours cart is empty");
+    if (cart.length === 0) return toast.error("Yours cart is empty");
 
     // Check that the user is logged in
-    if (!user._id) return alert("You must be logged in to checkout");
+    if (!user._id) return toast.error("You must be logged in to checkout");
 
     // Get Stripe.js instance
     const stripe = await stripePromise;
@@ -40,7 +42,6 @@ const CartSummary = ({ cart }: CartSummaryProps) => {
         }
       );
       const session = response.data.session;
-      console.log(session);
 
       // Check that stripe isn't null before using it
       if (stripe) {
@@ -70,6 +71,7 @@ const CartSummary = ({ cart }: CartSummaryProps) => {
 
   return (
     <div className="bg-white w-full rounded mt-4 xl:mt-0">
+      <ToastContainer />
       <h1 className="text-xl mb-0 border-b-2 border-gray-200 p-4">
         Order Summary
       </h1>
