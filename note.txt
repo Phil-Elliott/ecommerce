@@ -9,4 +9,10 @@
 
 
 
+Account 
+- Add change password
+- Add delete Account
+- Fix address
 
+signin model
+- Add forgot password

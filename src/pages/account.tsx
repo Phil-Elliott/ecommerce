@@ -32,19 +32,34 @@ const Account = () => {
     setFields([
       { label: "Name", type: "text", name: user.name },
       { label: "Email", type: "email", name: user.email },
-      { label: "Address", type: "text", name: user.address },
       { label: "Phone Number", type: "tel", name: user.phoneNumber },
+      {
+        label: "Address",
+        type: "object",
+        name: {
+          streetAddress: user.address?.streetAddress || "",
+          city: user.address?.city || "",
+          state: user.address?.state || "",
+          postalCode: user.address?.postalCode || "",
+          country: user.address?.country || "",
+        },
+      },
     ]);
   }, [user]);
 
   const handleInputChange = (e: any) => {
     e.preventDefault();
-    const { name, value } = e.target;
+    const [label, key] = e.target.name.split(".");
+    const value = e.target.value;
 
     setFields((prevState: any) =>
       prevState.map((field: any) => {
-        if (field.label === name) {
-          return { ...field, name: value };
+        if (field.label === label) {
+          if (key) {
+            return { ...field, name: { ...field.name, [key]: value } };
+          } else {
+            return { ...field, name: value };
+          }
         }
         return field;
       })
@@ -57,8 +72,8 @@ const Account = () => {
     const newUserData = {
       name: fields[0].name,
       email: fields[1].name,
-      address: fields[2].name,
-      phoneNumber: fields[3].name,
+      phoneNumber: fields[2].name,
+      address: fields[3].name,
     };
 
     try {
@@ -107,45 +122,68 @@ const Account = () => {
             My Account
           </h1>
           <form onSubmit={handleSubmit} className="space-y-4 p-6">
-            {fields.map((field: any, index: any) => (
+            {fields.map((field: any, index: number) => (
               <div
                 key={index}
                 className="flex sm:items-center sm:space-x-2 flex-col sm:flex-row"
               >
-                <label className="" htmlFor={field.name}>
+                <label
+                  className={field.label === "Address" ? "self-start" : ""}
+                  htmlFor={field.name}
+                >
                   {field.label}:
                 </label>
-                <div className="items-center space-x-2 pt-2 sm:pt-0">
-                  <input
-                    ref={(el) => (inputRefs.current[index] = el)}
-                    className="border py-1 px-2 rounded"
-                    type={field.type}
-                    id={field.label}
-                    name={field.label}
-                    value={field.name ? field.name : ""}
-                    onChange={handleInputChange}
-                    placeholder={field.label}
-                    disabled={!isEditing[field.label]}
-                    onKeyDown={(e) => handleKeyDown(field, e)}
-                  />
-                  <button
-                    type="button"
-                    className="cursor-pointer text-sm hover:text-blue-900 transition duration-300"
-                    onClick={() => toggleEdit(field.label, index)}
-                  >
-                    Edit
-                  </button>
+                <div className="space-x-2 pt-2 sm:pt-0">
+                  {field.type === "object" ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {Object.keys(field.name).map((key) => (
+                        <input
+                          key={key}
+                          className="border py-1 px-2 rounded"
+                          type="text"
+                          id={`${field.label}_${key}`}
+                          name={`${field.label}.${key}`}
+                          value={field.name[key]}
+                          placeholder={key}
+                          disabled={!isEditing[field.label]}
+                          onChange={handleInputChange}
+                        />
+                      ))}
+                      <button
+                        type="button"
+                        className="text-left cursor-pointer text-sm hover:text-blue-900 transition duration-300"
+                        onClick={() => toggleEdit(field.label, index)}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-x-2">
+                      <input
+                        ref={(el) => (inputRefs.current[index] = el)}
+                        className="border py-1 px-2 rounded"
+                        type={field.type}
+                        id={field.label}
+                        name={field.label}
+                        value={field.name ? field.name : ""}
+                        placeholder={field.label}
+                        disabled={!isEditing[field.label]}
+                        onChange={handleInputChange}
+                        onKeyDown={(e) => handleKeyDown(field, e)}
+                      />
+                      <button
+                        type="button"
+                        className="cursor-pointer text-sm hover:text-blue-900 transition duration-300"
+                        onClick={() => toggleEdit(field.label, index)}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
             <div className="flex sm:flex-row flex-col gap-2 pt-2">
-              {/* <button
-                onClick={() => {
-                }}
-                className="px-4 py-2 rounded border-black border-2 hover:shadow-lg"
-              >
-                Change Password
-              </button> */}
               <button
                 type="submit"
                 className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
