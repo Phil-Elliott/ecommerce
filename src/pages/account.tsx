@@ -5,15 +5,27 @@ import { setUser } from "redux/slices/userSlice";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+import Modal from "components/shared/Modal/Modal";
+import { BiShow, BiHide } from "react-icons/bi";
 
 const Account = () => {
   const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
   const [fields, setFields] = useState([] as any);
 
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const passwordModalCloseRef = useRef<HTMLButtonElement>(null);
 
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
+  const router = useRouter();
 
   useEffect(() => {
     fields.forEach((field: any, index: any) => {
@@ -49,6 +61,51 @@ const Account = () => {
     ]);
   }, [user]);
 
+  async function handlePasswordChange(e: React.FormEvent) {
+    e.preventDefault();
+
+    // Check if the user typed the current password, new password, and confirm password fields
+    if (!currentPassword || !newPassword || !passwordConfirm) {
+      return toast.error("Please fill in all fields");
+    }
+
+    // Check if the new password and confirm password fields match
+    if (newPassword !== passwordConfirm) {
+      return toast.error("New password and confirm password fields must match");
+    }
+
+    const passwordData = {
+      currentPassword,
+      newPassword,
+      passwordConfirm,
+    };
+
+    try {
+      const res = await axios.patch(
+        "http://localhost:4242/api/v1/auth/updatePassword",
+        passwordData,
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("Password Updated Successfully");
+      passwordModalCloseRef.current?.click();
+    } catch (error: any) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // If the server sends an error message, show it in a toast
+        toast.error(error.response.data.message);
+      } else {
+        // If the error message is not available, show a generic error message
+        toast.error("An error occurred while updating the password");
+      }
+      console.log(error);
+    }
+  }
+
   const handleInputChange = (e: any) => {
     e.preventDefault();
     const [label, key] = e.target.name.split(".");
@@ -70,6 +127,21 @@ const Account = () => {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+
+    // // Check if the user has made any changes
+    // const hasChanged = fields.some((field: any) => {
+    //   if (field.type === "object") {
+    //     return Object.keys(field.name).some(
+    //       (key) => field.name[key] !== user[field.label]?.[key]
+    //     );
+    //   } else {
+    //     return field.name !== user[field.label];
+    //   }
+    // });
+
+    // if (!hasChanged) {
+    //   return toast.error("No changes made");
+    // }
 
     const newUserData = {
       name: fields[0].name,
@@ -111,6 +183,31 @@ const Account = () => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    const confirmation = window.confirm(
+      "Are you sure you want to delete your account? This action is irreversible."
+    );
+
+    if (!confirmation) return;
+
+    try {
+      await axios.delete("http://localhost:4242/api/v1/users/deleteMe", {
+        withCredentials: true,
+      });
+
+      toast.success("Account Deleted Successfully");
+      router.push("/login"); // Or '/' to redirect to home page or login page after deletion
+    } catch (err: any) {
+      console.log(err);
+      // Check if the error message is related to the deletion of demo account
+      if (err.response && err.response.status === 403) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Error deleting account");
+      }
+    }
+  };
+
   return (
     <div className="bg-gray-100">
       <Head>
@@ -128,7 +225,7 @@ const Account = () => {
           <h1 className="text-3xl p-6 border-b-2 border-gray-200">
             My Account
           </h1>
-          <form onSubmit={handleSubmit} className="space-y-4 p-6">
+          <form onSubmit={handleSubmit} className="space-y-4 p-6 pb-0">
             {fields.map((field: any, index: number) => (
               <div
                 key={index}
@@ -199,6 +296,103 @@ const Account = () => {
               </button>
             </div>
           </form>
+          <div className="px-6 pb-6 sm:space-x-3 space-y-3 pt-3 sm:space-y-0">
+            <Modal
+              trigger={
+                <div className="bg-white text-black border-2 border-black px-4 py-2 rounded hover:opacity-75 hover:shadow-lg w-full sm:w-auto">
+                  Change Password
+                </div>
+              }
+              classAddOn="w-full sm:w-auto"
+              closeRef={passwordModalCloseRef}
+            >
+              <form
+                onSubmit={handlePasswordChange}
+                className="space-y-4 relative"
+              >
+                <div className="z-50 flex flex-col space-y-2">
+                  <label htmlFor="currentPassword" className="self-center">
+                    Current Password:
+                  </label>
+                  <div className="relative flex items-center space-x-2">
+                    <input
+                      type={showCurrentPassword ? "text" : "password"}
+                      id="currentPassword"
+                      className="border p-2 rounded flex-grow pr-8"
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowCurrentPassword(!showCurrentPassword)
+                      }
+                      className="absolute top-1/2 right-2 transform -translate-y-1/2"
+                    >
+                      {showCurrentPassword ? <BiHide /> : <BiShow />}
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-col space-y-2">
+                  <label htmlFor="newPassword" className="self-center">
+                    New Password:
+                  </label>
+                  <div className="relative flex items-center space-x-2">
+                    <input
+                      type={showNewPassword ? "text" : "password"}
+                      id="newPassword"
+                      className="border p-2 rounded flex-grow pr-8"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                      className="absolute top-1/2 right-2 transform -translate-y-1/2"
+                    >
+                      {showNewPassword ? <BiHide /> : <BiShow />}
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-col space-y-2">
+                  <label htmlFor="passwordConfirm" className="self-center">
+                    Confirm New Password:
+                  </label>
+                  <div className="relative flex items-center space-x-2">
+                    <input
+                      type={showPasswordConfirm ? "text" : "password"}
+                      id="passwordConfirm"
+                      className="border p-2 rounded flex-grow pr-8"
+                      value={passwordConfirm}
+                      onChange={(e) => setPasswordConfirm(e.target.value)}
+                    />
+                    <button
+                      className="absolute top-1/2 right-2 transform -translate-y-1/2"
+                      type="button"
+                      onClick={() =>
+                        setShowPasswordConfirm(!showPasswordConfirm)
+                      }
+                    >
+                      {showPasswordConfirm ? <BiHide /> : <BiShow />}
+                    </button>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg w-full"
+                >
+                  Update Password
+                </button>
+              </form>
+            </Modal>
+            <button
+              type="button"
+              onClick={handleDeleteAccount}
+              className="bg-red-600 border-red-600 border-2 text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg w-full sm:w-auto"
+            >
+              Delete Account
+            </button>
+          </div>
         </div>
       </div>
     </div>

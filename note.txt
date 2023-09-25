@@ -2,7 +2,6 @@
 - Host backend
 - Host frontend
 - Add badge numbers to wishlist and cart header
-- Replace alerts in cartSummary with something better
 - Add to orders page (page numbers, filter, sort, etc)
 - Add change and forgot password
 - Add testing
@@ -11,8 +10,12 @@
 
 Account 
 - Add change password
-- Add delete Account
-- Fix address
 
 signin model
 - Add forgot password
+
+- show error when trying to sign in with wrong credentials
+
+
+
+- Add account stuff to responsive nav bar
