@@ -163,7 +163,22 @@ const shop = () => {
     }
   }, [sortBy, filterOptions, searchQuery, page]);
 
+  useEffect(() => {
+    let isMounted = true;
+    if (hasInitialFiltersSet) {
+      getGames().catch((error) => {
+        console.error(error);
+        if (isMounted) setLoading(false);
+      });
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [getGames, hasInitialFiltersSet]);
+
   // Fetches the games from the database the page, sort, and filter options change
+
   useEffect(() => {
     if (hasInitialFiltersSet) {
       getGames();
@@ -172,7 +187,11 @@ const shop = () => {
 
   useEffect(() => {
     if (hasInitialFiltersSet) {
-      setPage(1);
+      if (page !== 1) {
+        setPage(1);
+      } else {
+        getGames();
+      }
     }
   }, [hasInitialFiltersSet, sortBy, filterOptions, searchQuery]);
 
