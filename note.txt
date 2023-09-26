@@ -1,15 +1,13 @@
 
 - Host backend
 - Host frontend
-- Add badge numbers to wishlist and cart header
 - Add to orders page (page numbers, filter, sort, etc)
 - Add forgot password
 - Add testing
 
 
 
-Account 
-- Add change password
+
 
 signin model
 - Add forgot password
@@ -19,3 +17,11 @@ signin model
 
 
 - Add account stuff to responsive nav bar
+- Add toasts to rest of app (addToWishlist and addToCart, and review stuff)
+- Make categories buttons work on shop page
+
+- Add more items to app
+- Add more reviews to app
+
+- Maybe add seedData for reviews, cart, and wishList
+- Make docs

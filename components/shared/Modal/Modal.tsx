@@ -6,8 +6,8 @@ type ModalProps = {
   trigger: React.ReactNode;
   children: React.ReactNode;
   classAddOn?: string;
-  closeRef?: React.RefObject<HTMLButtonElement>; // New Prop for Close Button Ref
-  onClick?: () => void; // New Prop for handling Close Button click
+  closeRef?: React.RefObject<HTMLButtonElement>;
+  onClick?: () => void;
 };
 
 const Modal = ({
@@ -28,8 +28,8 @@ const Modal = ({
           {children}
           <Dialog.Close
             className="absolute top-0 right-0 p-3"
-            ref={closeRef} // Assign Ref to Dialog.Close
-            onClick={onClick} // Assign onClick to Dialog.Close
+            ref={closeRef}
+            onClick={onClick}
           >
             <Cross2Icon />
           </Dialog.Close>
