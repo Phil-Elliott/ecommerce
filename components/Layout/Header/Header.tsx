@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { AiOutlineSearch, AiOutlineHeart, AiFillShop } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -23,6 +23,10 @@ const Header = ({ signInButton }: HeaderProps) => {
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 
   const user = useSelector((state: RootState) => state.user);
+  const cartQuantity = useSelector((state: RootState) => state.cart.length);
+  const wishListQuantity = useSelector(
+    (state: RootState) => state.wishList.length
+  );
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -192,14 +196,30 @@ const Header = ({ signInButton }: HeaderProps) => {
             href="/wishList"
             className="lg:flex hidden items-center space-x-3 cursor-pointer rounded hover:bg-gradient-bg py-1 px-3"
           >
-            <AiOutlineHeart className="text-xl" />
+            <div className="relative">
+              <AiOutlineHeart className="text-xl" />
+              {wishListQuantity > 0 && (
+                <div className="absolute bottom-3 left-3 bg-white rounded-full p-0 px-1 text-xs">
+                  <p className="text-Secondary font-black">
+                    {wishListQuantity}
+                  </p>
+                </div>
+              )}
+            </div>
             <p className="xl:block hidden">WishList</p>
           </Link>
           <Link
             href="/cart"
             className="lg:flex hidden  items-center space-x-3 cursor-pointer rounded hover:bg-gradient-bg py-1 px-3"
           >
-            <FiShoppingCart className="text-xl" />
+            <div className="relative">
+              <FiShoppingCart className="text-xl" />
+              {cartQuantity > 0 && (
+                <div className="absolute bottom-3 left-3 bg-white rounded-full p-0 px-1 text-xs">
+                  <p className="text-Secondary font-black">{cartQuantity}</p>
+                </div>
+              )}
+            </div>
           </Link>
           <div
             className="lg:hidden block text-xl cursor-pointer"

@@ -3,7 +3,7 @@
 - Host frontend
 - Add badge numbers to wishlist and cart header
 - Add to orders page (page numbers, filter, sort, etc)
-- Add change and forgot password
+- Add forgot password
 - Add testing
 
 
