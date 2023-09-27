@@ -5,6 +5,8 @@ import Link from "next/link";
 import { BsChevronDown, BsPersonCircle } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
+import { BiPackage } from "react-icons/bi";
+import { IoSettingsOutline } from "react-icons/io5";
 
 import AccessoriesImage from "assets/accessories.jpg";
 import ConsoleImage from "assets/consoles.webp";
@@ -126,6 +128,26 @@ const Mobile = ({
         >
           <FiShoppingCart />
           <p>Cart</p>
+        </Link>
+      </div>
+      <div className="flex justify-between items-center cursor-pointer border-b-2">
+        <Link
+          href="/orders"
+          className="p-4 flex items-center space-x-3 cursor-pointer text-xl text-base font-medium w-full h-full"
+          onClick={() => setIsMobileHeaderOpen(false)}
+        >
+          <BiPackage />
+          <p>Orders</p>
+        </Link>
+      </div>
+      <div className="flex justify-between items-center cursor-pointer border-b-2">
+        <Link
+          href="/account"
+          className="p-4 flex items-center space-x-3 cursor-pointer text-xl text-base font-medium w-full h-full"
+          onClick={() => setIsMobileHeaderOpen(false)}
+        >
+          <IoSettingsOutline />
+          <p>Account</p>
         </Link>
       </div>
       <div className="flex justify-between items-center cursor-pointer border-b-2">
