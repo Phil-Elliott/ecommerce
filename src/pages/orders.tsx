@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Item from "components/Orders/Item";
-import { Order } from "components/shared/Types/Types";
+import Order from "components/Orders/Order";
+import { OrderType } from "components/shared/Types/Types";
 
 const orders = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<OrderType[]>([]);
 
   const user = useSelector((state: any) => state.user);
 
@@ -21,6 +21,7 @@ const orders = () => {
           }
         );
         setOrders(response.data.data.orders);
+        console.log(response.data.data.orders);
       } catch (error) {
         console.log(error);
       }
@@ -40,11 +41,89 @@ const orders = () => {
       <div className="container mx-auto min-h-screen pb-10 pt-28 ">
         <div className="bg-white w-full rounded">
           <h1 className="text-3xl mb-0 py-4 px-6">Your Orders</h1>
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
+            <p className="hidden sm:block">Order #</p>
+            <p className="hidden sm:block">Date</p>
+            <p className="hidden sm:block">Status</p>
+            <p className="hidden sm:block">Shipping</p>
+            <p className="hidden sm:block">Total</p>
+            <p className="hidden sm:block">Track</p>
+            <p className="hidden sm:block"></p>
+            <p className="hidden sm:block"></p>
+          </div>
+          <div className="">
+            {orders.length > 0 ? (
+              orders.map((order) => <Order key={order._id} order={order} />)
+            ) : (
+              <p className="p-20 text-center">Your orders are empty</p>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default orders;
+
+/*
+
+- orderNumber
+- break down Date
+- add shipping
+- add tracking number
+
+labels
+- orderNumber
+- orderDate
+- status
+- shipping
+- total
+- track delivery (if shipped, show tracking number)
+- cancel order if not shipped (button says cancel order)
+- show items in order icon
+      
+Top
+- shipping address
+- billing address
+- payment method
+- shipping method
+
+Items section
+
+All order items
+- image
+- name
+- price
+- quantity
+- total
+
+
+
+
+*/
+
+{
+  /* <button
+              className="hidden sm:block text-red-500 hover:text-red-600 transition duration-300"
+              onClick={() => console.log("cancel")}
+            >
+              Cancel
+            </button>
+            <button
+              className="hidden sm:block text-red-500 hover:text-red-600 transition duration-300"
+              onClick={() => console.log("return")}
+            >
+              <BiShow className="text-2xl" />
+            </button> */
+}
+
+{
+  /* <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
             <p className="col-span-2">Item</p>
             <p className="hidden lg:block">Price</p>
             <p className="hidden sm:block">Quantity</p>
-            {/* <p className="hidden sm:block">Total</p> */}
+            
             <p className="hidden sm:block">Status</p>
           </div>
           <div className="">
@@ -65,21 +144,5 @@ const orders = () => {
             ) : (
               <p className="p-20 text-center">Your orders are empty</p>
             )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default orders;
-
-/*
-
-1) Pull orders from the database
-2) Display the orders in a table
-
-
-
-
-*/
+          </div> */
+}

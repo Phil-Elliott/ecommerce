@@ -54,26 +54,36 @@ export type FilterOption = {
   show: boolean;
 };
 
-export type Order = {
+export type OrderType = {
   _id: string;
   orderedAt: string;
-  total: number;
-  user: string;
+  orderNumber: string;
   orderStatus: string;
+  orderStatusHistory: any[];
+  shippingDetails: {
+    addressLine1: string;
+    addressLine2: string | null;
+    city: string;
+    contactName: string;
+    country: string;
+    postalCode: string;
+    state: string;
+  };
+  shippingStatus: string;
+  total: number;
+  trackingNumber: string | null;
+  user: string;
+  __v: number;
   items: {
-    product: {
-      description: string;
-      image: string[];
-      name: string;
-      price: number;
-      _id: string;
-    };
-    description: string;
-    image: string[];
-    name: string;
-    price: number;
-    quantity: number;
     _id: string;
+    quantity: number;
+    price: number;
+    product: {
+      _id: string;
+      name: string;
+      description: string;
+      price: number;
+      image: string[];
+    };
   }[];
-  status: string;
 };

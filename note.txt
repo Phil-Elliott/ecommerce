@@ -11,12 +11,10 @@
 
 signin model
 - Add forgot password
-
 - show error when trying to sign in with wrong credentials
 
 
 
-- Add account stuff to responsive nav bar
 - Add toasts to rest of app (addToWishlist and addToCart, and review stuff)
 - Make categories buttons work on shop page
 
@@ -25,3 +23,7 @@ signin model
 
 - Maybe add seedData for reviews, cart, and wishList
 - Make docs
+
+
+- Fix up stripe checkout page
+- Add shipping details to checkout page
