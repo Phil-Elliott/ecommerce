@@ -28,7 +28,7 @@ const Item = ({
   return (
     <div
       key={item._id}
-      className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4 w-full py-4 px-6 bg-white rounded border-b-2 border-gray-200"
+      className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4 w-full py-4 bg-white rounded border-b-2 border-gray-200"
     >
       <div className="col-span-2 space-y-5">
         <div className="flex space-x-10">
@@ -55,18 +55,20 @@ const Item = ({
               <p>Quantity: {quantity}</p>
             </div>
             <div className="flex block sm:hidden">
-              <p>Status: {orderStatus}</p>
+              <p>Total: ${item.price * quantity}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <p className="text-sm text-gray-600 hidden lg:block">${item.price}</p>
+      <p className="text-sm text-gray-600 hidden lg:block">
+        Price: ${item.price}
+      </p>
       <div className="flex items-start hidden sm:block">
-        <p>{quantity}</p>
+        <p>Quantity: {quantity}</p>
       </div>
       <div className="flex hidden sm:block">
-        <p>{orderStatus}</p>
+        <p>Total: ${item.price * quantity}</p>
       </div>
     </div>
   );
