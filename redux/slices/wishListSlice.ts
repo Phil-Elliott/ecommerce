@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { GameProps } from "components/shared/Types/Types";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const fetchWishList = createAsyncThunk("wishList/fetchWishList", async () => {
   const { data } = await axios.get("http://localhost:4242/api/v1/wishList", {
@@ -11,15 +12,21 @@ const fetchWishList = createAsyncThunk("wishList/fetchWishList", async () => {
 
 const addToList = createAsyncThunk(
   "wishList/addToList",
-  async (product: GameProps) => {
-    const { data } = await axios.post(
-      `http://localhost:4242/api/v1/wishlist/add`,
-      { gameId: product._id },
-      {
-        withCredentials: true,
-      }
-    );
-    return product;
+  async (product: GameProps, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:4242/api/v1/wishlist/add`,
+        { gameId: product._id },
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("Added to wishlist");
+      return product;
+    } catch (error: any) {
+      toast.info("Item already in wishlist");
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -52,6 +59,9 @@ const wishListSlice = createSlice({
       if (itemIndex === -1) {
         // item does not exist in wishlist, add it
         state.push(action.payload);
+        toast.success("Added to wishlist");
+      } else {
+        toast.info("Item already in wishlist");
       }
     },
     removeFromListLocal: (state, action: PayloadAction<string>) => {

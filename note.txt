@@ -2,7 +2,6 @@
 - Host frontend
 - Make docs
 
-- Make categories buttons work on shop page
 - Add toasts to rest of app (addToWishlist and addToCart, and review stuff)
 
 - Add more items to app

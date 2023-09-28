@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 
@@ -224,6 +226,7 @@ const product = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ToastContainer />
       {loading ? (
         <Spinner size={150} />
       ) : (

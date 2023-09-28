@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { GameProps } from "components/shared/Types/Types";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
   const { data } = await axios.get("http://localhost:4242/api/v1/cart", {
@@ -19,6 +20,7 @@ const addToCart = createAsyncThunk(
         withCredentials: true,
       }
     );
+    toast.success("Added to cart");
     return product;
   }
 );
@@ -73,6 +75,7 @@ const cartSlice = createSlice({
         // item does not exist in cart, add it
         state.push({ ...action.payload, quantity: 1 });
       }
+      toast.success("Added to cart");
     },
     removeFromCartLocal: (state, action: PayloadAction<string>) => {
       const index = state.findIndex((item) => item._id === action.payload);

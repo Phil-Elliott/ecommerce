@@ -52,7 +52,7 @@ const Layout = ({
         searchQuery={searchQuery}
       />
       <div
-        className={`container mx-auto gap-12 pt-4 lg:pt-40 pb-32 ${
+        className={`container mx-auto gap-12 pt-4 lg:pt-40 pb-20 ${
           showFilter ? "flex" : "block"
         }`}
       >
