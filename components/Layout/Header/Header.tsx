@@ -241,17 +241,3 @@ const Header = ({ signInButton }: HeaderProps) => {
 };
 
 export default Header;
-
-/*
-
-
-1) Categories dropdown
-2) Categories responsive
-3) Search bar responsive
-
-
-Have it change to responsive menu earlier
-Need a hamburger menu - could do it really similar to the shop page
-     Make it into a shared component
-
-*/

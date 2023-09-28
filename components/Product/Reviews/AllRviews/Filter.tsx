@@ -80,18 +80,3 @@ const Filter = ({ page, ratingsQuantity }: FilterProps) => {
 };
 
 export default Filter;
-
-/*
-
-- how to filter the reviews
-      - star rating
-      - recommendation
-      - date
-
-
-- could also add a review search
-
-
-
-
-*/

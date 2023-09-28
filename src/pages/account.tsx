@@ -403,16 +403,3 @@ const Account = () => {
 };
 
 export default Account;
-
-/*
-
-- Connect to backend updating user details
-- Add all of the other user details to the model that you will need
-- Figure out changing the password
-- Add a delete account button and figure out on the backend
-
-- Fix how it looks
-- Make it responsive
-
-
-*/

@@ -2,8 +2,6 @@
 - Host frontend
 - Make docs
 
-- Add toasts to rest of app (addToWishlist and addToCart, and review stuff)
-
 - Add more items to app
 - Add more reviews to app
 

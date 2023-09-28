@@ -289,10 +289,3 @@ const product = () => {
 };
 
 export default product;
-
-/*
-
-- Add more like this section
-- Add a loading spinner
-
-*/

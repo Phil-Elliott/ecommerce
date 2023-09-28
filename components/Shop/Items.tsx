@@ -47,18 +47,3 @@ const Items = ({ games }: ItemsProps) => {
 };
 
 export default Items;
-
-/*
-
-  console.log(games, "games");
-
-  //   v1686030651/Ecommerce/Super_Mario_Bros_2_is7adq"
-  // 1
-  // :
-  // "v1686030651/Ecommerce/download_q7bufx"
-  // 2
-  // :
-  // "v1686030651/Ecommerce/Smb2_comparison_i0h7oa
-
-
-*/

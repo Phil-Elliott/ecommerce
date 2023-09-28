@@ -32,14 +32,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-{
-  /* <img
-        src="https://www.racketboy.com/images/interview-game-collecting-001-collection-featured.jpg"
-        alt="Video games"
-        className="object-cover w-full lg:h-[65vh] brightness-75 rounded-sm"
-      /> */
-}
-
-//h-screen
-// https://res.cloudinary.com/djdxd5akb/image/upload/v1691214276/Ecommerce/hero_jgjpik.jpg

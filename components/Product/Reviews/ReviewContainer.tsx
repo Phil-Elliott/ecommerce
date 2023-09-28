@@ -53,19 +53,6 @@ const ReviewContainer = ({ review, user }: ReviewContainerProps) => {
       return;
     }
 
-    // could fix later - need to have a state that saves whether the user has already voted on the review and how they voted between renders
-    // if (voteType === "upVote") {
-    //   if (review.upVotes.includes(user._id.toString())) {
-    //     console.log("You have already voted on this review");
-    //     return;
-    //   }
-    // } else if (voteType === "downVote") {
-    //   if (review.downVotes.includes(user._id.toString())) {
-    //     console.log("You have already voted on this review");
-    //     return;
-    //   }
-    // }
-
     try {
       const voteData =
         voteType === "upVote" ? { upVote: true } : { downVote: true };

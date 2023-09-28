@@ -72,25 +72,3 @@ const AllReviews = ({ id, ratingsQuantity, user }: AllReviewsProps) => {
 };
 
 export default AllReviews;
-
-/*
-
-- Get all buttons working
-- Make responsive
-- Figure out pagination and how to load the reviews (should not be loading all at once)
-
-
-Header 
-  - All Reviews
-  - Number of reviews and page number
-  - Filter button
-  - sort button
-
-  - List reviews in same style as top reviews
-
-
-
-  Need to figure out how to paginate and maybe only load the ones you need at first (there could be a lot)
-  - then do the same to the shop page
-
-*/

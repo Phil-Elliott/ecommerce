@@ -25,12 +25,10 @@ const orders = () => {
           }
         );
         setOrders(response.data.data.orders);
-        console.log(response.data.data.orders);
         setTimeout(() => {
           setLoading(false);
         }, 1000);
       } catch (error) {
-        console.log(error);
         setLoading(false);
       }
     }

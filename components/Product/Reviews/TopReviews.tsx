@@ -24,10 +24,3 @@ const TopReviews = ({ reviews, user }: TopReviewsProps) => {
 };
 
 export default TopReviews;
-
-/*
-
-
-
-
-*/

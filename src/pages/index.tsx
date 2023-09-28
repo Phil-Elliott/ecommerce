@@ -20,28 +20,3 @@ export default function Home() {
     </div>
   );
 }
-
-/*
-
-1) Add spinners
-4) Plan out stripe
-5) Remove deals button on header
-
-
-Add heads to everything
-Get category links working and also on header
-
-- Need to do
-    - stop pulling all games when app loads
-    - finish product page
-      - make responsive
-      - add product list on bottom
-    - Fix shop page
-      - add pagination and sorting and filtering through server
-    - Figure out checkout and connecting to stripe
-    - clean up the sign in model
-    - host it somewhere
-    - add spinners for loading different things
-    - add testing and play around with it (desperately need to learn how to do this)
-
-*/

@@ -85,8 +85,3 @@ const RatingsContainer = ({
 };
 
 export default RatingsContainer;
-
-/*
-
-
-*/
