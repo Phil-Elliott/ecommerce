@@ -290,22 +290,25 @@ const Account = () => {
             <div className="flex sm:flex-row flex-col gap-2 pt-2">
               <button
                 type="submit"
-                className="bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
+                className="w-full bg-black text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg"
               >
                 Update Profile
               </button>
             </div>
           </form>
-          <div className="px-6 pb-6 sm:space-x-3 space-y-3 pt-3 sm:space-y-0">
+          <div className="px-6 pb-6 sm:space-x-3 space-y-3 pt-3 sm:space-y-0 w-full sm:flex">
             <Modal
               trigger={
-                <div className="bg-white text-black border-2 border-black px-4 py-2 rounded hover:opacity-75 hover:shadow-lg w-full sm:w-auto">
+                <div className="bg-white text-black border-2 border-black px-4 py-2 rounded hover:opacity-75 hover:shadow-lg w-full ">
                   Change Password
                 </div>
               }
-              classAddOn="w-full sm:w-auto"
+              classAddOn="w-full"
               closeRef={passwordModalCloseRef}
             >
+              <h2 className="text-2xl font-bold text-center pt-2 pb-4 text-gray-800">
+                Change Password
+              </h2>
               <form
                 onSubmit={handlePasswordChange}
                 className="space-y-4 relative"
@@ -388,7 +391,7 @@ const Account = () => {
             <button
               type="button"
               onClick={handleDeleteAccount}
-              className="bg-red-600 border-red-600 border-2 text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg w-full sm:w-auto"
+              className="bg-red-600 border-red-600 border-2 text-white px-4 py-2 rounded hover:opacity-75 hover:shadow-lg w-full "
             >
               Delete Account
             </button>

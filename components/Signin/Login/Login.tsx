@@ -46,6 +46,7 @@ const Login = ({
       dispatch(setUser(response.data.data.user));
       closeModal();
     } catch (error: any) {
+      setError(error);
       console.log(error);
     }
   };
@@ -86,12 +87,12 @@ const Login = ({
           </p>
         )}
 
-        {/* <p
+        <p
           className="text-sm text-gray-700 cursor-pointer hover:underline mb-2"
           onClick={() => handleForgotPassword()}
         >
           Forgot Password
-        </p> */}
+        </p>
 
         <div className="">
           <button

@@ -23,7 +23,7 @@ const Order = ({ order }: OrderProps) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-8 gap-4 w-full py-4 px-6 bg-white border-b-2 border-gray-200">
+      <div className="grid grid-cols-1 lg:grid-cols-7 gap-4 w-full py-4 px-6 bg-white border-b-2 border-gray-200">
         <p className="hidden lg:block">{refinedOrderNumber}</p>
         <p className="hidden lg:block">{dateStr}</p>
         <p className="hidden lg:block">{order.orderStatus}</p>
@@ -40,14 +40,14 @@ const Order = ({ order }: OrderProps) => {
         {order.trackingNumber && (
           <p className="sm:hidden">Tracking: {order.trackingNumber}</p>
         )}
-        <button className="lg:block" onClick={() => console.log("return")}>
+        {/* <button className="lg:block" onClick={() => console.log("return")}>
           <div
             onClick={() => console.log("cancel")}
             className="flex justify-center text-sm text-red-500 border-2 border-red-500 rounded px-1 py-1 transition duration-300 hover:bg-red-500 hover:text-white hover:shadow-md hover:border-transparent"
           >
             <p>Cancel</p>
           </div>
-        </button>
+        </button> */}
         <button className="lg:block" onClick={() => console.log("return")}>
           <div
             onClick={() => setShowDetails(!showDetails)}
@@ -58,7 +58,7 @@ const Order = ({ order }: OrderProps) => {
         </button>
       </div>
       {showDetails && (
-        <div className="border-b-2 border-gray-200 bg-gray-200">
+        <div className="border-b-2 border-gray-200 bg-gray-100">
           <h2 className="px-6 pt-4 text-xl font-bold">Shipping Details</h2>
           <div className="w-full lg:w-1/3 flex justify-center items-center px-6 py-4">
             <p className="bg-Primary px-6 py-4 rounded w-full">

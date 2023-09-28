@@ -31,7 +31,7 @@ const orders = () => {
   }, [user]);
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-200">
       <Head>
         <title>Orders</title>
         <meta name="description" content="Find your orders information here" />
@@ -39,16 +39,15 @@ const orders = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container mx-auto min-h-screen pb-10 pt-28 ">
-        <div className="bg-white w-full rounded">
+        <div className="bg-white w-full rounded shadow">
           <h1 className="text-3xl mb-0 py-4 px-6">Your Orders</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-8 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
+          <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-7 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
             <p className="hidden lg:block">Order #</p>
             <p className="hidden lg:block">Date</p>
             <p className="hidden lg:block">Status</p>
             <p className="hidden lg:block">Shipping</p>
             <p className="hidden lg:block">Total</p>
             <p className="hidden lg:block">Track</p>
-            <p className="hidden lg:block"></p>
             <p className="hidden lg:block"></p>
           </div>
           <div className="">
