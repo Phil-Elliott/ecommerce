@@ -25,10 +25,10 @@ signin model
 - Make docs
 
 
-- Fix up stripe checkout page
+
 - Add shipping details to checkout page
  
 
 
-- Add loading to orders screen
+
 - Add toastify to other parts of the app
