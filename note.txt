@@ -32,4 +32,3 @@ signin model
 
 - Add loading to orders screen
 - Add toastify to other parts of the app
-- Fix button styles on account page
