@@ -1,34 +1,13 @@
-
 - Host backend
 - Host frontend
-- Add to orders page (page numbers, filter, sort, etc)
-- Add forgot password
-- Add testing
+- Make docs
 
-
-
-
-
-signin model
-- Add forgot password
-- show error when trying to sign in with wrong credentials
-
-
-
-- Add toasts to rest of app (addToWishlist and addToCart, and review stuff)
 - Make categories buttons work on shop page
+- Add toasts to rest of app (addToWishlist and addToCart, and review stuff)
 
 - Add more items to app
 - Add more reviews to app
 
 - Maybe add seedData for reviews, cart, and wishList
-- Make docs
-
-
-
-- Add shipping details to checkout page
- 
-
-
-
-- Add toastify to other parts of the app
+- Add to orders page (page numbers, filter, sort, etc)
+- Add testing

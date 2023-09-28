@@ -10,7 +10,7 @@ type ItemsProps = {
 
 const Items = ({ games }: ItemsProps) => {
   return (
-    <div className="grid grid-cols-3 gap-10 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-10 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {games.map((game) => (
         <div
           key={game.name}

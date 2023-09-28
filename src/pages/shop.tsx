@@ -86,12 +86,21 @@ const shop = () => {
   const router = useRouter();
 
   const searchQuery = router.query.search ? router.query.search.toString() : "";
-  const filterQuery = router.query.category
+  let filterQuery = router.query.category
     ? router.query.category.toString()
     : "";
-  const publisherQuery = router.query.publisher
+  let publisherQuery = router.query.publisher
     ? router.query.publisher.toString()
     : "";
+
+  useEffect(() => {
+    filterQuery = router.query.category ? router.query.category.toString() : "";
+    publisherQuery = router.query.publisher
+      ? router.query.publisher.toString()
+      : "";
+
+    console.log(filterQuery, publisherQuery, "filterQuery, publisherQuery");
+  }, [router.asPath]);
 
   useEffect(() => {
     if (router.isReady && !hasInitialFiltersSet) {
@@ -101,6 +110,13 @@ const shop = () => {
         addFilterOption("publisher", publisherQuery);
       } else {
         getGames();
+      }
+    } else {
+      if (filterQuery && filterQuery.trim() !== "") {
+        setFilterOptions((prev) => ({
+          ...prev,
+          category: [filterQuery],
+        }));
       }
     }
     setHasInitialFiltersSet(true);
