@@ -23,51 +23,63 @@ const Order = ({ order }: OrderProps) => {
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 w-full py-4 px-6 bg-white border-b-2 border-gray-200">
-        <p className="hidden sm:block">{refinedOrderNumber}</p>
-        <p className="hidden sm:block">{dateStr}</p>
-        <p className="hidden sm:block">{order.orderStatus}</p>
-        <p className="hidden sm:block">{order.shippingStatus}</p>
-        <p className="hidden sm:block">${order.total}</p>
-        <p className="hidden sm:block">{order.trackingNumber}</p>
-        <button
-          className="hidden sm:block text-sm text-red-500 transition duration-300 border-2 border-red-500 rounded px-2 py-1 hover:bg-red-500 hover:text-white hover:shadow-md hover:border-transparent"
-          onClick={() => console.log("cancel")}
-        >
-          Cancel
+      <div className="grid grid-cols-1 lg:grid-cols-8 gap-4 w-full py-4 px-6 bg-white border-b-2 border-gray-200">
+        <p className="hidden lg:block">{refinedOrderNumber}</p>
+        <p className="hidden lg:block">{dateStr}</p>
+        <p className="hidden lg:block">{order.orderStatus}</p>
+        <p className="hidden lg:block">{order.shippingStatus}</p>
+        <p className="hidden lg:block">${order.total}</p>
+        <p className="hidden lg:block">{order.trackingNumber}</p>
+
+        {/* mobile view */}
+        <p className="lg:hidden">Order#: {refinedOrderNumber}</p>
+        <p className="lg:hidden">Date: {dateStr}</p>
+        <p className="lg:hidden">Status: {order.orderStatus}</p>
+        <p className="lg:hidden">Shipping: {order.shippingStatus}</p>
+        <p className="lg:hidden">Total: ${order.total}</p>
+        {order.trackingNumber && (
+          <p className="sm:hidden">Tracking: {order.trackingNumber}</p>
+        )}
+        <button className="lg:block" onClick={() => console.log("return")}>
+          <div
+            onClick={() => console.log("cancel")}
+            className="flex justify-center text-sm text-red-500 border-2 border-red-500 rounded px-1 py-1 transition duration-300 hover:bg-red-500 hover:text-white hover:shadow-md hover:border-transparent"
+          >
+            <p>Cancel</p>
+          </div>
         </button>
-        <button
-          className="hidden sm:block"
-          onClick={() => console.log("return")}
-        >
+        <button className="lg:block" onClick={() => console.log("return")}>
           <div
             onClick={() => setShowDetails(!showDetails)}
-            className="text-xl inline-block align-middle border-2 border-gray-700 rounded px-1 py-1 transition duration-300 hover:bg-gray-700 hover:text-white hover:shadow-md"
+            className="w-full lg:w-1/3 flex justify-center text-xl border-2 border-gray-700 rounded px-1 py-1 transition duration-300 hover:bg-gray-700 hover:text-white hover:shadow-md"
           >
             {showDetails ? <BiHide className="" /> : <BiShow className="" />}
           </div>
         </button>
       </div>
       {showDetails && (
-        <div className="px-6">
-          <h2 className="py-4 text-xl font-bold">Shipping Details</h2>
-          <p>
-            {order.shippingDetails.contactName}
-            <br />
-            {order.shippingDetails.addressLine1}
-            {order.shippingDetails.addressLine2 && (
-              <>
-                <br />
-                {order.shippingDetails.addressLine2}
-              </>
-            )}
-            <br />
-            {order.shippingDetails.city}, {order.shippingDetails.state}{" "}
-            {order.shippingDetails.postalCode}
-            <br />
-            {order.shippingDetails.country}
-          </p>
-          <h2 className="py-4 text-xl font-bold">All Order Items</h2>
+        <div className="border-b-2 border-gray-200 bg-gray-200">
+          <h2 className="px-6 pt-4 text-xl font-bold">Shipping Details</h2>
+          <div className="w-full lg:w-1/3 flex justify-center items-center px-6 py-4">
+            <p className="bg-Primary px-6 py-4 rounded w-full">
+              {order.shippingDetails.contactName}
+              <br />
+              {order.shippingDetails.addressLine1}
+              {order.shippingDetails.addressLine2 && (
+                <>
+                  <br />
+                  {order.shippingDetails.addressLine2}
+                </>
+              )}
+              <br />
+              {order.shippingDetails.city}, {order.shippingDetails.state}{" "}
+              {order.shippingDetails.postalCode}
+              <br />
+              {order.shippingDetails.country}
+            </p>
+          </div>
+
+          <h2 className="px-6 py-4 text-xl font-bold">All Order Items</h2>
           {order.items.map((item) => (
             <Item
               key={item._id}

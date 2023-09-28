@@ -41,15 +41,15 @@ const orders = () => {
       <div className="container mx-auto min-h-screen pb-10 pt-28 ">
         <div className="bg-white w-full rounded">
           <h1 className="text-3xl mb-0 py-4 px-6">Your Orders</h1>
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
-            <p className="hidden sm:block">Order #</p>
-            <p className="hidden sm:block">Date</p>
-            <p className="hidden sm:block">Status</p>
-            <p className="hidden sm:block">Shipping</p>
-            <p className="hidden sm:block">Total</p>
-            <p className="hidden sm:block">Track</p>
-            <p className="hidden sm:block"></p>
-            <p className="hidden sm:block"></p>
+          <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-8 gap-4 items-center w-full py-4 px-6 border-b-2 border-gray-200">
+            <p className="hidden lg:block">Order #</p>
+            <p className="hidden lg:block">Date</p>
+            <p className="hidden lg:block">Status</p>
+            <p className="hidden lg:block">Shipping</p>
+            <p className="hidden lg:block">Total</p>
+            <p className="hidden lg:block">Track</p>
+            <p className="hidden lg:block"></p>
+            <p className="hidden lg:block"></p>
           </div>
           <div className="">
             {orders.length > 0 ? (
