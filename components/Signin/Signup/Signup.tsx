@@ -55,7 +55,7 @@ const Signup = ({ handleFormChange, closeModal }: SignupProps) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4242/api/v1/auth/register",
+        "https://ecommercebackend-production-40c6.up.railway.app/api/v1/auth/register",
         {
           name: username,
           email: email,

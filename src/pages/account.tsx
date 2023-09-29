@@ -82,7 +82,7 @@ const Account = () => {
 
     try {
       const res = await axios.patch(
-        "http://localhost:4242/api/v1/auth/updatePassword",
+        "https://ecommercebackend-production-40c6.up.railway.app/api/v1/auth/updatePassword",
         passwordData,
         {
           withCredentials: true,
@@ -152,7 +152,7 @@ const Account = () => {
 
     try {
       const res = await axios.patch(
-        "http://localhost:4242/api/v1/users/updateMe",
+        "https://ecommercebackend-production-40c6.up.railway.app/api/v1/users/updateMe",
         newUserData,
         {
           withCredentials: true,
@@ -191,9 +191,12 @@ const Account = () => {
     if (!confirmation) return;
 
     try {
-      await axios.delete("http://localhost:4242/api/v1/users/deleteMe", {
-        withCredentials: true,
-      });
+      await axios.delete(
+        "https://ecommercebackend-production-40c6.up.railway.app/api/v1/users/deleteMe",
+        {
+          withCredentials: true,
+        }
+      );
 
       toast.success("Account Deleted Successfully");
       router.push("/login"); // Or '/' to redirect to home page or login page after deletion

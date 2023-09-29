@@ -39,7 +39,7 @@ const Layout = ({ children, signInButton }: LayoutProps) => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4242/api/v1/users/me",
+          "https://ecommercebackend-production-40c6.up.railway.app/api/v1/users/me",
           { withCredentials: true }
         );
 

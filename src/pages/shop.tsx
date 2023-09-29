@@ -129,7 +129,7 @@ const shop = () => {
         arrayFormat: "comma",
       });
       const response = await axios.get(
-        `http://localhost:4242/api/v1/games?page=${page}&limit=9&sort=${sortBy}&search=${searchQuery}&${queryParams}`
+        `https://ecommercebackend-production-40c6.up.railway.app/api/v1/games?page=${page}&limit=9&sort=${sortBy}&search=${searchQuery}&${queryParams}`
       );
       const data = await response.data;
       setQuantity(data.totalProducts);

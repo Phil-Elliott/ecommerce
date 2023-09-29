@@ -35,3 +35,10 @@ export default function App({ Component, pageProps }: AppProps) {
     </Provider>
   );
 }
+
+/*
+http://localhost:4242/
+
+
+
+*/

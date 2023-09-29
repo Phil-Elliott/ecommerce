@@ -4,9 +4,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const fetchWishList = createAsyncThunk("wishList/fetchWishList", async () => {
-  const { data } = await axios.get("http://localhost:4242/api/v1/wishList", {
-    withCredentials: true,
-  });
+  const { data } = await axios.get(
+    "https://ecommercebackend-production-40c6.up.railway.app/api/v1/wishList",
+    {
+      withCredentials: true,
+    }
+  );
   return data.data.wishListItems[0].items;
 });
 
@@ -15,7 +18,7 @@ const addToList = createAsyncThunk(
   async (product: GameProps, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(
-        `http://localhost:4242/api/v1/wishlist/add`,
+        `https://ecommercebackend-production-40c6.up.railway.app/api/v1/wishlist/add`,
         { gameId: product._id },
         {
           withCredentials: true,
@@ -34,7 +37,7 @@ const removeFromList = createAsyncThunk(
   "wishList/removeFromList",
   async (id: string) => {
     const { data } = await axios.delete(
-      `http://localhost:4242/api/v1/wishlist/remove/${id}`,
+      `https://ecommercebackend-production-40c6.up.railway.app/api/v1/wishlist/remove/${id}`,
       {
         withCredentials: true,
       }

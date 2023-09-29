@@ -19,7 +19,7 @@ const orders = () => {
     async function getOrders() {
       try {
         const response = await axios.get(
-          `http://localhost:4242/api/v1/orders`,
+          `https://ecommercebackend-production-40c6.up.railway.app/api/v1/orders`,
           {
             withCredentials: true,
           }

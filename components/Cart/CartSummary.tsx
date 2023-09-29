@@ -30,7 +30,7 @@ const CartSummary = ({ cart }: CartSummaryProps) => {
     try {
       // Make a call to the backend to get the checkout session
       const response = await axios.post(
-        "http://localhost:4242/api/v1/orders/checkout-session",
+        "https://ecommercebackend-production-40c6.up.railway.app/api/v1/orders/checkout-session",
         {
           cart: cart.map((item) => ({
             gameId: item._id,

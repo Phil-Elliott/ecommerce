@@ -5,7 +5,7 @@ export const logoutUser = createAsyncThunk(
   "user/logoutUser",
   async (_, { dispatch }) => {
     const response = await axios.get(
-      "http://localhost:4242/api/v1/auth/logout",
+      "https://ecommercebackend-production-40c6.up.railway.app/api/v1/auth/logout",
       { withCredentials: true }
     );
 
