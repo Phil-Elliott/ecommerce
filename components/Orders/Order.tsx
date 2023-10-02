@@ -28,7 +28,7 @@ const Order = ({ order }: OrderProps) => {
         <p className="hidden lg:block">{dateStr}</p>
         <p className="hidden lg:block">{order.orderStatus}</p>
         <p className="hidden lg:block">{order.shippingStatus}</p>
-        <p className="hidden lg:block">${order.total}</p>
+        <p className="hidden lg:block">${order.total.toFixed(2)}</p>
         <p className="hidden lg:block">{order.trackingNumber}</p>
 
         {/* mobile view */}
