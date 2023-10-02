@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
 /*
 http://localhost:4242/
-
+https://ecommerce-seven-opal-44.vercel.app/
 
 
 */

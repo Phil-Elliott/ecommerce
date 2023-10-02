@@ -36,7 +36,7 @@ const Order = ({ order }: OrderProps) => {
         <p className="lg:hidden">Date: {dateStr}</p>
         <p className="lg:hidden">Status: {order.orderStatus}</p>
         <p className="lg:hidden">Shipping: {order.shippingStatus}</p>
-        <p className="lg:hidden">Total: ${order.total}</p>
+        <p className="lg:hidden">Total: ${order.total.toFixed(2)}</p>
         {order.trackingNumber && (
           <p className="sm:hidden">Tracking: {order.trackingNumber}</p>
         )}
