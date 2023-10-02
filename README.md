@@ -17,6 +17,7 @@ This E-Commerce Platform is a dynamic and user-centric web application designed 
 ## Technologies Used
 
 - React
+- Redux
 - Node.js
 - Express
 - MongoDB
